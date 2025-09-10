@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneManager
+public class SceneManager : MonoBehaviour
 {
     public Define.Type.Scene CurrentScene => currentScene;
 

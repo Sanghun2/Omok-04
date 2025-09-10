@@ -3,9 +3,43 @@ using UnityEngine;
 public class Managers : MonoBehaviour
 {
     public static UIManager UI => uiManager;
-    public static SceneManager Scene => sceneManager;
+    public static SceneManager Scene
+    {
+        get
+        {
+            if (sceneManager == null) {
+                sceneManager = Instance.GetComponent<SceneManager>();
+            }
 
-    static SceneManager sceneManager = new SceneManager();
+            return sceneManager;
+        }
+    }
+    public static Managers Instance
+    {
+        get
+        {
+            if (_instance == null) {
+                _instance = GameObject.FindAnyObjectByType<Managers>();
+            }
+
+            return _instance;
+        }
+    }
+    public static CoroutineManager Coroutine
+    {
+        get
+        {
+            if (coroutineManager == null) {
+                coroutineManager = Instance.GetComponent<CoroutineManager>();
+            }
+
+            return coroutineManager;
+        }
+    }
+
+    static CoroutineManager coroutineManager;
+    static Managers _instance;
+    static SceneManager sceneManager;
     static UIManager uiManager = new UIManager();
 
     private void Awake() {
