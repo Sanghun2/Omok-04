@@ -36,7 +36,9 @@ public class Managers : MonoBehaviour
             return coroutineManager;
         }
     }
+    public static TimeManager Time => timeManager;
 
+    static TimeManager timeManager = new TimeManager();
     static CoroutineManager coroutineManager;
     static Managers _instance;
     static SceneManager sceneManager;
