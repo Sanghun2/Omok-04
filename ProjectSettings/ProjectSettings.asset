@@ -867,11 +867,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: 350a1faf-fc0f-43cd-80e2-dce480522b57
+  cloudProjectId: 17f802c0-30b9-4303-bb0e-040e201ae5b3
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Omok 04
-  organizationId: lshzang0622
+  projectName: omok-04
+  organizationId: syghwan
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

@@ -2,11 +2,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent (typeof(Collider2D))]
-public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
     private Cell[,] board;
     private Cell currentCell;
 
+    [SerializeField] private GameObject markers;
     [SerializeField] private GameObject positionSelector;
     [SerializeField] private GameObject blackMarker;
     [SerializeField] private GameObject whiteMarker;
@@ -19,6 +20,14 @@ public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
     private void Start()
     {
         InitBoard();
+    }
+
+    public void DestroyMarkers()
+    {
+        foreach (Transform children in markers.transform)
+        {
+            Destroy(children.gameObject);
+        }
     }
 
     /// <summary>
@@ -60,7 +69,7 @@ public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
         currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnClickLaunchButton()
     {
         positionSelector.SetActive(false);
 
@@ -72,7 +81,7 @@ public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
         }
 
         // 돌 생성
-        GameObject blackMarkerObj = Instantiate(blackMarker,transform);
+        GameObject blackMarkerObj = Instantiate(blackMarker, markers.transform);
 
         // 선택된 셀의 row와 col을 기준으로 위치 지정
         Vector3 markerPos = new Vector3((currentCell.CellRow - 7) * 0.45f, (currentCell.CellCol - 7) * 0.45f, 0);
@@ -82,6 +91,7 @@ public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
         currentCell.SetMarker(Cell.CellMarker.Black);
         if (OmokAI.CheckGameWin(currentCell.Marker, board, currentCell.CellRow, currentCell.CellCol))
             Debug.Log("### GAME WIN ###");
+
     }
 
     public void OnPointerDown(PointerEventData eventData)
