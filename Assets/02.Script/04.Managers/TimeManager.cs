@@ -8,10 +8,12 @@ public class TimeManager
     public void RegisterTimer(Define.Type.Player player, Timer timer) {
         switch (player) {
             case Define.Type.Player.Player1:
-                player1_Timer = timer;  
+                player1_Timer = timer;
+                Debug.LogAssertion($"player1 timer registered");
                 break;
             case Define.Type.Player.Player2:
                 player2_Timer = timer;
+                Debug.LogAssertion($"player2 timer registered");
                 break;
             default:
                 break;

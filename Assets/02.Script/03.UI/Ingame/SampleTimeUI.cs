@@ -12,12 +12,27 @@ public class SampleTimeUI : UIBase
 
     public override void InitUI() {
         Timer targetTimer = Managers.Time.GetTimer(Define.Type.Player.Player1);
-        targetTimer.OnTimeChanged -= UpdateTimeSlider;
-        targetTimer.OnTimeChanged += UpdateTimeSlider;
+        AddTimerEvent(targetTimer);
+    }
+    public void AddTimerEvent(Timer targetTimer) {
+        if (targetTimer != null) {
+            targetTimer.OnTimeChanged -= UpdateTimeSlider;
+            targetTimer.OnTimeChanged += UpdateTimeSlider;
+            return;
+        }
+
+        Debug.LogAssertion($"<color=orange>timer 등록 필요</color>");
     }
 
     private void UpdateTimeSlider(float currentTime, float totalTime) {
-        timeSlider.value = currentTime / totalTime;
-        timeText.text = currentTime.ToString("F0");
+        if (timeSlider != null) timeSlider.value = currentTime / totalTime;
+        if (timeText != null) timeText.text = currentTime.ToString("F0");
+    }
+
+    private void Reset() {
+        timeSlider = GetComponentInChildren<Slider>();
+        timeText = GetComponentInChildren<TextMeshProUGUI>();
+
+        if (!timeText) Debug.LogAssertion($"<color=red>Time Text UI 필요</color>");
     }
 }

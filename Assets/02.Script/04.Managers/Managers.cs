@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -47,6 +49,17 @@ public class Managers : MonoBehaviour
     static UIManager uiManager = new UIManager();
 
     private void Awake() {
+        List<IInitializable> initializeList = new List<IInitializable>() {
+            Scene,
+        };
 
+        Initialize(initializeList);
+    }
+
+    private void Initialize(List<IInitializable> initializeList) {
+        for (int i = 0; i < initializeList.Count; i++) {
+            var initializeTarget = initializeList[i];
+            if (!initializeTarget.IsInit) initializeTarget.Initialize();
+        }
     }
 }
