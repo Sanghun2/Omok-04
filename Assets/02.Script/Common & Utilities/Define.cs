@@ -19,5 +19,10 @@ public class Define
             Local,
             Multi
         }
+
+        public enum Player {
+            Player1,
+            Player2,
+        }
     }
 }
