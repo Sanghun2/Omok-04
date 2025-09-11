@@ -21,7 +21,9 @@ public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
         InitBoard();
     }
 
-    // 보드 초기화
+    /// <summary>
+    /// 보드 초기화
+    /// </summary>
     public void InitBoard()
     {
         board = new Cell[BoardRow, BoardCol];
@@ -76,8 +78,10 @@ public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
         Vector3 markerPos = new Vector3((currentCell.CellRow - 7) * 0.45f, (currentCell.CellCol - 7) * 0.45f, 0);
         blackMarkerObj.transform.position = markerPos;
 
-        // 셀의 마커 변경
+        // 임시로 흑돌 고정
         currentCell.SetMarker(Cell.CellMarker.Black);
+        if (OmokAI.CheckGameWin(currentCell.Marker, board, currentCell.CellRow, currentCell.CellCol))
+            Debug.Log("### GAME WIN ###");
     }
 
     public void OnPointerDown(PointerEventData eventData)

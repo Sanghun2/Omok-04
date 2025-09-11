@@ -14,7 +14,12 @@ public class Cell
     public delegate void OnCellClicked(int row, int col);  
     public OnCellClicked onCellClicked;
 
-    // 셀 초기화
+    /// <summary>
+    /// 셀 초기화
+    /// </summary>
+    /// <param name="row"></param>
+    /// <param name="col"></param>
+    /// <param name="onCellClicked"></param>
     public void InitCell(int row, int col,OnCellClicked onCellClicked)
     {
         cellRow = row; 
@@ -23,6 +28,10 @@ public class Cell
         this.onCellClicked = onCellClicked;
     }
 
+    /// <summary>
+    /// 마커 변경
+    /// </summary>
+    /// <param name="marker"></param>
     public void SetMarker(CellMarker marker)
     {
         this.marker = marker;
