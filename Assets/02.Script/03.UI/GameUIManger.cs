@@ -13,7 +13,7 @@ public enum BTNType
     SETTING,
     EXIT,
 }
-public class GameUIManger : MonoBehaviour
+public class GameUIManger : UIBase
 {
 
 
