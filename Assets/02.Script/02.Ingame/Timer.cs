@@ -46,7 +46,7 @@ public class Timer : MonoBehaviour
 
         if (Mathf.Approximately(currentTime, 0)) {
             Pause();
-            OnTimeOver(0, totalTime);
+            OnTimeOver?.Invoke(0, totalTime);
         }
     }
 }
