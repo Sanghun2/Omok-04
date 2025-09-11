@@ -15,8 +15,10 @@ public class Debugger : MonoBehaviour
     }
 
     private void Awake() {
-        testTimer.OnTimeChanged += Test_CheckTime;
-        testTimer.OnTimeOver += Test_CheckTimeOver;
+        if (testTimer != null) {
+            testTimer.OnTimeChanged += Test_CheckTime;
+            testTimer.OnTimeOver += Test_CheckTimeOver;
+        }
     }
 
     private void Test_CheckTimeOver(float currentTime, float totalTime) {
