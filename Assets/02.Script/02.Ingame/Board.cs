@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent (typeof(Collider2D))]
-public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
     private Cell[,] board;
     private Cell currentCell;
@@ -10,6 +10,7 @@ public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
     [SerializeField] private GameObject positionSelector;
     [SerializeField] private GameObject blackMarker;
     [SerializeField] private GameObject whiteMarker;
+    [SerializeField] private GameObject xMarker;
 
     public const int BoardRow = 15;
     public const int BoardCol = 15;
@@ -20,6 +21,7 @@ public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
     {
         InitBoard();
     }
+
 
     /// <summary>
     /// 보드 초기화
@@ -60,33 +62,50 @@ public class Board : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
         currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnClickLaunchButton()
     {
+        if (currentCell == null)
+            return;
+
         positionSelector.SetActive(false);
+
+        // 선택된 셀의 row와 col을 기준으로 위치 지정
+        Vector3 markerPos = new Vector3((currentCell.CellRow - 7) * 0.45f, (currentCell.CellCol - 7) * 0.45f, 0);
 
         // 이미 돌이 놓여져있다면 취소
         if (currentCell.Marker != Cell.CellMarker.None)
         {
+            xMarker.SetActive(true);
+            xMarker.transform.position = markerPos; 
             currentCell = null;
             return;
         }
+        for (int i = 0; i< 2; i++)
+        {
+            if (OmokAI.CheckRenju(Cell.CellMarker.Black, board, currentCell.CellRow, currentCell.CellCol, 3))
+            {
+                xMarker.SetActive(true);
+                xMarker.transform.position = markerPos;
+                return;
+            }
+        }
+
 
         // 돌 생성
-        GameObject blackMarkerObj = Instantiate(blackMarker,transform);
-
-        // 선택된 셀의 row와 col을 기준으로 위치 지정
-        Vector3 markerPos = new Vector3((currentCell.CellRow - 7) * 0.45f, (currentCell.CellCol - 7) * 0.45f, 0);
+        GameObject blackMarkerObj = Instantiate(blackMarker, transform);
         blackMarkerObj.transform.position = markerPos;
 
         // 임시로 흑돌 고정
         currentCell.SetMarker(Cell.CellMarker.Black);
         if (OmokAI.CheckGameWin(currentCell.Marker, board, currentCell.CellRow, currentCell.CellCol))
             Debug.Log("### GAME WIN ###");
+
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         positionSelector.SetActive(true);
+        xMarker.SetActive(false) ;
 
         // 스크린 지점 -> 월드 지점 변환
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
