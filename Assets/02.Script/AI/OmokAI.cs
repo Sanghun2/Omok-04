@@ -3,288 +3,96 @@ using System;
 
 public static class OmokAI
 {
+    private static readonly (int rowDir, int colDir)[] directions =
+    {
+        (0, 1),   // 가로 방향
+        (1, 0),   // 세로 방향
+        (1, 1),   // 대각선 ↘ 방향
+        (1, -1)   // 대각선 ↙ 방향
+    };
+
     public static bool CheckGameWin(Cell.CellMarker marker, Cell[,] board, int row, int col)
     {
-        int minRow = Math.Max(row - 4, 0);
-        int maxRow = Math.Min(row + 4, 14);
-        int minCol = Math.Max(col - 4, 0);
-        int maxCol = Math.Min(col + 4, 14);
-        Debug.Log($"Row : {row} / Col : {col}");
-
-        // 중앙 7*7 범위에 대해서 확인
-        if (row >= 4 && row <= 10 && col >= 4 && col <= 10)
+        foreach (var (rowDir, colDir) in directions)
         {
-            for (int j = minCol; j <= maxCol - 4; j++)
-            {
-                for (int i = minRow; i <= maxRow - 4; i++)
-                {
-                    // 돌을 놓은 지점의 가로 세로 대각선만 확인
-                    if (i == row)
-                    {
-                        if (board[i, j].Marker == marker &&
-                            board[i, j+1].Marker == marker &&
-                            board[i, j+2].Marker == marker &&
-                            board[i, j+3].Marker == marker &&
-                            board[i, j+4].Marker == marker)
-                            return true;
-                    }
+            int count = 1; // 현재 돌 포함
 
-                    else if (j == col) 
-                    { 
-                        if (board[i, j].Marker == marker &&
-                            board[i+1, j].Marker == marker &&
-                            board[i+2, j].Marker == marker &&
-                            board[i+3, j].Marker == marker &&
-                            board[i+4, j].Marker == marker)
-                            return true;
-                    }
-                    else if ((i - j) == (row - col))
-                    {
-                        if (board[i,j].Marker == marker &&
-                            board[i+1, j+1].Marker == marker &&
-                            board[i+2, j+2].Marker == marker &&
-                            board[i+3, j+3].Marker == marker &&
-                            board[i+4, j+4].Marker == marker)
-                            return true;
-                    }
-                    else if ((i + j + 4) == (row + col))
-                    {
-                        if (board[i,j + 4].Marker == marker &&
-                            board[i+1, j +3].Marker == marker &&
-                            board[i+2, j + 2].Marker == marker &&
-                            board[i+3, j + 1].Marker == marker &&
-                            board[i+4, j].Marker == marker)
-                            return true;
-                    }
+            // 한쪽 방향으로 체크
+            count += CountStones(marker, board, row, col, rowDir, colDir);
 
-                    else continue;
-                }
-            }
+            // 반대 방향으로 체크
+            count += CountStones(marker, board, row, col, -rowDir, -colDir);
+
+            if (count >= 5) return true;
         }
-        // 왼쪽 아래 4*4 범위에 대해서 확인
-        else if(row < 4 && col < 4)
+        return false;
+    }
+
+    /// <summary>
+    /// 연속된 마커 개수 확인
+    /// </summary>
+    private static int CountStones(Cell.CellMarker marker, Cell[,] board, int row, int col, int rowDir, int colDir)
+    {
+        int count = 0;
+        int r = row + rowDir;
+        int c = col + colDir;
+
+        // 한 칸 씩 이동하면서 Marker가 같다면 count++ 아니면 반복 종료
+        while (r >= 0 && r < Board.BoardRow && c >= 0 && c < Board.BoardCol && board[r, c].Marker == marker)
         {
-            for (int i = minRow; i <= maxRow; i++)
-            {
-                for (int j = minCol; j <= maxCol; j++)
-                {
-                    // 돌을 놓은 지점의 가로 세로 대각선만 확인
-                    if (i == row || j == col || (i - j) == (row = col))
-                    {
-                        if (i == row)
-                        {
-                            if (board[i, j].Marker == marker &&
-                                board[i, j+1].Marker == marker &&
-                                board[i, j+2].Marker == marker &&
-                                board[i, j+3].Marker == marker &&
-                                board[i, j+4].Marker == marker)
-                                return true;
-                        }
-
-                        else if (j == col)
-                        {
-                            if (board[i, j].Marker == marker &&
-                                board[i+1, j].Marker == marker &&
-                                board[i+2, j].Marker == marker &&
-                                board[i+3, j].Marker == marker &&
-                                board[i+4, j].Marker == marker)
-                                return true;
-                        }
-                        else if ((i - j) == (row - col))
-                        {
-                            if (board[i, j].Marker == marker &&
-                                board[i+1, j+1].Marker == marker &&
-                                board[i+2, j+2].Marker == marker &&
-                                board[i+3, j+3].Marker == marker &&
-                                board[i+4, j+4].Marker == marker)
-                                return true;
-                        }
-                        else continue;
-                    }
-                    else continue;
-
-                    if ((row + col) >= 4)
-                    {
-                        if (i == row || j == col || (i - j) == (row = col) || (i + j) == (row + col))
-                        {
-                            if (i == row)
-                            {
-                                if (board[i, j].Marker == marker &&
-                                    board[i, j+1].Marker == marker &&
-                                    board[i, j+2].Marker == marker &&
-                                    board[i, j+3].Marker == marker &&
-                                    board[i, j+4].Marker == marker)
-                                    return true;
-                            }
-
-                            else if (j == col)
-                            {
-                                if (board[i, j].Marker == marker &&
-                                    board[i+1, j].Marker == marker &&
-                                    board[i+2, j].Marker == marker &&
-                                    board[i+3, j].Marker == marker &&
-                                    board[i+4, j].Marker == marker)
-                                    return true;
-                            }
-                            else if ((i - j) == (row - col))
-                            {
-                                if (board[i, j].Marker == marker &&
-                                    board[i+1, j+1].Marker == marker &&
-                                    board[i+2, j+2].Marker == marker &&
-                                    board[i+3, j+3].Marker == marker &&
-                                    board[i+4, j+4].Marker == marker)
-                                    return true;
-                            }
-                            else if ((i + j + 4) == (row + col))
-                            {
-                                if (board[i, j + 4].Marker == marker &&
-                                    board[i+1, j +3].Marker == marker &&
-                                    board[i+2, j + 2].Marker == marker &&
-                                    board[i+3, j + 1].Marker == marker &&
-                                    board[i+4, j].Marker == marker)
-                                    return true;
-                            }
-
-                            else continue;
-                        }
-                        else continue;
-                    }
-                }
-            }
+            count++;
+            r += rowDir;
+            c += colDir;
         }
-        // 오른쪽 위 4*4 범위에 대해서 확인
-        else if(row > 10 && col > 10)
+        return count;
+    }
+
+    private static int CountRenjuStone(Cell.CellMarker marker, Cell[,] board, int row, int col, int rowDir, int colDir, int moveLimit)
+    {
+        int stoneCount = 0;
+        int r = row + rowDir;
+        int c = col + colDir;
+
+        //  제한 범위 내 돌 개수 확인
+        while (r >= 0 && r < Board.BoardRow && c >= 0 && c < Board.BoardCol && moveLimit > 0)
         {
-            for (int i = maxRow; i >= minRow; i--)
+            if (board[r, c].Marker == marker)
             {
-                for (int j = maxCol; j >= minCol; j--)
-                {
-
-                    if (i == row || j == col || (i - j) == (row = col) || (i + j) == (row + col))
-                    {
-
-                    }
-                    else continue;
-
-                    if ((row + col) <= 24) 
-                    {
-                        if (i == row || j == col || (i - j) == (row = col) || (i + j) == (row + col))
-                        {
-
-                        }
-                    }
-                    else continue;
-                }
+                stoneCount++;
             }
+
+            r += rowDir;
+            c += colDir;
+            moveLimit--;
         }
-        // 왼쪽 위 4*4 범위에 대해서 확인
-        else if (row < 4 && col > 10)
+
+        return stoneCount;
+    }
+
+    public static bool CheckRenju(Cell.CellMarker marker, Cell[,] board, int row, int col, int stoneLimit)
+    {
+        int stoneCount = 0;
+        int count = 0;
+
+        foreach (var (rowDir, colDir) in directions)
         {
-            for (int i = minRow; i <= maxRow; i++)
+            // 한쪽 방향으로 체크
+            stoneCount += CountRenjuStone(marker, board, row, col, rowDir, colDir , stoneLimit);
+
+            if (stoneCount == (stoneLimit - 1))
             {
-                for (int j = maxCol; j >= minCol; j--)
-                {
-                    if (i == row || j == col || (i + j) == (row + col))
-                    {
-
-                    }
-                    else continue;
-
-                    if ((row - col) >= -10) 
-                    {
-                        if (i == row || j == col || (i - j) == (row = col) || (i + j) == (row + col))
-                        {
-
-                        }
-                    }
-                    else continue;
-                }
+                count++;
+                stoneCount = 0;
             }
+
+            // 반대 방향으로 체크
+            stoneCount += CountRenjuStone(marker, board, row, col, -rowDir, -colDir, stoneLimit);
+
+            if (stoneCount == (stoneLimit - 1)) count++;
+
+            stoneCount = 0;
         }
-        // 오른쪽 아래 4*4 범위에 대해서 확인
-        else if (row  > 10 && col < 4)
-        {
-            for (int i = maxRow; i >= minRow; i--)
-            {
-                for (int j = minCol; j <= maxCol; j++)
-                {
-                    if (i == row || j == col || (i + j) == (row + col))
-                    {
-
-                    }
-                    else continue;
-
-                    if ((row - col) <= 10) 
-                    {
-                        if (i == row || j == col || (i - j) == (row = col) || (i + j) == (row + col))
-                        {
-
-                        }
-                    }
-                    else continue;
-                }
-            }
-        }
-        // 왼쪽 중앙 4*7 범위에 대해서 확인
-        else if (row < 4)
-        {
-            for (int i = minRow; i <= maxRow; i++)
-            {
-                for (int j = minCol; j <= maxCol; j++)
-                {
-                    if (i == row || j == col || (i - j) == (row = col) || (i + j) == (row + col))
-                    {
-
-                    }
-                    else continue;
-                }
-            }
-        }
-        // 오른쪽 중앙 4*7 범위에 대해서 확인
-        else if (row > 10)
-        {
-            for (int i = maxRow; i >= minRow; i--)
-            {
-                for (int j = minCol; j <= maxCol; j++)
-                {
-                    if (i == row || j == col || (i - j) == (row = col) || (i + j) == (row + col))
-                    {
-
-                    }
-                    else continue;
-                }
-            }
-        }
-        // 아래쪽 중앙 7*4 범위에 대해서 확인
-        else if (col < 4)
-        {
-            for (int i = minRow; i <= maxRow; i++)
-            {
-                for (int j = minCol; j <= maxCol; j++)
-                {
-                    if (i == row || j == col || (i - j) == (row = col) || (i + j) == (row + col))
-                    {
-
-                    }
-                    else continue;
-                }
-            }
-        }
-        // 위쪽 중앙 7*4 범위에 대해서 확인
-        else if (col > 10)
-        {
-            for (int i = minRow; i <= maxRow; i++)
-            {
-                for (int j = maxCol; j >= minCol; j--)
-                {
-                    if (i == row || j == col || (i - j) == (row = col) || (i + j) == (row + col))
-                    {
-
-                    }
-                    else continue;
-                }
-            }
-        }
+        if (count >= 2) return true;
 
         return false;
     }

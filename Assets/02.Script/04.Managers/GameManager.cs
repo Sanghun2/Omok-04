@@ -31,6 +31,7 @@ public class GameManager
     private void ReleasePrevScene(Define.Type.Scene prevScene) {
         switch (prevScene) {
             case Define.Type.Scene.None:
+                Debug.LogAssertion($"no need release");
                 return;
             case Define.Type.Scene.LogIn:
                 break;
@@ -45,7 +46,7 @@ public class GameManager
     }
     
     private void ProcessSceneChange(Define.Type.Scene sceneType) {
-        ReleasePrevScene(Managers.Scene.PrevScene);
+        ReleasePrevScene(Managers.Scene.CurrentScene);
         Managers.Scene.ShowScene(sceneType);
         InitCurrentScene(sceneType);
     }

@@ -6,10 +6,14 @@ public class Define
         public const float DEFAULT_TIME = 25f;
     }
 
+    public class State {
+
+    }
+
     public class Type {
         public enum Scene {
-            None,
-            LogIn,
+            None=-1,
+            LogIn=0,
             MainMenu,
             InGame,
         }

@@ -1,13 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneManager : MonoBehaviour
+public class SceneManager : MonoBehaviour, IInitializable
 {
     public Define.Type.Scene CurrentScene => currentScene;
     public Define.Type.Scene PrevScene => prevScene;
 
-    private Define.Type.Scene currentScene;
-    private Define.Type.Scene prevScene;
+    public bool IsInit => isInit;
+
+    private bool isInit;
+    private Define.Type.Scene currentScene = Define.Type.Scene.None;
+    private Define.Type.Scene prevScene = Define.Type.Scene.None;
 
     [SerializeField] GameObject[] scenes;
 
@@ -20,7 +22,14 @@ public class SceneManager : MonoBehaviour
             GameObject targetScene = scenes[sceneIndex];
             targetScene.SetActive((int)sceneType == sceneIndex);
         }
+
+        prevScene = currentScene;
         currentScene = sceneType;
-        Debug.LogAssertion($"<color=yellow>{currentScene}으로 이동</color>");
+        Debug.LogAssertion($"<color=yellow>{prevScene}->{currentScene}으로 이동</color>");
+    }
+
+    public void Initialize() {
+        currentScene = Define.Type.Scene.None;
+        prevScene = Define.Type.Scene.None;
     }
 }
