@@ -19,8 +19,16 @@ public class Define
             Local,
             Multi
         }
+        
+        public enum GameState
+        {
+        NotStarted,
+        InProgress,
+        Ended
+        }
 
-        public enum Player {
+        public enum Player
+        {
             Player1,
             Player2,
         }
