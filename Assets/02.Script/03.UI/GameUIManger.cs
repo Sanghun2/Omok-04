@@ -17,39 +17,39 @@ public class GameUIManger : MonoBehaviour
 {
 
 
-    public GameObject popup;
-    public GameObject introPopup;
-    public GameObject dim;
+    [SerializeField] GameObject popup;
+    [SerializeField] GameObject introPopup;
+    [SerializeField] GameObject dim;
 
 
-    public Button settingButton;
-    public Button exitButton;
+    [SerializeField] Button settingButton;
+    [SerializeField] Button exitButton;
 
     //intro 화면
-    public GameObject ButtonPopup;
+    [SerializeField] GameObject ButtonPopup;
 
 
-    public bool isStart; //게임 오버 후 인트로로 돌아오면 다시 false로 켜줘야 됨
-    public bool isSetting;
+    [SerializeField] bool isStart; //게임 오버 후 인트로로 돌아오면 다시 false로 켜줘야 됨
+    [SerializeField] bool isSetting;
 
     // 팝업 버튼들
-    public GameObject settingPopup;
-    public GameObject MultiPopup;
-    public GameObject tipPopup; //디벨로퍼
+    [SerializeField] GameObject settingPopup;
+    [SerializeField] GameObject MultiPopup;
+    [SerializeField] GameObject tipPopup; //디벨로퍼
 
     [Header("사운드 셋팅 UI")]
-    public SoundManager soundManager;
-    public Slider bgmVolumeSlider;
-    public Slider SfxVolumeSlider;
-    public Button bgmTestButton;
-    public Button SfxTestButton;
+    [SerializeField] SoundManager soundManager;
+    [SerializeField] Slider bgmVolumeSlider;
+    [SerializeField] Slider SfxVolumeSlider;
+    [SerializeField] Button bgmTestButton;
+    [SerializeField] Button SfxTestButton;
 
-    public GameObject MainButton;
+    [SerializeField] GameObject MainButton;
 
     bool isMulti;
     bool isTip;
 
-    public GameObject[] background = new GameObject[3];
+    [SerializeField] GameObject[] background = new GameObject[3];
 
 
 
