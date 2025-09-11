@@ -37,7 +37,9 @@ public class Managers : MonoBehaviour
         }
     }
     public static TimeManager Time => timeManager;
+    public static GameManager Game => gameManager;
 
+    static GameManager gameManager => new GameManager();
     static TimeManager timeManager = new TimeManager();
     static CoroutineManager coroutineManager;
     static Managers _instance;

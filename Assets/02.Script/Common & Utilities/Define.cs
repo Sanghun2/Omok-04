@@ -8,9 +8,16 @@ public class Define
 
     public class Type {
         public enum Scene {
+            None,
             LogIn,
             MainMenu,
             InGame,
+        }
+
+        public enum Game {
+            Single,
+            Local,
+            Multi
         }
     }
 }

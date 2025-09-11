@@ -4,8 +4,10 @@ using UnityEngine;
 public class SceneManager : MonoBehaviour
 {
     public Define.Type.Scene CurrentScene => currentScene;
+    public Define.Type.Scene PrevScene => prevScene;
 
     private Define.Type.Scene currentScene;
+    private Define.Type.Scene prevScene;
 
     [SerializeField] GameObject[] scenes;
 
@@ -19,5 +21,6 @@ public class SceneManager : MonoBehaviour
             targetScene.SetActive((int)sceneType == sceneIndex);
         }
         currentScene = sceneType;
+        Debug.LogAssertion($"<color=yellow>{currentScene}으로 이동</color>");
     }
 }
