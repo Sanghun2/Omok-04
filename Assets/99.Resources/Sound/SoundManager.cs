@@ -17,10 +17,10 @@ public class SoundManager : MonoBehaviour
 
     [Header("볼륨 셋팅")]
     [Range(0f, 1f)]
-    public float bgmVolume = 0.5f;
+    public float bgmVolume = 0.1f;
 
     [Range(0f, 1f)]
-    public float sfxVolume = 0.2f;
+    public float sfxVolume = 0.1f;
 
 
 

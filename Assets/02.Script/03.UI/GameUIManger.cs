@@ -8,7 +8,7 @@ using System;
 
 public enum BTNType
 {
-    STARTSOLO,
+    STARTSINGLE,
     STARTMULTI,
     SETTING,
     EXIT,
@@ -34,7 +34,7 @@ public class GameUIManger : MonoBehaviour
 
     // 팝업 버튼들
     public GameObject settingPopup;
-    public GameObject storyPopup;
+    public GameObject MultiPopup;
     public GameObject tipPopup; //디벨로퍼
 
     [Header("사운드 셋팅 UI")]
@@ -46,7 +46,7 @@ public class GameUIManger : MonoBehaviour
 
     public GameObject MainButton;
 
-    bool isStory;
+    bool isMulti;
     bool isTip;
 
     public GameObject[] background = new GameObject[3];
@@ -168,12 +168,12 @@ public class GameUIManger : MonoBehaviour
         }
         isSetting = false;
 
-        if (isStory || isTip)
+        if (isMulti || isTip)
         {
-            storyPopup.SetActive(false);
+            MultiPopup.SetActive(false);
             tipPopup.SetActive(false);
 
-            isStory = false;
+            isMulti = false;
             isTip = false;
         }
 
@@ -181,25 +181,22 @@ public class GameUIManger : MonoBehaviour
 
     }
 
-    public void OnStroyPopup()
+    public void OnmMultiPopup()
     {
-        storyPopup.SetActive(true);
+        MultiPopup.SetActive(true);
         ButtonPopup.SetActive(false);
-        isStory = true;
-    }
-    public void OnTipPopup()
-    {
-        tipPopup.SetActive(true);
-        ButtonPopup.SetActive(false);
-        isTip = true;
-        popup.SetActive(false);
-
+        isMulti = true;
     }
 
     public void OnSettingPopup()
     {
         OnPopup();
         settingPopup.SetActive(true);
+    }
+
+    //종료할 기능 넣기
+    public void OnExitPopup()
+    {
     }
 
     public void OnToMain()

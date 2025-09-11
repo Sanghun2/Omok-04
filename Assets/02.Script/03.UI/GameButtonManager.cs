@@ -22,21 +22,22 @@ public class GameButtonManager : MonoBehaviour
     {
         switch (currentType)
         {
-            case BTNType.STARTSOLO:
-                Debug.Log("STARTSOLO");
+            case BTNType.STARTSINGLE:
+                Debug.Log("STARTSINGLE");
                 break;
 
             case BTNType.STARTMULTI:
-                gameUIManger.OnStroyPopup();
+                gameUIManger.OnmMultiPopup();
                 Debug.Log("STARTMULTI");
                 break;
 
             case BTNType.SETTING:
-                gameUIManger.OnTipPopup();
+                gameUIManger.OnSettingPopup();
                 Debug.Log("SETTING");
                 break;
 
             case BTNType.EXIT:
+                gameUIManger.OnExitPopup();
                 Debug.Log("나가기");
                 break;
         }
@@ -46,8 +47,8 @@ void AutoSetButtonType()
     {
         string objectName = gameObject.name.ToLower();
 
-        if (objectName.Contains("start"))
-            currentType = BTNType.STARTSOLO;
+        if (objectName.Contains("single"))
+            currentType = BTNType.STARTSINGLE;
         else if (objectName.Contains("multi"))
             currentType = BTNType.STARTMULTI;
         else if (objectName.Contains("setting"))
