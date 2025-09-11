@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
+    public float CurrentTime => currentTime;
+
     [SerializeField] bool _pause;
     [SerializeField] float currentTime;
     [SerializeField] float totalTime;
