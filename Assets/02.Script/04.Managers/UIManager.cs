@@ -70,7 +70,6 @@ public class UIManager
         var targetUI = GetUI<T>();
         targetUI?.OpenUI();
         _openedUIStack.Push(targetUI); 
-        CheckCursorVisible();
         return targetUI;
     }
     public void CloseUI<T>() where T : UIBase {
@@ -88,28 +87,17 @@ public class UIManager
         while (tempUIStack.Count > 0) {
             _openedUIStack.Push(tempUIStack.Pop());
         }
-
-        CheckCursorVisible();
     }
     public void CloseTopUI() {
         if (_openedUIStack.Count > 0) {
             _openedUIStack.Pop().CloseUI();
         }
-
-        CheckCursorVisible();
-    }
-
-    private void CheckCursorVisible() {        
-        Cursor.visible = OpenedUICount > 0;
-        Cursor.lockState = OpenedUICount > 0 ? CursorLockMode.Confined : CursorLockMode.Locked;
     }
 
     public void CloseAllUIs() {
         while (_openedUIStack.Count > 0) {
             CloseTopUI();
         }
-
-        CheckCursorVisible();
     }
 
     public void ToggleUI<T>(T targetUI) where T : UIBase{
