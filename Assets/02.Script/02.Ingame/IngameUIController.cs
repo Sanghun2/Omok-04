@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class IngameUIController : UIBase
 {
-    [SerializeField] private GameObject player1Obj;
-    [SerializeField] private GameObject player2Obj;
+    [SerializeField] private GameObject player1;
+    [SerializeField] private GameObject player2;
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button startButton;
 
@@ -18,13 +18,13 @@ public class IngameUIController : UIBase
 
     void Awake()
     {
-        p1Name = player1Obj.transform.Find("Player1").GetComponent<TextMeshProUGUI>();
-        p1Result = player1Obj.transform.Find("Result").GetComponent<TextMeshProUGUI>();
-        p1TurnCheck = player1Obj.transform.Find("Turn Check").GetComponent<GameObject>();
+        p1Name = player1.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        p1Result = player1.transform.Find("Result").GetComponent<TextMeshProUGUI>();
+        p1TurnCheck = player1.transform.Find("Turn Check").gameObject;
 
-        p2Name = player2Obj.transform.Find("Player2").GetComponent<TextMeshProUGUI>();
-        p2Result = player2Obj.transform.Find("Result").GetComponent<TextMeshProUGUI>();
-        p2TurnCheck = player2Obj.transform.Find("Turn Check").GetComponent<GameObject>();
+        p2Name = player2.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        p2Result = player2.transform.Find("Result").GetComponent<TextMeshProUGUI>();
+        p2TurnCheck = player2.transform.Find("Turn Check").gameObject;
     }
 
 }

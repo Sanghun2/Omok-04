@@ -28,5 +28,12 @@ public class Define
             Player1,
             Player2,
         }
+
+        public enum GameLevel
+        {
+            Easy,
+            Normal,
+            Hard
+        }
     }
 }
