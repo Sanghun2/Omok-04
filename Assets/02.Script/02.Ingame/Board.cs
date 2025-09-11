@@ -7,7 +7,6 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
     private Cell[,] board;
     private Cell currentCell;
 
-    [SerializeField] private GameObject markers;
     [SerializeField] private GameObject positionSelector;
     [SerializeField] private GameObject blackMarker;
     [SerializeField] private GameObject whiteMarker;
@@ -23,13 +22,6 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
         InitBoard();
     }
 
-    public void DestroyMarkers()
-    {
-        foreach (Transform children in markers.transform)
-        {
-            Destroy(children.gameObject);
-        }
-    }
 
     /// <summary>
     /// 보드 초기화
@@ -100,7 +92,7 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
 
 
         // 돌 생성
-        GameObject blackMarkerObj = Instantiate(blackMarker, markers.transform);
+        GameObject blackMarkerObj = Instantiate(blackMarker, transform);
         blackMarkerObj.transform.position = markerPos;
 
         // 임시로 흑돌 고정

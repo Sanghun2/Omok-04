@@ -79,6 +79,12 @@ public static class OmokAI
             // 한쪽 방향으로 체크
             stoneCount += CountRenjuStone(marker, board, row, col, rowDir, colDir , stoneLimit);
 
+            if (stoneCount == (stoneLimit - 1))
+            {
+                count++;
+                stoneCount = 0;
+            }
+
             // 반대 방향으로 체크
             stoneCount += CountRenjuStone(marker, board, row, col, -rowDir, -colDir, stoneLimit);
 
