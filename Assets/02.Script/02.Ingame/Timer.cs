@@ -6,6 +6,7 @@ public class Timer : MonoBehaviour
     [SerializeField] bool _pause;
     [SerializeField] float currentTime;
     [SerializeField] float totalTime;
+    private bool isInit;
 
     public delegate void TimeHandler(float currentTime, float totalTime);
     public event TimeHandler OnTimeChanged;
@@ -15,6 +16,11 @@ public class Timer : MonoBehaviour
         this.currentTime = currentTime;
         this.totalTime = totalTime;
         OnTimeChanged?.Invoke(this.currentTime, totalTime);
+        Pause();
+        isInit = true;
+    }
+    public void StartCount() {
+        Unpause();
     }
     public void Pause() {
         _pause = true;
@@ -25,7 +31,7 @@ public class Timer : MonoBehaviour
 
 
     private void Update() {
-        if (!_pause) {
+        if (!_pause && isInit) {
             CountTime(Time.deltaTime);
         }
     }
