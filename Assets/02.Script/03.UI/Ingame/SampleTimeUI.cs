@@ -5,7 +5,7 @@ using UnityEngine.UI;
 /// <summary>
 /// UIBase 상속받아 구현하는 UI 샘플
 /// </summary>
-public class SampleTimeTextUI : UIBase
+public class SampleTimeUI : UIBase
 {
     [SerializeField] Slider timeSlider;
     [SerializeField] TextMeshProUGUI timeText;
