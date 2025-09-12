@@ -63,6 +63,6 @@ public class Debugger : MonoBehaviour
             testTimer.OnTimeOver += Test_CheckTimeOver;
         }
 
-        Managers.UI.GetUI<SampleTimeUI>().CloseUI();
+        //Managers.UI.GetUI<SampleTimeUI>().CloseUI();
     }
 }
