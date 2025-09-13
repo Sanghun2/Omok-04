@@ -33,7 +33,7 @@ public class RegistrationManager : MonoBehaviour
         string json = $"{{ \"username\": \"{username}\", \"password\": \"{password}\" }}";
 
 
-        using (UnityWebRequest request = new UnityWebRequest("http://localhost:3000/register", "POST"))
+        using (UnityWebRequest request = new UnityWebRequest("https://omokserver-04.onrender.com/register", "POST"))
         {
             // 데이터와 헤더 설정
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
