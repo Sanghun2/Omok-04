@@ -85,15 +85,12 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
         }
 
         if (marker == Cell.CellMarker.Black) {
-            for (int i = 0; i< 2; i++)
+            if (OmokAI.CheckRenju(Cell.CellMarker.Black, board, currentCell.CellRow, currentCell.CellCol))
             {
-                if (OmokAI.CheckRenju(Cell.CellMarker.Black, board, currentCell.CellRow, currentCell.CellCol, 3 + i))
-                {
-                    xMarker.SetActive(true);
-                    xMarker.transform.position = markerPos;
-                    return;
-                }
-            }
+                xMarker.SetActive(true);
+                xMarker.transform.position = markerPos;
+                return;
+            }            
         }
 
 
