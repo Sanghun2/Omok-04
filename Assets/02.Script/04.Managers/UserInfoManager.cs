@@ -1,5 +1,3 @@
-// UserInfoManager.cs
-
 using UnityEngine;
 
 public class UserInfoManager : MonoBehaviour

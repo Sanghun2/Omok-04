@@ -13,6 +13,9 @@ public class RegistrationManager : MonoBehaviour
     [SerializeField] Button registerButton;
     [SerializeField] TextMeshProUGUI statusText;
 
+    [SerializeField] GameObject errorPopup;
+
+
     void Start()
     {
         // 버튼이 클릭되었을 때 Register 함수를 실행하도록 연결
@@ -28,12 +31,26 @@ public class RegistrationManager : MonoBehaviour
         // 서버로 보낼 JSON 데이터 만들기
         string username = usernameInput.text;
         string password = passwordInput.text;
-        
+        string confirmPassword = confirmPasswordInput.text;
+
+        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+        {
+            statusText.text = "아이디와 비밀번호를 모두 입력해주세요.";
+            yield break;
+        }
+
+        if (password != confirmPassword)
+        {
+            statusText.text = "비밀번호가 일치하지 않습니다.";
+            yield break;
+        }
 
         string json = $"{{ \"username\": \"{username}\", \"password\": \"{password}\" }}";
 
+        
 
-        using (UnityWebRequest request = new UnityWebRequest("https://omokserver-04.onrender.com/register", "POST"))
+
+        using (UnityWebRequest request = new UnityWebRequest("https://omokserver-04.onrender.com/auth/register", "POST"))
         {
             // 데이터와 헤더 설정
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
@@ -54,8 +71,9 @@ public class RegistrationManager : MonoBehaviour
             else
             {
                 // 실패
+                errorPopup.SetActive(true);
                 Debug.LogError("서버 응답: " + request.error);
-                statusText.text = "회원가입 실패: " + request.downloadHandler.text;
+                statusText.text = "회원가입 실패";
             }
         }
     }

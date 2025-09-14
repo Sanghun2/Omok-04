@@ -8,6 +8,8 @@ public class UserData
     public int wins;
     public int losses;
     public int winStreak;
+    public int rank;
+    public int rankpoint;
 }
 
 [System.Serializable]

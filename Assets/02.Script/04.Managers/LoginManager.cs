@@ -12,6 +12,8 @@ public class LoginManager : MonoBehaviour
     [SerializeField] Button loginButton;
     [SerializeField] TextMeshProUGUI statusText;
 
+    [SerializeField] GameObject errorPopup;
+
     void Start()
     {
         loginButton.onClick.AddListener(() => {
@@ -28,7 +30,7 @@ public class LoginManager : MonoBehaviour
 
         string json = $"{{ \"username\": \"{username}\", \"password\": \"{password}\" }}";
 
-        using (UnityWebRequest request = new UnityWebRequest("https://omokserver-04.onrender.com/login", "POST"))
+        using (UnityWebRequest request = new UnityWebRequest("https://omokserver-04.onrender.com/auth/login", "POST"))
         {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(jsonToSend);
@@ -52,14 +54,17 @@ public class LoginManager : MonoBehaviour
                 Debug.Log("유저 승: " + loggedInUser.wins);
                 Debug.Log("유저 패: " + loggedInUser.losses);
                 Debug.Log("유저 연승: " + loggedInUser.winStreak);
+                Debug.Log("유저 랭크: " + loggedInUser.rank);
+                Debug.Log("유저 랭크포인트: " + loggedInUser.rankpoint);
 
                 statusText.text = "로그인 성공!";
                 //로그인 후 메인 씬으로 전환하는 기능 추가 가능
             }
             else
             {
+                errorPopup.SetActive(true);
                 Debug.LogError("서버 응답: " + request.error);
-                statusText.text = "로그인 실패: " + request.downloadHandler.text;
+                statusText.text = "로그인 실패";
             }
         }
         
