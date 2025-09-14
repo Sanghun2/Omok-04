@@ -1,26 +1,26 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System;
 
 public static class OmokAI
 {
     private static readonly (int rowDir, int colDir)[] directions =
     {
-        (0, 1),   // °¡·Î ¹æÇâ
-        (1, 0),   // ¼¼·Î ¹æÇâ
-        (1, 1),   // ´ë°¢¼± ¢Ù ¹æÇâ
-        (1, -1)   // ´ë°¢¼± ¢× ¹æÇâ
+        (0, 1),   // ê°€ë¡œ ë°©í–¥
+        (1, 0),   // ì„¸ë¡œ ë°©í–¥
+        (1, 1),   // ëŒ€ê°ì„  â†˜ ë°©í–¥
+        (1, -1)   // ëŒ€ê°ì„  â†™ ë°©í–¥
     };
 
     public static bool CheckGameWin(Cell.CellMarker marker, Cell[,] board, int row, int col)
     {
         foreach (var (rowDir, colDir) in directions)
         {
-            int count = 1; // ÇöÀç µ¹ Æ÷ÇÔ
+            int count = 1; // í˜„ì¬ ëŒ í¬í•¨
 
-            // ÇÑÂÊ ¹æÇâÀ¸·Î Ã¼Å©
+            // í•œìª½ ë°©í–¥ìœ¼ë¡œ ì²´í¬
             count += CountStones(marker, board, row, col, rowDir, colDir);
 
-            // ¹İ´ë ¹æÇâÀ¸·Î Ã¼Å©
+            // ë°˜ëŒ€ ë°©í–¥ìœ¼ë¡œ ì²´í¬
             count += CountStones(marker, board, row, col, -rowDir, -colDir);
 
             if (count >= 5) return true;
@@ -29,7 +29,7 @@ public static class OmokAI
     }
 
     /// <summary>
-    /// ¿¬¼ÓµÈ ¸¶Ä¿ °³¼ö È®ÀÎ
+    /// ì—°ì†ëœ ë§ˆì»¤ ê°œìˆ˜ í™•ì¸
     /// </summary>
     private static int CountStones(Cell.CellMarker marker, Cell[,] board, int row, int col, int rowDir, int colDir)
     {
@@ -37,7 +37,7 @@ public static class OmokAI
         int r = row + rowDir;
         int c = col + colDir;
 
-        // ÇÑ Ä­ ¾¿ ÀÌµ¿ÇÏ¸é¼­ Marker°¡ °°´Ù¸é count++ ¾Æ´Ï¸é ¹İº¹ Á¾·á
+        // í•œ ì¹¸ ì”© ì´ë™í•˜ë©´ì„œ Markerê°€ ê°™ë‹¤ë©´ count++ ì•„ë‹ˆë©´ ë°˜ë³µ ì¢…ë£Œ
         while (r >= 0 && r < Board.BoardRow && c >= 0 && c < Board.BoardCol && board[r, c].Marker == marker)
         {
             count++;
@@ -53,7 +53,7 @@ public static class OmokAI
         int r = row + rowDir;
         int c = col + colDir;
 
-        //  Á¦ÇÑ ¹üÀ§ ³» µ¹ °³¼ö È®ÀÎ
+        //  ì œí•œ ë²”ìœ„ ë‚´ ëŒ ê°œìˆ˜ í™•ì¸
         while (r >= 0 && r < Board.BoardRow && c >= 0 && c < Board.BoardCol && moveLimit > 0)
         {
             if (board[r, c].Marker == marker)
@@ -76,7 +76,7 @@ public static class OmokAI
 
         foreach (var (rowDir, colDir) in directions)
         {
-            // ÇÑÂÊ ¹æÇâÀ¸·Î Ã¼Å©
+            // í•œìª½ ë°©í–¥ìœ¼ë¡œ ì²´í¬
             stoneCount += CountRenjuStone(marker, board, row, col, rowDir, colDir , stoneLimit);
 
             if (stoneCount == (stoneLimit - 1))
@@ -85,7 +85,7 @@ public static class OmokAI
                 stoneCount = 0;
             }
 
-            // ¹İ´ë ¹æÇâÀ¸·Î Ã¼Å©
+            // ë°˜ëŒ€ ë°©í–¥ìœ¼ë¡œ ì²´í¬
             stoneCount += CountRenjuStone(marker, board, row, col, -rowDir, -colDir, stoneLimit);
 
             if (stoneCount == (stoneLimit - 1)) count++;
