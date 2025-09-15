@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Text;
 
 public static class OmokAI
 {
@@ -52,23 +53,28 @@ public static class OmokAI
         int openThreeDirs = 0; // 삼삼 판단용
         int openFourDirs = 0;  // 사사 판단용
 
-        foreach (var (dr, dc) in directions)
+        foreach (var (rowDir, colDir) in directions)
         {
             // 중심에 marker를 둔 상태로 해당 방향의 길이 9(오프셋 -4..+4) 문자열을 만든다
-            char[] line = BuildLineWithPlacement(board, marker, row, col, dr, dc);
+            char[] line = BuildLineWithPlacement(board, marker, row, col, rowDir, colDir);
 
             if (HasOpenFour(line))
                 openFourDirs++;
 
             if (HasOpenThree(line))
+            {
                 openThreeDirs++;
+            }
         }
 
         // 삼삼
-        if (openThreeDirs >= 2) return true;
+        if (openThreeDirs >= 2)        
+            return true;        
 
         // 사사
-        if (openFourDirs >= 2) return true;
+        if (openFourDirs >= 2)
+            return true;
+        
 
         return false;
     }
@@ -139,7 +145,7 @@ public static class OmokAI
                 bool leftOpen = (s - 1 >= 0 && line[s - 1] == '_');
                 bool rightOpen = (s + 5 < line.Length && line[s + 5] == '_');
 
-                if (leftOpen || rightOpen)
+                if (leftOpen && rightOpen)
                     return true;
             }
         }
