@@ -15,18 +15,14 @@ public class GameManager
 
     private void InitCurrentScene(Scene currentScene) {
         currentScene.InitScene();
-        Debug.LogAssertion($"{currentScene} init");
     }
     private void ReleasePrevScene(Scene prevScene) {
         prevScene?.ReleaseScene();
-
-#if UNITY_EDITOR
-        var sceneType = prevScene == null ? Define.Type.Scene.None : prevScene.SceneType;
-        Debug.LogAssertion($"{sceneType} released");
-#endif
     }
     
     private void ProcessSceneChange(Define.Type.Scene targetSceneType) {
+        if (Managers.Scene.CurrentSceneType == targetSceneType) { Debug.LogAssertion($"같은 씬이므로 이동하지 않음"); return; }
+
         var prevScene = Managers.Scene.CurrentScene;
         ReleasePrevScene(prevScene);
         Managers.Scene.ShowScene(targetSceneType);
