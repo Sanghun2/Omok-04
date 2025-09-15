@@ -75,7 +75,9 @@ public class Managers : MonoBehaviour
             return boardController;
         }
     }
+    public static PlayerManager Player => playerManager;
 
+    static PlayerManager playerManager = new PlayerManager();
     static BoardController boardController;
     static GameResultManager gameResultManager;
     static UserInfoManager userInfoManager;
