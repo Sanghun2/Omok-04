@@ -40,11 +40,11 @@ public class Managers : MonoBehaviour
     }
     public static TimeManager Time => timeManager;
     public static GameManager Game => gameManager;
-    public static NetworkManager Network => networkManager;
+    //public static NetworkManager Network => networkManager;
     public static TurnManager Turn => turnManager;
 
     static TurnManager turnManager = new TurnManager();
-    static NetworkManager networkManager = new NetworkManager();
+    //static NetworkManager networkManager = new NetworkManager();
     static GameManager gameManager => new GameManager();
     static TimeManager timeManager = new TimeManager();
     static CoroutineManager coroutineManager;
