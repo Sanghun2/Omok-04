@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Timer : MonoBehaviour
+public partial class Timer : MonoBehaviour
 {
     public float CurrentTime => currentTime;
 

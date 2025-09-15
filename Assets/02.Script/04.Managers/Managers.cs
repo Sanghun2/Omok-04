@@ -40,7 +40,11 @@ public class Managers : MonoBehaviour
     }
     public static TimeManager Time => timeManager;
     public static GameManager Game => gameManager;
+    public static NetworkManager Network => networkManager;
+    public static TurnManager Turn => turnManager;
 
+    static TurnManager turnManager = new TurnManager();
+    static NetworkManager networkManager = new NetworkManager();
     static GameManager gameManager => new GameManager();
     static TimeManager timeManager = new TimeManager();
     static CoroutineManager coroutineManager;
@@ -51,12 +55,13 @@ public class Managers : MonoBehaviour
     private void Awake() {
         List<IInitializable> initializeList = new List<IInitializable>() {
             Scene,
+            Time,
         };
 
-        Initialize(initializeList);
+        InitializeAll(initializeList);
     }
 
-    private void Initialize(List<IInitializable> initializeList) {
+    private void InitializeAll(List<IInitializable> initializeList) {
         for (int i = 0; i < initializeList.Count; i++) {
             var initializeTarget = initializeList[i];
             if (!initializeTarget.IsInit) initializeTarget.Initialize();
