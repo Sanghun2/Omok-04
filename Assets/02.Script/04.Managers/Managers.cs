@@ -64,7 +64,19 @@ public class Managers : MonoBehaviour
             return gameResultManager;
         }
     }
+    public static BoardController Board
+    {
+        get
+        {
+            if (boardController == null) {
+                boardController = FindAnyObjectByType<BoardController>(FindObjectsInactive.Include);
+            }
 
+            return boardController;
+        }
+    }
+
+    static BoardController boardController;
     static GameResultManager gameResultManager;
     static UserInfoManager userInfoManager;
     static TurnManager turnManager = new TurnManager();
