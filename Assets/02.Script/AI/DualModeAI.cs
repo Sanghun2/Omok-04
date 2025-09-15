@@ -15,7 +15,7 @@ public class DualModeAI
     }
 
     // 현재 상태를 전달하면 다음 최적의 수를 반환하는 메서드
-    public static (int row, int col)? GetBestMove(Cell[,] board, Cell.CellMarker aiMarker, Define.Type.GameLevel level)
+    public static (int row, int col)? GetBestMove(Cell[,] board, Cell.CellMarkerType aiMarker, Define.Type.GameLevel level)
     {
         int maxDepth = GetMaxDepth(level);
         float bestScore = float.NegativeInfinity;
@@ -25,11 +25,11 @@ public class DualModeAI
         {
             for (int col = 0; col < board.GetLength(1); col++)
             {
-                if (board[row, col].Marker == Cell.CellMarker.None)
+                if (board[row, col].Marker == Cell.CellMarkerType.None)
                 {
                     board[row, col].SetMarker(aiMarker);
                     float score = DoMiniMax(board, 0, false, aiMarker, maxDepth);
-                    board[row, col].SetMarker(Cell.CellMarker.None);
+                    board[row, col].SetMarker(Cell.CellMarkerType.None);
 
                     if (score > bestScore)
                     {
@@ -46,9 +46,9 @@ public class DualModeAI
     }
 
     // 미니맥스 알고리즘
-    private static float DoMiniMax(Cell[,] board, int depth, bool isMaximizing, Cell.CellMarker aiMarker, int maxDepth)
+    private static float DoMiniMax(Cell[,] board, int depth, bool isMaximizing, Cell.CellMarkerType aiMarker, int maxDepth)
     {
-        Cell.CellMarker opponent = (aiMarker == Cell.CellMarker.Black) ? Cell.CellMarker.White : Cell.CellMarker.Black;
+        Cell.CellMarkerType opponent = (aiMarker == Cell.CellMarkerType.Black) ? Cell.CellMarkerType.White : Cell.CellMarkerType.Black;
 
         // 승패 체크
         if (CheckAnyWin(aiMarker, board)) return 100 - depth;
@@ -63,11 +63,11 @@ public class DualModeAI
             {
                 for (int col = 0; col < board.GetLength(1); col++)
                 {
-                    if (board[row, col].Marker == Cell.CellMarker.None)
+                    if (board[row, col].Marker == Cell.CellMarkerType.None)
                     {
                         board[row, col].SetMarker(aiMarker);
                         float score = DoMiniMax(board, depth + 1, false, aiMarker, maxDepth);
-                        board[row, col].SetMarker(Cell.CellMarker.None);
+                        board[row, col].SetMarker(Cell.CellMarkerType.None);
                         bestScore = Mathf.Max(score, bestScore);
                     }
                 }
@@ -81,11 +81,11 @@ public class DualModeAI
             {
                 for (int col = 0; col < board.GetLength(1); col++)
                 {
-                    if (board[row, col].Marker == Cell.CellMarker.None)
+                    if (board[row, col].Marker == Cell.CellMarkerType.None)
                     {
                         board[row, col].SetMarker(opponent);
                         float score = DoMiniMax(board, depth + 1, true, aiMarker, maxDepth);
-                        board[row, col].SetMarker(Cell.CellMarker.None);
+                        board[row, col].SetMarker(Cell.CellMarkerType.None);
                         bestScore = Mathf.Min(score, bestScore);
                     }
                 }
@@ -95,7 +95,7 @@ public class DualModeAI
     }
 
     // 간단한 평가 함수 
-    private static float EvaluateBoard(Cell[,] board, Cell.CellMarker aiMarker)
+    private static float EvaluateBoard(Cell[,] board, Cell.CellMarkerType aiMarker)
     {
         float score = 0;
         for (int row = 0; row < board.GetLength(0); row++)
@@ -115,14 +115,14 @@ public class DualModeAI
         {
             for (int col = 0; col < board.GetLength(1); col++)
             {
-                if (board[row, col].Marker == Cell.CellMarker.None) return false;
+                if (board[row, col].Marker == Cell.CellMarkerType.None) return false;
             }
         }
         return true;
     }
 
     // 특정 돌이 승리 조건을 만족하는지 확인 (전체 보드 탐색)
-    private static bool CheckAnyWin(Cell.CellMarker marker, Cell[,] board)
+    private static bool CheckAnyWin(Cell.CellMarkerType marker, Cell[,] board)
     {
         for (int row = 0; row < board.GetLength(0); row++)
         {
