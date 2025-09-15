@@ -13,12 +13,18 @@ public class LoginManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI statusText;
 
     [SerializeField] GameObject errorPopup;
+    SceneManager sceneManager;
 
     void Start()
     {
-        loginButton.onClick.AddListener(() => {
+        loginButton.onClick.AddListener(() =>
+        {
             StartCoroutine(Login());
         });
+        sceneManager = FindFirstObjectByType<SceneManager>();
+        if (sceneManager == null) {
+            Debug.LogError("SceneManager를 찾을 수 없습니다!");
+        }
     }
 
     IEnumerator Login()
@@ -58,7 +64,11 @@ public class LoginManager : MonoBehaviour
                 Debug.Log("유저 랭크포인트: " + loggedInUser.rankpoint);
 
                 statusText.text = "로그인 성공!";
-                //로그인 후 메인 씬으로 전환하는 기능 추가 가능
+                
+                if (sceneManager != null)
+                {
+                    sceneManager.ShowScene(Define.Type.Scene.MainMenu);
+                }
             }
             else
             {
