@@ -2,11 +2,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent (typeof(Collider2D))]
-public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
+public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
     private Cell[,] board;
     private Cell currentCell;
-    private Cell.CellMarker marker;
+    private Cell.CellMarkerType marker;
 
     [SerializeField] private GameObject positionSelector;
     [SerializeField] private GameObject blackMarker;
@@ -18,12 +18,14 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
     public const int BoardCol = 15;
     public delegate void OnCellClicked(int row, int col);
     public OnCellClicked onCellClickedDelegate;
+    public delegate void OnMarkerSetted(Cell.CellMarkerType markerType);
+    public OnMarkerSetted onMarkerSettedDelegate;
 
     private void Start()
     {
         InitBoard();
+        GameLogic gameLogic = new GameLogic(this, board, Define.Type.Game.Local);
     }
-
 
     /// <summary>
     /// 보드 초기화
@@ -31,7 +33,14 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
     public void InitBoard()
     {
         board = new Cell[BoardRow, BoardCol];
-        marker = Cell.CellMarker.Black;
+        marker = Cell.CellMarkerType.Black;
+
+        onMarkerSettedDelegate = (marker) =>
+        {
+            Debug.Log("### DEV_JSH MarkerEvent Start ###");
+            Debug.Log($"### DEV_JSH 이번에 놓인 돌은 {marker.ToString()}");
+            Debug.Log("### DEV_JSH MarkerEvent End ###");
+        };
 
         for (int i = 0; i < board.GetLength(0); i++)
         {
@@ -52,10 +61,13 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
         // 스크린 지점 -> 월드 지점 변환
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
 
-        // 보드판 범위 내에서만 움직이도록 조건
+        // 보드판 범위를 벗어나면 선택 취소
         if (Mathf.Round(worldPosition.x / 0.45f) > 7 || Mathf.Round(worldPosition.x / 0.45f) < -7 ||
             Mathf.Round(worldPosition.y / 0.45f) > 7 || Mathf.Round(worldPosition.y / 0.45f) < -7)
+        {
+            currentCell = null;
             return;
+        }
 
         // 셀렉터의 위치 변경
         Vector3 selectorPosition = new Vector3(Mathf.Round(worldPosition.x / 0.45f) * 0.45f, Mathf.Round(worldPosition.y / 0.45f) * 0.45f, 0);
@@ -63,52 +75,6 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         // 현재 셀렉터의 위치를 기준으로 셀 선택
         currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
-    }
-
-    public void OnClickLaunchButton()
-    {
-        if (currentCell == null)
-            return;
-
-        positionSelector.SetActive(false);
-
-        // 선택된 셀의 row와 col을 기준으로 위치 지정
-        Vector3 markerPos = new Vector3((currentCell.CellRow - 7) * 0.45f, (currentCell.CellCol - 7) * 0.45f, 0);
-
-        // 이미 돌이 놓여져있다면 취소
-        if (currentCell.Marker != Cell.CellMarker.None)
-        {
-            xMarker.SetActive(true);
-            xMarker.transform.position = markerPos; 
-            currentCell = null;
-            return;
-        }
-
-        if (marker == Cell.CellMarker.Black) {
-            if (OmokAI.CheckRenju(Cell.CellMarker.Black, board, currentCell.CellRow, currentCell.CellCol))
-            {
-                xMarker.SetActive(true);
-                xMarker.transform.position = markerPos;
-                return;
-            }            
-        }
-
-
-
-        // 돌 생성
-        GameObject markerObj = marker == Cell.CellMarker.Black ? Instantiate(blackMarker, transform) : Instantiate(whiteMarker, transform);
-        markerObj.transform.position = markerPos;
-
-        currentCell.SetMarker(marker);
-
-        lastPositionMarker.SetActive(true);
-        lastPositionMarker.transform.position = markerPos;
-
-        if (OmokAI.CheckGameWin(currentCell.Marker, board, currentCell.CellRow, currentCell.CellCol))
-            Debug.Log($"{marker.ToString()} / ### GAME WIN ###");
-
-        marker = marker == Cell.CellMarker.Black ? Cell.CellMarker.White : Cell.CellMarker.Black;
-
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -125,5 +91,36 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         // 현재 셀렉터의 위치를 기준으로 셀 선택
         currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
+    }
+
+    public void ActiveX_Marker(int row, int col)
+    {
+        Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
+
+        xMarker.SetActive(true);
+        xMarker.transform.position = markerPos;
+        currentCell = null;
+    }
+
+    public void OnClickLaunchButton()
+    {
+        if (currentCell == null)
+            return;
+
+        positionSelector.SetActive(false);
+
+        currentCell.onCellClicked?.Invoke(currentCell.CellRow,currentCell.CellCol);
+    }
+
+    public void PlaceMarker(Cell.CellMarkerType marker, int row, int col)
+    {
+        Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
+
+        // 돌 생성
+        GameObject markerObj = marker == Cell.CellMarkerType.Black ? Instantiate(blackMarker, transform) : Instantiate(whiteMarker, transform);
+        markerObj.transform.position = markerPos;
+
+        lastPositionMarker.SetActive(true);
+        lastPositionMarker.transform.position = markerPos;
     }
 }
