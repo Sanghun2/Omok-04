@@ -49,7 +49,8 @@ public class Define
             Hard
         }
         
-        public enum StoneColor {
+        public enum StoneColor 
+        {
             White,
             Black,
         }
