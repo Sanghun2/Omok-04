@@ -13,6 +13,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField] private GameObject whiteMarker;
     [SerializeField] private GameObject xMarker;
     [SerializeField] private GameObject lastPositionMarker;
+    [SerializeField] private Define.Type.Game gameType;
 
     public const int BoardRow = 15;
     public const int BoardCol = 15;
@@ -24,7 +25,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     private void Start()
     {
         InitBoard();
-        GameLogic gameLogic = new GameLogic(this, board, Define.Type.Game.Local);
+        GameLogic gameLogic = new GameLogic(this, board, gameType);
     }
 
     /// <summary>
@@ -93,15 +94,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
     }
 
-    public void ActiveX_Marker(int row, int col)
-    {
-        Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
-
-        xMarker.SetActive(true);
-        xMarker.transform.position = markerPos;
-        currentCell = null;
-    }
-
     public void OnClickLaunchButton()
     {
         if (currentCell == null)
@@ -110,6 +102,16 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         positionSelector.SetActive(false);
 
         currentCell.onCellClicked?.Invoke(currentCell.CellRow,currentCell.CellCol);
+    }
+
+    #region 자동 호출 메서드 / 금지 표시, 돌 생성
+    public void ActiveX_Marker(int row, int col)
+    {
+        Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
+
+        xMarker.SetActive(true);
+        xMarker.transform.position = markerPos;
+        currentCell = null;
     }
 
     public void PlaceMarker(Cell.CellMarkerType marker, int row, int col)
@@ -123,4 +125,5 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         lastPositionMarker.SetActive(true);
         lastPositionMarker.transform.position = markerPos;
     }
+    #endregion
 }

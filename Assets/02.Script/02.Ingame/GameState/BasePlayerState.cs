@@ -14,13 +14,14 @@ public abstract class BasePlayerState
         if (gameLogic.SetNewBoardValue(marker, row, col))
         {
             // 새로이 놓여진 Marker를 기반으로 게임의 결과를 판단
-            var gameResult = gameLogic.CheckGameResult(row, col);
+            var gameResult = gameLogic.CheckGameResult(marker, row, col);
             if (gameResult == GameLogic.GameResult.NONE)
             {
                 HandleNextTurn(gameLogic);
             }
             else
             {
+                Debug.Log("### DEV_JSH Game End Called In ProcessMove ###");
                 gameLogic.EndGame(gameResult);
             }
         }

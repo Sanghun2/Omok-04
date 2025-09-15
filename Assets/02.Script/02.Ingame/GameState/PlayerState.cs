@@ -20,6 +20,7 @@ public class PlayerState : BasePlayerState
     #region 필수 메서드
     public override void HandleMove(GameLogic gameLogic, int row, int col)
     {
+        Debug.Log("### DEV_JSH Player_HandleMove Called ###");
         ProcessMove(gameLogic, marker, row, col);
     }
 
@@ -40,13 +41,13 @@ public class PlayerState : BasePlayerState
     {
         if (isFirstPlayer)
         {
-            gameLogic.SetState(gameLogic.secondPlayerState);
             Debug.Log("### DEV_JSH 현재 턴의 플레이어는 백돌 ###");
+            gameLogic.SetState(gameLogic.secondPlayerState);
         }
         else
         {
-            gameLogic.SetState(gameLogic.firstPlayerState);
             Debug.Log("### DEV_JSH 현재 턴의 플레이어는 흑돌 ###");
+            gameLogic.SetState(gameLogic.firstPlayerState);
         }
     }
     #endregion 
