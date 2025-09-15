@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] string playerName;
+    [SerializeField] TextMeshProUGUI playerNameText;
     [SerializeField] TextMeshProUGUI rankText;
+    [SerializeField] PlayerInfo playerInfo;
     //[SerializeField] TimeUI timeUI;
 
     public void InitPlayer(PlayerInfo playerInfo) {
-        playerName = playerInfo.PlayerName;
-        rankText.text = playerInfo.Rank;
+        this.playerInfo = playerInfo;
+        playerNameText.text = playerInfo.PlayerName;
+
+        if (rankText != null) {
+            rankText.text = playerInfo.Rank;
+        }
     }
 }
 
