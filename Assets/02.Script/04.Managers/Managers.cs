@@ -42,7 +42,31 @@ public class Managers : MonoBehaviour
     public static GameManager Game => gameManager;
     //public static NetworkManager Network => networkManager;
     public static TurnManager Turn => turnManager;
+    public static UserInfoManager UserInfo
+    {
+        get
+        {
+            if (userInfoManager == null) {
+                userInfoManager = Instance.GetComponentInChildren<UserInfoManager>();
+            }
 
+            return userInfoManager;
+        }
+    }
+    public static GameResultManager GameResult
+    {
+        get
+        {
+            if (gameResultManager == null) {
+                gameResultManager = Instance.GetComponentInChildren<GameResultManager>();
+            }
+
+            return gameResultManager;
+        }
+    }
+
+    static GameResultManager gameResultManager;
+    static UserInfoManager userInfoManager;
     static TurnManager turnManager = new TurnManager();
     //static NetworkManager networkManager = new NetworkManager();
     static GameManager gameManager => new GameManager();
