@@ -7,7 +7,12 @@ public class TimeManager : IInitializable
     [SerializeField] Timer player1_Timer;
     [SerializeField] Timer player2_Timer;
 
-    public bool IsInit => throw new System.NotImplementedException();
+    public bool IsInit => isInit;
+    private bool isInit;
+
+
+
+    #region Interface
 
     /// <summary>
     /// 게임 시작 시 player 생성 후 각자의 timer를 manager에 연결
@@ -35,23 +40,30 @@ public class TimeManager : IInitializable
             case Define.Type.Player.Player1:
                 return player1_Timer;
             case Define.Type.Player.Player2:
-                return player2_Timer; 
+                return player2_Timer;
             default:
                 return null;
         }
     }
+
+    #endregion
+
+    #region Capsule
 
     public void Initialize() {
         Managers.Turn.OnTurnChanged.AddListener((targetPlayer) => {
             try {
                 GetTimer(targetPlayer).SetTimeAsDefault();
                 Debug.LogAssertion($"<color=green>timer init complete</color>");
+                isInit = true;
             }
             catch {
                 Debug.LogError($"timer null");
             }
         });
     }
+
+    #endregion
 }
 
 public partial class Timer : MonoBehaviour
