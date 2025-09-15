@@ -3,26 +3,10 @@ using UnityEngine.Events;
 
 public class TurnManager
 {
-    
-    public enum GameState
-    {
-        NotStarted,
-        InProgress,
-        Ended
-    }
-
-    
-    public enum Player
-    {
-        None,
-        Black,
-        White
-    }
-
-    
-    private GameState currentState = GameState.NotStarted;
-    private Player currentPlayer = Player.None;
-    public UnityEvent<Player> OnTurnChanged = new UnityEvent<Player>();
+        
+    private Define.Type.GameState currentState = Define.Type.GameState.NotStarted;
+    private Define.Type.Player currentPlayer = Define.Type.Player.Player1;
+    public UnityEvent<Define.Type.Player> OnTurnChanged = new UnityEvent<Define.Type.Player>();
 
    
 
@@ -31,28 +15,28 @@ public class TurnManager
     
     public void StartGame() // GameState를 InProgress로 바꾸고 흑돌의 차례로 만드는 함수
     {
-        if (currentState == GameState.NotStarted)
+        if (currentState == Define.Type.GameState.NotStarted)
         {
-            currentState = GameState.InProgress;
-            SetTurn(Player.Black);
+            currentState = Define.Type.GameState.InProgress;
+            SetTurn(Define.Type.Player.Player1);
         }
     }
 
     
     public void SwitchTurn() // 게임이 진행중일 때 차례를 다음 사람에게 넘기는 함수
     {
-        if (currentState != GameState.InProgress)
+        if (currentState != Define.Type.GameState.InProgress)
         {
             return;
         }
 
         
-        Player nextPlayer = (currentPlayer == Player.Black) ? Player.White : Player.Black;
+        Define.Type.Player nextPlayer = (currentPlayer == Define.Type.Player.Player1) ? Define.Type.Player.Player2 : Define.Type.Player.Player1;
         SetTurn(nextPlayer);
     }
 
     
-    private void SetTurn(Player player)
+    private void SetTurn(Define.Type.Player player)
     {
         currentPlayer = player;
 
@@ -63,23 +47,23 @@ public class TurnManager
     }
 
     
-    public Player GetCurrentPlayer()
+    public Define.Type.Player GetCurrentPlayer()
     {
         return currentPlayer;
     }
 
     
-    public GameState GetGameState()
+    public Define.Type.GameState GetGameState()
     {
         return currentState;
     }
 
     
-    public void EndGame(Player winner)
+    public void EndGame(Define.Type.Player winner)
     {
-        if (currentState == GameState.InProgress)
+        if (currentState == Define.Type.GameState.InProgress)
         {
-            currentState = GameState.Ended;
+            currentState = Define.Type.GameState.Ended;
             Debug.Log($"게임 종료! 승자: {winner}");
             // 게임 종료 UI 표시, 재경기 나가기 버튼 활성화 기능 추가 가능
             // 게임을 다시 시작하기 위해서 GameState를 NotStarted로 변경 필요
