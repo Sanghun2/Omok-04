@@ -8,8 +8,8 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     private Cell currentCell;
 
     [SerializeField] private GameObject positionSelector;
-    [SerializeField] private GameObject blackMarker;
-    [SerializeField] private GameObject whiteMarker;
+    [SerializeField] private GameObject blackStone;
+    [SerializeField] private GameObject whiteStone;
     [SerializeField] private GameObject xMarker;
     [SerializeField] private GameObject lastPositionMarker;
     [SerializeField] private Define.Type.Game gameType;
@@ -18,7 +18,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public const int BoardCol = 15;
     public delegate void OnCellClicked(int row, int col);
     public OnCellClicked onCellClickedDelegate;
-    public delegate void OnMarkerSetted(Cell.CellMarkerType markerType);
+    public delegate void OnMarkerSetted(Cell.StoneType stoneType);
     public OnMarkerSetted onMarkerSettedDelegate;
     public Cell[,] Board => board;
 
@@ -35,10 +35,10 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
         board = new Cell[BoardRow, BoardCol];
 
-        onMarkerSettedDelegate = (marker) =>
+        onMarkerSettedDelegate = (stoneType) =>
         {
             Debug.Log("### DEV_JSH MarkerEvent Start ###");
-            Debug.Log($"### DEV_JSH 이번에 놓인 돌은 {marker.ToString()}");
+            Debug.Log($"### DEV_JSH 이번에 놓인 돌은 {stoneType.ToString()}");
             Debug.Log("### DEV_JSH MarkerEvent End ###");
         };
 
@@ -113,13 +113,13 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         currentCell = null;
     }
 
-    public void PlaceMarker(Cell.CellMarkerType marker, int row, int col)
+    public void PlaceMarker(Cell.StoneType stoneType, int row, int col)
     {
         Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
 
         // 돌 생성
-        GameObject markerObj = marker == Cell.CellMarkerType.Black ? Instantiate(blackMarker, transform) : Instantiate(whiteMarker, transform);
-        markerObj.transform.position = markerPos;
+        GameObject stoneObj = stoneType == Cell.StoneType.Black ? Instantiate(blackStone, transform) : Instantiate(whiteStone, transform);
+        stoneObj.transform.position = markerPos;
 
         lastPositionMarker.SetActive(true);
         lastPositionMarker.transform.position = markerPos;
