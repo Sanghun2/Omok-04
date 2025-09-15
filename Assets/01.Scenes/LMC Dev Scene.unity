@@ -518,6 +518,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2462386671539631605, guid: f2b1044d89f4ed14798e113d482d08de, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462386671539631605, guid: f2b1044d89f4ed14798e113d482d08de, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2937634039056824918, guid: f2b1044d89f4ed14798e113d482d08de, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -610,6 +618,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Canvas] Intro'
       objectReference: {fileID: 0}
+    - target: {fileID: 6800828212983989144, guid: f2b1044d89f4ed14798e113d482d08de, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800828212983989144, guid: f2b1044d89f4ed14798e113d482d08de, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800828212983989144, guid: f2b1044d89f4ed14798e113d482d08de, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6800828212983989144, guid: f2b1044d89f4ed14798e113d482d08de, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7042305861118968693, guid: f2b1044d89f4ed14798e113d482d08de, type: 3}
       propertyPath: gameUIManger
       value: 
@@ -618,6 +642,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 397246434}
+    - target: {fileID: 8588043472223463114, guid: f2b1044d89f4ed14798e113d482d08de, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8588043472223463114, guid: f2b1044d89f4ed14798e113d482d08de, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -789,10 +821,6 @@ PrefabInstance:
       propertyPath: popup
       value: 
       objectReference: {fileID: 1646686934}
-    - target: {fileID: 2748465131735356921, guid: ee132d9102fa41445b3e1449e979e45b, type: 3}
-      propertyPath: tipPopup
-      value: 
-      objectReference: {fileID: 113656665}
     - target: {fileID: 2748465131735356921, guid: ee132d9102fa41445b3e1449e979e45b, type: 3}
       propertyPath: MainButton
       value: 
