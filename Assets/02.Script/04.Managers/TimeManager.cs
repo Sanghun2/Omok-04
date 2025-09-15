@@ -1,10 +1,19 @@
+using System.Security.Cryptography;
+using Mono.Cecil.Cil;
 using UnityEngine;
 
-public class TimeManager
+public class TimeManager : IInitializable
 {
     [SerializeField] Timer player1_Timer;
     [SerializeField] Timer player2_Timer;
 
+    public bool IsInit => throw new System.NotImplementedException();
+
+    /// <summary>
+    /// 게임 시작 시 player 생성 후 각자의 timer를 manager에 연결
+    /// </summary>
+    /// <param name="player"></param>
+    /// <param name="timer"></param>
     public void RegisterTimer(Define.Type.Player player, Timer timer) {
         switch (player) {
             case Define.Type.Player.Player1:
@@ -18,6 +27,8 @@ public class TimeManager
             default:
                 break;
         }
+
+        timer.SetTimeAsDefault();
     }
     public Timer GetTimer(Define.Type.Player player) {
         switch (player) {
@@ -28,5 +39,24 @@ public class TimeManager
             default:
                 return null;
         }
+    }
+
+    public void Initialize() {
+        Managers.Turn.OnTurnChanged.AddListener((targetPlayer) => {
+            try {
+                GetTimer(targetPlayer).SetTimeAsDefault();
+                Debug.LogAssertion($"<color=green>timer init complete</color>");
+            }
+            catch {
+                Debug.LogError($"timer null");
+            }
+        });
+    }
+}
+
+public partial class Timer : MonoBehaviour
+{
+    public void SetTimeAsDefault() {
+        SetTime(Define.Value.DEFAULT_TIME, Define.Value.DEFAULT_TIME);
     }
 }
