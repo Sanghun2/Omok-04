@@ -2,50 +2,48 @@ using System;
 using UnityEngine;
 
 
-[Serializable]
-public class SceneInfo
-{
-    [SerializeField] Define.Type.Scene scene;
-    [SerializeField] GameObject[] sceneObjs;
-
-    public void SetActiveObjs(bool active) {
-        for (int i = 0; i < sceneObjs.Length; i++) {
-            var targetObj = sceneObjs[i];
-            targetObj.SetActive(active);
-        }
-    }
-}
-
 public class SceneManager : MonoBehaviour, IInitializable
 {
-    public Define.Type.Scene CurrentScene => currentScene;
-    public Define.Type.Scene PrevScene => prevScene;
+    public Define.Type.Scene CurrentSceneType => _currentScene == null ? Define.Type.Scene.None : _currentScene.SceneType;
+    public Scene CurrentScene => _currentScene;
+    public Scene PrevScene => _prevScene;
 
     public bool IsInit => isInit;
 
     private bool isInit;
-    private Define.Type.Scene currentScene = Define.Type.Scene.None;
-    private Define.Type.Scene prevScene = Define.Type.Scene.None;
+    private Scene _currentScene;
+    private Scene _prevScene;
 
-    [SerializeField] SceneInfo[] sceneInfos;
+    [SerializeField] Scene[] scenes;
 
     /// <summary>
     /// Scene 전환 기능. scene list의 순서와 Define.Type.Scene의 순서 맞춰서 사용.
     /// </summary>
-    /// <param name="sceneType"></param>
-    public void ShowScene(Define.Type.Scene sceneType) {
-        for (int sceneIndex = 0; sceneIndex < sceneInfos.Length; sceneIndex++) {
-            SceneInfo targetScene = sceneInfos[sceneIndex];
-            targetScene.SetActiveObjs((int)sceneType == sceneIndex);
+    /// <param name="activeSceneType"></param>
+    public void ShowScene(Define.Type.Scene activeSceneType) {
+        if (CurrentSceneType == activeSceneType) return;
+
+        _prevScene = _currentScene;
+        for (int sceneIndex = 0; sceneIndex < scenes.Length; sceneIndex++) {
+            Scene targetScene = scenes[sceneIndex];
+            if (targetScene.SceneType == activeSceneType) {
+                targetScene.ActiveScene(true);
+                _currentScene = targetScene;
+            }
+            else {
+                targetScene.ActiveScene(false);
+            }
         }
 
-        prevScene = currentScene;
-        currentScene = sceneType;
-        Debug.LogAssertion($"<color=yellow>{prevScene}->{currentScene}으로 이동</color>");
+#if UNITY_EDITOR
+        var prevSceneType = Define.Type.Scene.None;
+        if (_prevScene != null) prevSceneType = PrevScene.SceneType;
+        Debug.LogAssertion($"<color=yellow>{prevSceneType}->{_currentScene.SceneType}으로 이동</color>");
+#endif
     }
 
     public void Initialize() {
-        currentScene = Define.Type.Scene.None;
-        prevScene = Define.Type.Scene.None;
+        _currentScene = null;
+        _prevScene = null;
     }
 }

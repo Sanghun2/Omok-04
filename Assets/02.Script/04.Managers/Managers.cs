@@ -59,6 +59,12 @@ public class Managers : MonoBehaviour
         };
 
         InitializeAll(initializeList);
+
+        LoadFirstScene();
+    }
+
+    private void LoadFirstScene() {
+        Debug.LogAssertion($"첫 씬 로드 필요");
     }
 
     private void InitializeAll(List<IInitializable> initializeList) {

@@ -599,10 +599,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 804290354503012944, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
-      propertyPath: sceneUI
-      value: 
-      objectReference: {fileID: 1036628944}
     - target: {fileID: 1600730817382067069, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: m_Name
       value: Log In

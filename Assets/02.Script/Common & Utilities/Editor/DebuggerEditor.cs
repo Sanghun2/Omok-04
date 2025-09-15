@@ -16,7 +16,7 @@ public class DebuggerEditor : Editor
         }
         GUILayout.BeginHorizontal();
         {
-            if (GUILayout.Button("Login")){
+            if (GUILayout.Button("Login")) {
                 _script.Test_GoToLogIn();
             }
             if (GUILayout.Button("Main menu")) {
