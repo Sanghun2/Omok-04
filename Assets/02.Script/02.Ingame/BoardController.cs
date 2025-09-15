@@ -6,7 +6,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
     private Cell[,] board;
     private Cell currentCell;
-    private Cell.CellMarkerType marker;
 
     [SerializeField] private GameObject positionSelector;
     [SerializeField] private GameObject blackMarker;
@@ -21,6 +20,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public OnCellClicked onCellClickedDelegate;
     public delegate void OnMarkerSetted(Cell.CellMarkerType markerType);
     public OnMarkerSetted onMarkerSettedDelegate;
+    public Cell[,] Board => board;
 
     private void Start()
     {
@@ -34,7 +34,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public void InitBoard()
     {
         board = new Cell[BoardRow, BoardCol];
-        marker = Cell.CellMarkerType.Black;
 
         onMarkerSettedDelegate = (marker) =>
         {
