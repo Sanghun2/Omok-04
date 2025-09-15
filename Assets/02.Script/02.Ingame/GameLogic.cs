@@ -1,0 +1,115 @@
+﻿using UnityEngine;
+using System;
+using System.Text;
+
+public class GameLogic
+{
+    public BoardController boardController;
+    public enum GameResult { NONE, WIN, LOSE, DRAW }
+
+    public BasePlayerState firstPlayerState;            // Player A
+    public BasePlayerState secondPlayerState;           // Player B
+    private BasePlayerState currentPlayerState;         // 현재 턴의 Player
+    private Cell[,] board;                              // 보드의 상태 정보
+
+    public GameLogic(BoardController boardController, Cell[,] board, Define.Type.Game gameType)
+    {
+        this.boardController = boardController;
+        this.board = board;
+
+        switch (gameType)
+        {
+            case Define.Type.Game.Single:
+                break;
+            case Define.Type.Game.Local:
+                firstPlayerState = new PlayerState(true);
+                secondPlayerState = new PlayerState(false);
+
+                // 게임 시작
+                SetState(firstPlayerState);
+                break;
+            case Define.Type.Game.Multi:
+                break;
+        }
+    }    
+
+    /// <summary>
+    /// 턴이 바뀔 때, 기존 진행하던 상태를 Exit하고,
+    /// 이번 턴의 상태를 currentPlayerState에 할당하고
+    /// 이번 턴의 상태의 Enter를 호출
+    /// </summary>
+    /// <param name="state"></param>
+    public void SetState(BasePlayerState state)
+    {
+        currentPlayerState?.OnExit(this);
+        currentPlayerState = state;
+        currentPlayerState?.OnEnter(this);
+    }
+
+    /// <summary>
+    /// board 배열에 새로운 Marker 값을 할당
+    /// </summary>
+    /// <returns></returns>
+    public bool SetNewBoardValue(Cell.CellMarkerType marker, int row, int col)
+    {
+        if (board[row, col].Marker != Cell.CellMarkerType.None)
+        {
+            boardController.ActiveX_Marker(row, col);
+            return false;
+        }
+
+        if (marker == Cell.CellMarkerType.Black)
+        {
+            if (OmokAI.CheckRenju(marker, board, row, col))
+            {
+                boardController.ActiveX_Marker(row, col);
+                Debug.Log("### DEV_JSH 렌주룰상 금수 ###");
+                return false;
+            }
+            else
+            {
+                board[row, col].SetMarker(marker);
+                boardController.PlaceMarker(marker, row, col);
+                boardController.onMarkerSettedDelegate?.Invoke(marker);
+                return true;
+            }
+        }
+        else if (marker == Cell.CellMarkerType.White)
+        {
+            board[row, col].SetMarker(marker);
+            boardController.PlaceMarker(marker, row, col);
+            boardController.onMarkerSettedDelegate?.Invoke(marker);
+            return true;
+        }
+        else
+            return false;
+    }
+
+    // Game Over 처리
+    public void EndGame(GameResult gameResult)
+    {
+        SetState(null);
+        firstPlayerState = null;
+        secondPlayerState = null;
+
+        Debug.Log("### DEV_JSH Game Over ###");
+    }
+
+    // 게임의 결과를 확인하는 함수
+    public GameResult CheckGameResult(int row, int col)
+    {
+        if (OmokAI.CheckGameWin(Cell.CellMarkerType.Black, board, row, col)) 
+        {
+            return GameResult.WIN;
+        }
+        else if (OmokAI.CheckGameWin(Cell.CellMarkerType.White, board, row, col))
+        {
+            return GameResult.LOSE;
+        }
+        else if (OmokAI.CheckGameDraw(board))
+        {
+            return GameResult.DRAW;
+        }
+        return GameResult.NONE;
+    }
+}

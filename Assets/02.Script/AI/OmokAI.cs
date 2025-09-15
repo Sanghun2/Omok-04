@@ -1,27 +1,26 @@
-ï»¿using UnityEngine;
 using System;
-using System.Text;
+using UnityEngine;
 
 public static class OmokAI
 {
     private static readonly (int rowDir, int colDir)[] directions =
     {
-        (0, 1),   // ê°€ë¡œ ë°©í–¥
-        (1, 0),   // ì„¸ë¡œ ë°©í–¥
-        (1, 1),   // ëŒ€ê°ì„  â†˜ ë°©í–¥
-        (1, -1)   // ëŒ€ê°ì„  â†™ ë°©í–¥
+        (0, 1),   // °¡·Î ¹æÇâ
+        (1, 0),   // ¼¼·Î ¹æÇâ
+        (1, 1),   // ´ë°¢¼± ¢Ù ¹æÇâ
+        (1, -1)   // ´ë°¢¼± ¢× ¹æÇâ
     };
 
-    public static bool CheckGameWin(Cell.CellMarker marker, Cell[,] board, int row, int col)
+    public static bool CheckGameWin(Cell.CellMarkerType marker, Cell[,] board, int row, int col)
     {
         foreach (var (rowDir, colDir) in directions)
         {
-            int count = 1; // í˜„ì¬ ëŒ í¬í•¨
+            int count = 1; // ÇöÀç µ¹ Æ÷ÇÔ
 
-            // í•œìª½ ë°©í–¥ìœ¼ë¡œ ì²´í¬
+            // ÇÑÂÊ ¹æÇâÀ¸·Î Ã¼Å©
             count += CountStones(marker, board, row, col, rowDir, colDir);
 
-            // ë°˜ëŒ€ ë°©í–¥ìœ¼ë¡œ ì²´í¬
+            // ¹İ´ë ¹æÇâÀ¸·Î Ã¼Å©
             count += CountStones(marker, board, row, col, -rowDir, -colDir);
 
             if (count >= 5) return true;
@@ -30,16 +29,16 @@ public static class OmokAI
     }
 
     /// <summary>
-    /// ì—°ì†ëœ ë§ˆì»¤ ê°œìˆ˜ í™•ì¸
+    /// ¿¬¼ÓµÈ ¸¶Ä¿ °³¼ö È®ÀÎ
     /// </summary>
-    private static int CountStones(Cell.CellMarker marker, Cell[,] board, int row, int col, int rowDir, int colDir)
+    private static int CountStones(Cell.CellMarkerType marker, Cell[,] board, int row, int col, int rowDir, int colDir)
     {
         int count = 0;
         int r = row + rowDir;
         int c = col + colDir;
 
-        // í•œ ì¹¸ ì”© ì´ë™í•˜ë©´ì„œ Markerê°€ ê°™ë‹¤ë©´ count++ ì•„ë‹ˆë©´ ë°˜ë³µ ì¢…ë£Œ
-        while (r >= 0 && r < Board.BoardRow && c >= 0 && c < Board.BoardCol && board[r, c].Marker == marker)
+        // ÇÑ Ä­ ¾¿ ÀÌµ¿ÇÏ¸é¼­ Marker°¡ °°´Ù¸é count++ ¾Æ´Ï¸é ¹İº¹ Á¾·á
+        while (r >= 0 && r < BoardController.BoardRow && c >= 0 && c < BoardController.BoardCol && board[r, c].Marker == marker)
         {
             count++;
             r += rowDir;
@@ -48,14 +47,14 @@ public static class OmokAI
         return count;
     }
 
-    public static bool CheckRenju(Cell.CellMarker marker, Cell[,] board, int row, int col)
+    public static bool CheckRenju(Cell.CellMarkerType marker, Cell[,] board, int row, int col)
     {
-        int openThreeDirs = 0; // ì‚¼ì‚¼ íŒë‹¨ìš©
-        int openFourDirs = 0;  // ì‚¬ì‚¬ íŒë‹¨ìš©
+        int openThreeDirs = 0; // »ï»ï ÆÇ´Ü¿ë
+        int openFourDirs = 0;  // »ç»ç ÆÇ´Ü¿ë
 
         foreach (var (rowDir, colDir) in directions)
         {
-            // ì¤‘ì‹¬ì— markerë¥¼ ë‘” ìƒíƒœë¡œ í•´ë‹¹ ë°©í–¥ì˜ ê¸¸ì´ 9(ì˜¤í”„ì…‹ -4..+4) ë¬¸ìì—´ì„ ë§Œë“ ë‹¤
+            // Áß½É¿¡ marker¸¦ µĞ »óÅÂ·Î ÇØ´ç ¹æÇâÀÇ ±æÀÌ 9(¿ÀÇÁ¼Â -4..+4) ¹®ÀÚ¿­À» ¸¸µç´Ù
             char[] line = BuildLineWithPlacement(board, marker, row, col, rowDir, colDir);
 
             if (HasOpenFour(line))
@@ -67,23 +66,23 @@ public static class OmokAI
             }
         }
 
-        // ì‚¼ì‚¼
-        if (openThreeDirs >= 2)        
-            return true;        
+        // »ï»ï
+        if (openThreeDirs >= 2)
+            return true;
 
-        // ì‚¬ì‚¬
+        // »ç»ç
         if (openFourDirs >= 2)
             return true;
-        
+
 
         return false;
     }
 
     /// <summary>
-    /// ì¤‘ì‹¬ì— ëŒì„ ë‘”ë‹¤ê³  ê°€ì •í•´ì„œ, ì˜¤í”„ì…‹ -4..+4 ìœ¼ë¡œ ë¬¸ì ë°°ì—´ì„ ë§Œë“ ë‹¤.
-    /// 'X' = ë‚´ ëŒ(ê°€ì • í¬í•¨), '_' = ë¹ˆì¹¸, 'O' = ìƒëŒ€ëŒ ë˜ëŠ” ë³´ë“œ ë°–(ë²½).
+    /// Áß½É¿¡ µ¹À» µĞ´Ù°í °¡Á¤ÇØ¼­, ¿ÀÇÁ¼Â -4..+4 À¸·Î ¹®ÀÚ ¹è¿­À» ¸¸µç´Ù.
+    /// 'X' = ³» µ¹(°¡Á¤ Æ÷ÇÔ), '_' = ºóÄ­, 'O' = »ó´ëµ¹ ¶Ç´Â º¸µå ¹Û(º®).
     /// </summary>
-    private static char[] BuildLineWithPlacement(Cell[,] board, Cell.CellMarker marker, int row, int col, int dr, int dc)
+    private static char[] BuildLineWithPlacement(Cell[,] board, Cell.CellMarkerType marker, int row, int col, int dr, int dc)
     {
         char[] line = new char[9];
         for (int offset = -4; offset <= 4; offset++)
@@ -94,18 +93,18 @@ public static class OmokAI
 
             if (offset == 0)
             {
-                // ìš°ë¦¬ê°€ ë†“ëŠ” ëŒ (ê°€ì •)
+                // ¿ì¸®°¡ ³õ´Â µ¹ (°¡Á¤)
                 line[idx] = 'X';
             }
-            else if (r < 0 || r >= Board.BoardRow || c < 0 || c >= Board.BoardCol)
+            else if (r < 0 || r >= BoardController.BoardRow || c < 0 || c >= BoardController.BoardCol)
             {
-                // ë³´ë“œ ë°–ì€ ë²½ìœ¼ë¡œ ì·¨ê¸‰
+                // º¸µå ¹ÛÀº º®À¸·Î Ãë±Ş
                 line[idx] = 'O';
             }
             else
             {
                 var m = board[r, c].Marker;
-                if (m == Cell.CellMarker.None) line[idx] = '_'; // ë¹ˆì¹¸ì€ '_'
+                if (m == Cell.CellMarkerType.None) line[idx] = '_'; // ºóÄ­Àº '_'
                 else if (m == marker) line[idx] = 'X';
                 else line[idx] = 'O';
             }
@@ -114,11 +113,11 @@ public static class OmokAI
     }
 
     /// <summary>
-    /// ì£¼ì–´ì§„ ë¼ì¸ì—ì„œ ì—´ë¦°4ì´ ìˆëŠ”ì§€ ê²€ì‚¬
+    /// ÁÖ¾îÁø ¶óÀÎ¿¡¼­ ¿­¸°4ÀÌ ÀÖ´ÂÁö °Ë»ç
     /// </summary>
     private static bool HasOpenFour(char[] line)
     {
-        // ê¸¸ì´ 5 ìœˆë„ìš° ê²€ì‚¬
+        // ±æÀÌ 5 À©µµ¿ì °Ë»ç
         for (int s = 0; s <= line.Length - 5; s++)
         {
             int xCount = 0;
@@ -129,19 +128,19 @@ public static class OmokAI
             {
                 if (line[k] == 'X')
                     xCount++;
-                else if (line[k] == '_') // ë¹ˆì¹¸
+                else if (line[k] == '_') // ºóÄ­
                     emptyCount++;
-                else // 'O' í¬í•¨ â†’ ë§‰íŒ í˜•íƒœë¼ ë¶ˆê°€ëŠ¥
+                else // 'O' Æ÷ÇÔ ¡æ ¸·Èù ÇüÅÂ¶ó ºÒ°¡´É
                 {
                     hasBlock = true;
                     break;
                 }
             }
 
-            // 4ê°œì˜ ëŒ + 1ê°œì˜ ë¹ˆì¹¸
+            // 4°³ÀÇ µ¹ + 1°³ÀÇ ºóÄ­
             if (!hasBlock && xCount == 4 && emptyCount == 1)
             {
-                // ë°”ê¹¥ìª½ ì–‘ë í™•ì¸
+                // ¹Ù±ùÂÊ ¾ç³¡ È®ÀÎ
                 bool leftOpen = (s - 1 >= 0 && line[s - 1] == '_');
                 bool rightOpen = (s + 5 < line.Length && line[s + 5] == '_');
 
@@ -153,22 +152,27 @@ public static class OmokAI
     }
 
     /// <summary>
-    /// ì£¼ì–´ì§„ ë¼ì¸ì—ì„œ ì—´ë¦° 3ì´ ìˆëŠ”ì§€ ê²€ì‚¬
+    /// ÁÖ¾îÁø ¶óÀÎ¿¡¼­ ¿­¸° 3ÀÌ ÀÖ´ÂÁö °Ë»ç
     /// </summary>
     private static bool HasOpenThree(char[] line)
     {
         for (int i = 0; i < line.Length; i++)
         {
-            if (line[i] != '_') continue; // ë¹ˆì¹¸ë§Œ ì‹œë®¬ë ˆì´ì…˜
+            if (line[i] != '_') continue; // ºóÄ­¸¸ ½Ã¹Ä·¹ÀÌ¼Ç
 
-            // ì‹œë®¬ë ˆì´ì…˜: ë¹ˆì¹¸ì— ëŒì„ ë†“ì•„ë³¸ë‹¤
+            // ½Ã¹Ä·¹ÀÌ¼Ç: ºóÄ­¿¡ µ¹À» ³õ¾Æº»´Ù
             line[i] = 'X';
             bool makesOpenFour = HasOpenFour(line);
-            // ë˜ëŒë¦¬ê¸°
+            // µÇµ¹¸®±â
             line[i] = '_';
 
             if (makesOpenFour) return true;
         }
+        return false;
+    }
+
+    internal static bool CheckGameDraw(Cell[,] board)
+    {
         return false;
     }
 }
