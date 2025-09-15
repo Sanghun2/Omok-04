@@ -6,11 +6,13 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
     private Cell[,] board;
     private Cell currentCell;
+    private Cell.CellMarker marker;
 
     [SerializeField] private GameObject positionSelector;
     [SerializeField] private GameObject blackMarker;
     [SerializeField] private GameObject whiteMarker;
     [SerializeField] private GameObject xMarker;
+    [SerializeField] private GameObject lastPositionMarker;
 
     public const int BoardRow = 15;
     public const int BoardCol = 15;
@@ -29,6 +31,7 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
     public void InitBoard()
     {
         board = new Cell[BoardRow, BoardCol];
+        marker = Cell.CellMarker.Black;
 
         for (int i = 0; i < board.GetLength(0); i++)
         {
@@ -80,25 +83,31 @@ public class Board : MonoBehaviour, IPointerDownHandler, IDragHandler
             currentCell = null;
             return;
         }
-        for (int i = 0; i< 2; i++)
-        {
-            if (OmokAI.CheckRenju(Cell.CellMarker.Black, board, currentCell.CellRow, currentCell.CellCol, 3))
+
+        if (marker == Cell.CellMarker.Black) {
+            if (OmokAI.CheckRenju(Cell.CellMarker.Black, board, currentCell.CellRow, currentCell.CellCol))
             {
                 xMarker.SetActive(true);
                 xMarker.transform.position = markerPos;
                 return;
-            }
+            }            
         }
 
 
-        // 돌 생성
-        GameObject blackMarkerObj = Instantiate(blackMarker, transform);
-        blackMarkerObj.transform.position = markerPos;
 
-        // 임시로 흑돌 고정
-        currentCell.SetMarker(Cell.CellMarker.Black);
+        // 돌 생성
+        GameObject markerObj = marker == Cell.CellMarker.Black ? Instantiate(blackMarker, transform) : Instantiate(whiteMarker, transform);
+        markerObj.transform.position = markerPos;
+
+        currentCell.SetMarker(marker);
+
+        lastPositionMarker.SetActive(true);
+        lastPositionMarker.transform.position = markerPos;
+
         if (OmokAI.CheckGameWin(currentCell.Marker, board, currentCell.CellRow, currentCell.CellCol))
-            Debug.Log("### GAME WIN ###");
+            Debug.Log($"{marker.ToString()} / ### GAME WIN ###");
+
+        marker = marker == Cell.CellMarker.Black ? Cell.CellMarker.White : Cell.CellMarker.Black;
 
     }
 
