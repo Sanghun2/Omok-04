@@ -11,6 +11,7 @@ public class GameLogic
     public BasePlayerState secondPlayerState;           // Player B
     private BasePlayerState currentPlayerState;         // 현재 턴의 Player
     private Cell[,] board;                              // 보드의 상태 정보
+    public Cell[,] Board => board;
 
     public GameLogic(BoardController boardController, Cell[,] board, Define.Type.Game gameType)
     {
@@ -20,6 +21,11 @@ public class GameLogic
         switch (gameType)
         {
             case Define.Type.Game.Single:
+                firstPlayerState = new PlayerState(true);
+                secondPlayerState = new AIState();
+
+                // 게임 시작
+                SetState(firstPlayerState);
                 break;
             case Define.Type.Game.Local:
                 firstPlayerState = new PlayerState(true);
@@ -96,15 +102,14 @@ public class GameLogic
     }
 
     // 게임의 결과를 확인하는 함수
-    public GameResult CheckGameResult(int row, int col)
+    public GameResult CheckGameResult(Cell.CellMarkerType marker, int row, int col)
     {
-        if (OmokAI.CheckGameWin(Cell.CellMarkerType.Black, board, row, col)) 
+        if (OmokAI.CheckGameWin(marker, board, row, col)) 
         {
-            return GameResult.WIN;
-        }
-        else if (OmokAI.CheckGameWin(Cell.CellMarkerType.White, board, row, col))
-        {
-            return GameResult.LOSE;
+            if(marker == Cell.CellMarkerType.Black)
+                return GameResult.WIN;
+            else if(marker == Cell.CellMarkerType.White)
+                return GameResult.LOSE;
         }
         else if (OmokAI.CheckGameDraw(board))
         {
