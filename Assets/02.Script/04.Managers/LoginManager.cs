@@ -21,7 +21,7 @@ public class LoginManager : MonoBehaviour
         {
             StartCoroutine(Login());
         });
-        sceneManager = FindFirstObjectByType<SceneManager>();
+        sceneManager = Managers.Scene;
         if (sceneManager == null) {
             Debug.LogError("SceneManager를 찾을 수 없습니다!");
         }
@@ -51,7 +51,7 @@ public class LoginManager : MonoBehaviour
                 string jsonResponse = request.downloadHandler.text;
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(jsonResponse);
                 UserData loggedInUser = response.user;
-                UserInfoManager.Instance.SetCurrentUser(loggedInUser);
+                Managers.UserInfo.SetCurrentUser(loggedInUser);
 
 
                 Debug.Log("서버 응답: " + request.downloadHandler.text);
