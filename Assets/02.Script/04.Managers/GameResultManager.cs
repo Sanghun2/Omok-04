@@ -31,10 +31,20 @@ public class GameResultManager : MonoBehaviour
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                
+                //서버의 최신 정보로 유저 정보를 갱신
                 string responseJson = request.downloadHandler.text;
                 UserData updatedUser = JsonUtility.FromJson<UserData>(responseJson);
                 UserInfoManager.Instance.SetCurrentUser(updatedUser);
+
+                string userInfoLog = $"--- 유저 정보 갱신 완료 ---\n" +
+                                     $"아이디: {updatedUser.username}\n" +
+                                     $"승리: {updatedUser.wins}\n" +
+                                     $"패배: {updatedUser.losses}\n" +
+                                     $"연승: {updatedUser.winStreak}\n" +
+                                     $"랭크: {updatedUser.rank}급\n" +
+                                     $"랭크포인트: {updatedUser.rankpoint}점\n" +
+                                     $"---------------------------";
+                Debug.Log(userInfoLog);
 
                 Debug.Log("전적 업데이트 성공");
             }
