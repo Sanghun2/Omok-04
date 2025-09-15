@@ -84,5 +84,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2702b11388149cc4697823752e3e79cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Debugger
+  targetScene: 0
   testTimer: {fileID: 0}
   testTime: 3

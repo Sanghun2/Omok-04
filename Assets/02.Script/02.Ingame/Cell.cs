@@ -4,13 +4,13 @@ public class Cell
 {
     private int cellRow;
     private int cellCol;
-    private CellMarker marker;
+    private CellMarkerType marker;
 
     public int CellRow => cellRow;
     public int CellCol => cellCol;
 
-    public enum CellMarker { None, Black, White }
-    public CellMarker Marker => marker;
+    public enum CellMarkerType { None, Black, White }
+    public CellMarkerType Marker => marker;
     public delegate void OnCellClicked(int row, int col);  
     public OnCellClicked onCellClicked;
 
@@ -24,7 +24,7 @@ public class Cell
     {
         cellRow = row; 
         cellCol = col;
-        SetMarker(CellMarker.None);
+        SetMarker(CellMarkerType.None);
         this.onCellClicked = onCellClicked;
     }
 
@@ -32,7 +32,7 @@ public class Cell
     /// 마커 변경
     /// </summary>
     /// <param name="marker"></param>
-    public void SetMarker(CellMarker marker)
+    public void SetMarker(CellMarkerType marker)
     {
         this.marker = marker;
     }

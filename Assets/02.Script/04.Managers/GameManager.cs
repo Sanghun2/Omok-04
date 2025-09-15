@@ -13,42 +13,24 @@ public class GameManager
         ProcessSceneChange(Define.Type.Scene.LogIn);
     }
 
-    private void InitCurrentScene(Define.Type.Scene currentScene) {
-        switch (currentScene) {
-            case Define.Type.Scene.None:
-                return;
-            case Define.Type.Scene.LogIn:
-                break;
-            case Define.Type.Scene.MainMenu:
-                break;
-            case Define.Type.Scene.InGame:
-                break;
-            default:
-                break;
-        }
+    private void InitCurrentScene(Scene currentScene) {
+        currentScene.InitScene();
         Debug.LogAssertion($"{currentScene} init");
     }
-    private void ReleasePrevScene(Define.Type.Scene prevScene) {
-        switch (prevScene) {
-            case Define.Type.Scene.None:
-                Debug.LogAssertion($"no need release");
-                return;
-            case Define.Type.Scene.LogIn:
-                break;
-            case Define.Type.Scene.MainMenu:
-                break;
-            case Define.Type.Scene.InGame:
-                break;
-            default:
-                break;
-        }
-        Debug.LogAssertion($"{prevScene} released");
+    private void ReleasePrevScene(Scene prevScene) {
+        prevScene?.ReleaseScene();
+
+#if UNITY_EDITOR
+        var sceneType = prevScene == null ? Define.Type.Scene.None : prevScene.SceneType;
+        Debug.LogAssertion($"{sceneType} released");
+#endif
     }
     
-    private void ProcessSceneChange(Define.Type.Scene sceneType) {
-        ReleasePrevScene(Managers.Scene.CurrentScene);
-        Managers.Scene.ShowScene(sceneType);
-        InitCurrentScene(sceneType);
+    private void ProcessSceneChange(Define.Type.Scene targetSceneType) {
+        var prevScene = Managers.Scene.CurrentScene;
+        ReleasePrevScene(prevScene);
+        Managers.Scene.ShowScene(targetSceneType);
+        InitCurrentScene(Managers.Scene.CurrentScene);
     }
 
     #endregion
