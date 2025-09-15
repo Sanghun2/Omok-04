@@ -8,7 +8,7 @@ public abstract class BasePlayerState
     protected abstract void HandleNextTurn(GameLogic gameLogic);                // 턴 전환
 
     // 게임 결과 처리
-    protected void ProcessMove(GameLogic gameLogic, Cell.CellMarkerType marker, int row, int col)
+    protected void ProcessMove(GameLogic gameLogic, Cell.StoneType marker, int row, int col)
     {
         Debug.Log($"### DEV_JSH ProcessMove Called / Marker : {marker.ToString()} / Row : {row} / Col : {col} ###");
         if (gameLogic.SetNewBoardValue(marker, row, col))

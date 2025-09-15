@@ -4,13 +4,13 @@ public class Cell
 {
     private int cellRow;
     private int cellCol;
-    private CellMarkerType marker;
+    private StoneType stoneType;
 
     public int CellRow => cellRow;
     public int CellCol => cellCol;
 
-    public enum CellMarkerType { None, Black, White }
-    public CellMarkerType Marker => marker;
+    public enum StoneType { None, Black, White }
+    public StoneType Stone => stoneType;
     public delegate void OnCellClicked(int row, int col);  
     public OnCellClicked onCellClicked;
 
@@ -24,7 +24,7 @@ public class Cell
     {
         cellRow = row; 
         cellCol = col;
-        SetMarker(CellMarkerType.None);
+        SetMarker(StoneType.None);
         this.onCellClicked = onCellClicked;
     }
 
@@ -32,8 +32,8 @@ public class Cell
     /// 마커 변경
     /// </summary>
     /// <param name="marker"></param>
-    public void SetMarker(CellMarkerType marker)
+    public void SetMarker(StoneType marker)
     {
-        this.marker = marker;
+        this.stoneType = marker;
     }
 }
