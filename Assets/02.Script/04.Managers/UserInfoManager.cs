@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class UserInfoManager : MonoBehaviour
@@ -24,6 +25,26 @@ public class UserInfoManager : MonoBehaviour
 
     public UserData GetCurrentUser()
     {
-        return currentUser;
+        if (currentUser == null)
+        {
+            GetDummyData();
+        }
+            return currentUser;
+    }
+
+
+    // [Obsolete("개발용 임시 함수입니다. 실제 게임에서는 사용하지 마세요.")]
+    private UserData GetDummyData()
+    {
+        return new UserData
+        {
+            _id = "0000",
+            username = "DummyUser",
+            wins = 10,
+            losses = 5,
+            winStreak = 3,
+            rank = 3,
+            rankpoint = 2
+        };
     }
 }
