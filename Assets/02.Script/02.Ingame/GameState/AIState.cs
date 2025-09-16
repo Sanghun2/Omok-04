@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class AIState : BasePlayerState
 {
+    private Define.Type.GameLevel level;
+
+    public AIState(Define.Type.GameLevel level)
+    {
+        this.level = level;
+    }
+
     public override void HandleMove(GameLogic gameLogic, int row, int col)
     {
         Debug.Log("### DEV_JSH AI_HandleMove Called ###");
@@ -12,7 +19,7 @@ public class AIState : BasePlayerState
     {
         var board = gameLogic.Board;
 
-        var result = DualModeAI.GetBestMove(board,Cell.StoneType.White,Define.Type.GameLevel.Easy);
+        var result = DualModeAI.GetBestMove(board,Cell.StoneType.White,level);
 
         if (result.HasValue)
         {
