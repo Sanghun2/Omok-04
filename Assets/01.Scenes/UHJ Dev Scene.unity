@@ -802,20 +802,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342a8cc027dbf294d8dd080f30dbc632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LogInScene
---- !u!114 &6113120045126945157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1175103609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9854ea2ed2cdcef4d816cf46e6dd5ece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MainMenuScene
-  sceneType: 0
-  sceneUI: {fileID: 0}
 --- !u!224 &6508945162417002657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -961,10 +947,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4263925318876994990, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6113120045126945157}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
 --- !u!223 &7885234187124523784
 Canvas:
