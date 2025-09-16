@@ -8,7 +8,7 @@ public class GameResultManager : MonoBehaviour
     // isWin이 true이면 승리, false이면 패배입니다.
     public void SendGameResult(bool isWin)
     {
-        string userId = UserInfoManager.Instance.GetCurrentUser()._id;
+        string userId = Managers.UserInfo.GetCurrentUser()._id;
         string result = isWin ? "win" : "loss";
 
         StartCoroutine(SendResultCoroutine(userId, result));
@@ -34,8 +34,7 @@ public class GameResultManager : MonoBehaviour
                 //서버의 최신 정보로 유저 정보를 갱신
                 string responseJson = request.downloadHandler.text;
                 UserData updatedUser = JsonUtility.FromJson<UserData>(responseJson);
-                UserInfoManager.Instance.SetCurrentUser(updatedUser);
-
+                Managers.UserInfo.SetCurrentUser(updatedUser);
                 string userInfoLog = $"--- 유저 정보 갱신 완료 ---\n" +
                                      $"아이디: {updatedUser.username}\n" +
                                      $"승리: {updatedUser.wins}\n" +
@@ -45,8 +44,8 @@ public class GameResultManager : MonoBehaviour
                                      $"랭크포인트: {updatedUser.rankpoint}점\n" +
                                      $"---------------------------";
                 Debug.Log(userInfoLog);
-
                 Debug.Log("전적 업데이트 성공");
+
             }
             else
             {
