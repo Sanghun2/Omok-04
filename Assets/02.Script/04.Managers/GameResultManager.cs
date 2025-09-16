@@ -4,6 +4,8 @@ using UnityEngine.Networking;
 
 public class GameResultManager : MonoBehaviour
 {
+    [SerializeField] GameObject gameOverUI;
+
     // 게임 종료 시 이 함수를 호출해주세요.
     // isWin이 true이면 승리, false이면 패배입니다.
     public void SendGameResult(bool isWin)
@@ -12,6 +14,11 @@ public class GameResultManager : MonoBehaviour
         string result = isWin ? "win" : "loss";
 
         StartCoroutine(SendResultCoroutine(userId, result));
+    }
+
+    public void EndGame()
+    {
+        gameOverUI.SetActive(true);
     }
 
     private IEnumerator SendResultCoroutine(string userId, string result)
