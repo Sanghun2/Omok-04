@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager Instance;
+    public static SoundManager Instance = null;
 
     [Header("Bgm")]
     public AudioSource bgmsource;
@@ -24,12 +24,18 @@ public class SoundManager : MonoBehaviour
 
 
 
+    void Awake()
+    {
+    }
     //사운드
 
     void Start()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
         else
             Destroy(gameObject);
 
