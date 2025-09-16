@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5594360769783504284}
   - component: {fileID: 6672963692480812409}
   m_Layer: 0
-  m_Name: WhiteMarker
+  m_Name: WhiteStone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

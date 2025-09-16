@@ -94,6 +94,7 @@ public class Managers : MonoBehaviour
         List<IInitializable> initializeList = new List<IInitializable>() {
             Scene,
             Time,
+            Player,
         };
 
         InitializeAll(initializeList);

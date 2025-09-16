@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7049515724620125607}
   m_Layer: 5
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,5 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5cbc7db92d0c0439b2a37b950ee59f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  playerName: 
+  playerType: 0
+  playerNameText: {fileID: 0}
   rankText: {fileID: 0}
+  playerInfo:
+    playerType: 0
+    playerName: 
+    rank: 

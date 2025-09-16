@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7228809182032108260}
   - component: {fileID: 1085706898973841617}
   m_Layer: 0
-  m_Name: BlackMarker
+  m_Name: BlackStone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
