@@ -33,7 +33,7 @@ public class GameManager
 
     #region Game Start
 
-    public void StartSinglePlay() {
+    public void StartSinglePlay(Define.Type.GameLevel level = Define.Type.GameLevel.Easy) {
         StartGame(Define.Type.Game.Single);
     }
 
@@ -45,23 +45,26 @@ public class GameManager
         StartGame(Define.Type.Game.Multi);
     }
 
-    private void StartGame(Define.Type.Game gameType) {
+    private void StartGame(Define.Type.Game gameType, Define.Type.GameLevel level = Define.Type.GameLevel.Easy) {
 
         // setting game options
+        Managers.Board.InitBoard();
+
+        GameLogic gameLogic;
+
         switch (gameType) {
             case Define.Type.Game.Single:
+                //gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
                 break;
             case Define.Type.Game.Local:
+                gameLogic = new GameLogic(Managers.Board.Board, gameType);
                 break;
             case Define.Type.Game.Multi:
+                //gameLogic = new GameLogic(Managers.Board.Board, gameType);
                 break;
             default:
                 break;
         }
-
-        Managers.Board.InitBoard();
-        Managers.Board.AssignLaunchRole();
-        GameLogic gameLogic = new GameLogic(Managers.Board.Board,gameType);
 
         // transition scene
         ProcessSceneChange(Define.Type.Scene.InGame);

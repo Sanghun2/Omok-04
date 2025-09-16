@@ -29,7 +29,8 @@ public class LevelUIManager : UIBase
 
         // UI 전환
         this.CloseUI();         
-        inGameUI.OpenUI();  
+        inGameUI.OpenUI();
 
+        //Managers.Game.StartSinglePlay(level);
     }
 }
