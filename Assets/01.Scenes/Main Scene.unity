@@ -731,6 +731,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5496915716493026991, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: playerType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7420566217552168547, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: m_Type
       value: 1
@@ -741,9 +745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7420566217552168547, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: m_Enabled
-    - target: {fileID: 5496915716493026991, guid: e27876cdfd3175943aa25043d4354300, type: 3}
-      propertyPath: playerType
-      value: 1
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9210501229621319572, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: m_Name
@@ -834,6 +836,10 @@ PrefabInstance:
       propertyPath: sceneUI
       value: 
       objectReference: {fileID: 378636158}
+    - target: {fileID: 7601521556907767231, guid: c07fc6178240b4243a48c223c5945dad, type: 3}
+      propertyPath: InGameObjects
+      value: 
+      objectReference: {fileID: 296886359}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1261,6 +1267,10 @@ PrefabInstance:
       propertyPath: confirmPasswordInput
       value: 
       objectReference: {fileID: 5003610488322695480}
+    - target: {fileID: 4263925318876994990, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1332,7 +1342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1762990115497524668, guid: e9259eb15551e8a488386a16e44d3099, type: 3}
       propertyPath: targetScene
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2150337205909338493, guid: e9259eb15551e8a488386a16e44d3099, type: 3}
       propertyPath: m_Name
@@ -1661,7 +1671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1429598395655927607, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3577422467836143861, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
       propertyPath: blackStone
