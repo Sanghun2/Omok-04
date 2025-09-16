@@ -154,10 +154,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Board
   positionSelector: {fileID: 3059836018512702626}
-  blackMarker: {fileID: 7456722119803856625, guid: bf360de42f7f37b4588c2fee33090bb5, type: 3}
-  whiteMarker: {fileID: 1887957563566087329, guid: ed3c614acb00413478f6487dd9712652, type: 3}
+  blackStone: {fileID: 7456722119803856625, guid: bf360de42f7f37b4588c2fee33090bb5, type: 3}
+  whiteStone: {fileID: 1887957563566087329, guid: ed3c614acb00413478f6487dd9712652, type: 3}
   xMarker: {fileID: 8615217859289253563}
   lastPositionMarker: {fileID: 5041705154867018770}
+  gameType: 0
+  launchButton: {fileID: 0}
 --- !u!1 &3059836018512702626
 GameObject:
   m_ObjectHideFlags: 0
