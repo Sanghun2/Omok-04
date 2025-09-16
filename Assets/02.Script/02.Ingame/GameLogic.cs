@@ -98,7 +98,9 @@ public class GameLogic
         firstPlayerState = null;
         secondPlayerState = null;
 
-        Debug.Log("### DEV_JSH Game Over ###");
+        Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
+        //if (gameResult == GameResult.WIN)
+
     }
 
     // 게임의 결과를 확인하는 함수
