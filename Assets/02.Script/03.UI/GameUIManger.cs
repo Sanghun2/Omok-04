@@ -182,7 +182,7 @@ public class GameUIManger : UIBase
     }
 
     // 멀티 플레이 팝업을 열 때 호출되는 함수
-    public void OnmMultiPopup()
+    public void OnMultiPopup()
     {
         MultiPopup.SetActive(true);
         ButtonPopup.SetActive(false);
