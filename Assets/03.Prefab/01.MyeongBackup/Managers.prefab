@@ -67,7 +67,6 @@ MonoBehaviour:
   isSetting: 0
   settingPopup: {fileID: 0}
   MultiPopup: {fileID: 0}
-  tipPopup: {fileID: 0}
   soundManager: {fileID: 7436260734895514748}
   bgmVolumeSlider: {fileID: 0}
   SfxVolumeSlider: {fileID: 0}

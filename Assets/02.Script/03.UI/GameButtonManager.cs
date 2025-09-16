@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class GameButtonManager : MonoBehaviour
+public class GameButtonManager : UIBase, IPointerDownHandler, IPointerUpHandler
 {
     public BTNType currentType;
     public Transform buttonScale;
@@ -37,7 +37,7 @@ public class GameButtonManager : MonoBehaviour
                 break;
 
             case BTNType.EXIT:
-                gameUIManger.OnExitPopup();
+                gameUIManger.OnExit();
                 Debug.Log("나가기");
                 break;
         }

@@ -35,7 +35,6 @@ public class GameResultManager : MonoBehaviour
                 string responseJson = request.downloadHandler.text;
                 UserData updatedUser = JsonUtility.FromJson<UserData>(responseJson);
                 Managers.UserInfo.SetCurrentUser(updatedUser);
-
                 string userInfoLog = $"--- 유저 정보 갱신 완료 ---\n" +
                                      $"아이디: {updatedUser.username}\n" +
                                      $"승리: {updatedUser.wins}\n" +
@@ -45,8 +44,8 @@ public class GameResultManager : MonoBehaviour
                                      $"랭크포인트: {updatedUser.rankpoint}점\n" +
                                      $"---------------------------";
                 Debug.Log(userInfoLog);
-
                 Debug.Log("전적 업데이트 성공");
+
             }
             else
             {
