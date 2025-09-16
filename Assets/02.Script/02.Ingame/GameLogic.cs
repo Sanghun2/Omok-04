@@ -4,19 +4,24 @@ using System.Text;
 
 public class GameLogic
 {
+    // 합칠 때 삭제
     public BoardController boardController;
     public enum GameResult { NONE, WIN, LOSE, DRAW }
 
     public BasePlayerState firstPlayerState;            // Player A
     public BasePlayerState secondPlayerState;           // Player B
+    public Cell[,] Board => board;
+
     private BasePlayerState currentPlayerState;         // 현재 턴의 Player
     private Cell[,] board;                              // 보드의 상태 정보
-    public Cell[,] Board => board;
+    private Define.Type.Game gameType;                  // 현재 게임 타입 상태
 
     public GameLogic(BoardController boardController, Cell[,] board, Define.Type.Game gameType)
     {
+        // 합칠 때 삭제
         this.boardController = boardController;
         this.board = board;
+        this.gameType = gameType;
 
         switch (gameType)
         {
@@ -60,6 +65,7 @@ public class GameLogic
     {
         if (board[row, col].Stone != Cell.StoneType.None)
         {
+            // Managers.Board.ActiveX_Marker(row,col); // 이걸로 변경 예정
             boardController.ActiveX_Marker(row, col);
             return false;
         }
@@ -68,6 +74,7 @@ public class GameLogic
         {
             if (OmokAI.CheckRenju(stoneType, board, row, col))
             {
+                // Managers.Board.ActiveX_Marker(row,col); // 이걸로 변경 예정
                 boardController.ActiveX_Marker(row, col);
                 Debug.Log("### DEV_JSH 렌주룰상 금수 ###");
                 return false;
@@ -75,7 +82,9 @@ public class GameLogic
             else
             {
                 board[row, col].SetMarker(stoneType);
+                // Managers.Board.PlaceMarker(stoneType,row,col); // 이걸로 변경 예정
                 boardController.PlaceMarker(stoneType, row, col);
+                // Managers.Board.onMarkerSettedDelegate?.Invoke(stoneType); // 이걸로 변경 예정
                 boardController.onMarkerSettedDelegate?.Invoke(stoneType);
                 return true;
             }
@@ -83,7 +92,9 @@ public class GameLogic
         else if (stoneType == Cell.StoneType.White)
         {
             board[row, col].SetMarker(stoneType);
+            // Managers.Board.PlaceMarker(stoneType,row,col); // 이걸로 변경 예정
             boardController.PlaceMarker(stoneType, row, col);
+            // Managers.Board.onMarkerSettedDelegate?.Invoke(stoneType); // 이걸로 변경 예정
             boardController.onMarkerSettedDelegate?.Invoke(stoneType);
             return true;
         }
@@ -97,10 +108,19 @@ public class GameLogic
         SetState(null);
         firstPlayerState = null;
         secondPlayerState = null;
+        // Managers.Board.DepiveLaunchRole(); // 이걸로 변경 예정
+        boardController.DepiveLaunchRole();
 
         Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
-        //if (gameResult == GameResult.WIN)
 
+        if (gameType == Define.Type.Game.Multi)
+        {
+            if (gameResult == GameResult.WIN)
+                Managers.GameResult.SendGameResult(true);
+            else if (gameResult == GameResult.LOSE)
+                Managers.GameResult.SendGameResult(false);
+            //else // Draw일 때
+        }
     }
 
     // 게임의 결과를 확인하는 함수
