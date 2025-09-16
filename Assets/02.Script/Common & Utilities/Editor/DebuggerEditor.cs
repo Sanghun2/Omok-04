@@ -10,6 +10,15 @@ public class DebuggerEditor : Editor
         var _script = (Debugger)target;
         GUILayout.Space(20);
 
+        GUI.enabled = EditorApplication.isPlaying;
+        GUI.color = Color.green;
+        if (GUILayout.Button("Init Player")) {
+            _script.Test_InitPlayer();
+        }
+        GUI.color = Color.white;
+        GUI.enabled = true;
+
+        GUILayout.Space(20);
         GUI.color = Color.orange;
         if (GUILayout.Button("Change Scene")) {
             _script.Test_ShowScene();

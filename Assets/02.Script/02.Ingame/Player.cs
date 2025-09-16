@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -33,4 +34,14 @@ public class PlayerInfo // userdata로 써도 괜찮은가 ai 전용 userdata 필요
     [SerializeField] Define.Type.Player playerType;
     [SerializeField] string playerName;
     [SerializeField] string rank;
+
+    public PlayerInfo(string playerName, string rank) {
+        this.playerName = playerName;
+        this.rank = rank;
+    }
+
+    public PlayerInfo SetPlayerType(Define.Type.Player playerType) {
+        this.playerType = playerType;
+        return this;
+    }
 }

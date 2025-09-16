@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class Debugger : MonoBehaviour
 {
+    [Header("Player")]
+    [SerializeField] Define.Type.Player targetPlayer;
+    [SerializeField] string playerName;
+
     [Space]
     [Header("Scene")]
     [SerializeField] Define.Type.Scene targetScene;
@@ -11,6 +15,15 @@ public class Debugger : MonoBehaviour
     [Header("Timer")]
     [SerializeField] Timer testTimer;
     [SerializeField] float testTime = 3f;
+
+    #region Player
+
+    public void Test_InitPlayer() {
+        var p = new PlayerInfo(playerName, "1");
+        Managers.Player.InitPlayer(targetPlayer, p);
+    }
+
+    #endregion
 
     #region Scene
 
