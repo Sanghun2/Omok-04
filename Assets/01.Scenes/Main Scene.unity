@@ -241,12 +241,12 @@ GameObject:
   m_Component:
   - component: {fileID: 296886360}
   m_Layer: 0
-  m_Name: InGame
+  m_Name: In Game Objects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &296886360
 Transform:
   m_ObjectHideFlags: 0
@@ -278,7 +278,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &378636159
 RectTransform:
   m_ObjectHideFlags: 0
@@ -833,7 +833,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 655083601637818040, guid: c07fc6178240b4243a48c223c5945dad, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2205369537736366656, guid: c07fc6178240b4243a48c223c5945dad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1341,7 +1341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7986939443346863323, guid: de2d3da267e459448a8d6f3fb79cea76, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8212886055650033687, guid: de2d3da267e459448a8d6f3fb79cea76, type: 3}
       propertyPath: sceneUI
@@ -2025,26 +2025,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: omok-board_15x15_0
       objectReference: {fileID: 0}
-    - target: {fileID: 1429598395655927607, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3577422467836143861, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
-      propertyPath: blackStone
-      value: 
-      objectReference: {fileID: 7456722119803856625, guid: bf360de42f7f37b4588c2fee33090bb5, type: 3}
-    - target: {fileID: 3577422467836143861, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
-      propertyPath: whiteStone
-      value: 
-      objectReference: {fileID: 1887957563566087329, guid: ed3c614acb00413478f6487dd9712652, type: 3}
     - target: {fileID: 3577422467836143861, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
       propertyPath: launchButton
       value: 
       objectReference: {fileID: 777920475}
-    - target: {fileID: 6460495504595418595, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6203,7 +6187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4791449975072532618, guid: 6b5475458ec4e954f9377cf0fb905fb1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5670561597297964023, guid: 6b5475458ec4e954f9377cf0fb905fb1, type: 3}
       propertyPath: m_AnchorMax.y
