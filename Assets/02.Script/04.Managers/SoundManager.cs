@@ -22,13 +22,6 @@ public class SoundManager : MonoBehaviour
     [Range(0f, 1f)]
     public float sfxVolume = 0.1f;
 
-
-
-    void Awake()
-    {
-    }
-    //사운드
-
     void Start()
     {
         if (Instance == null)
@@ -84,7 +77,7 @@ public class SoundManager : MonoBehaviour
     //BGM 볼륨 변경
     public void SetBGMVolume(float volume)
     {
-        bgmVolume = Mathf.Clamp01(volume);
+        bgmVolume = Mathf.Clamp01(volume);  // 0 ~ 1 사이 값으로 제한
         if (bgmsource != null)
             bgmsource.volume = bgmVolume;
 
@@ -92,12 +85,12 @@ public class SoundManager : MonoBehaviour
 
     public void SetSFXVolume(float volume)
     {
-        sfxVolume = Mathf.Clamp01(volume);
-        if (sfxSource != null)
-            sfxSource.volume = sfxVolume;
+        sfxVolume = Mathf.Clamp01(volume); // 0 ~ 1 사이 값으로 제한
 
+        if (sfxSource != null) // SFX 오디오 소스가 연결되어 있다면
+            sfxSource.volume = sfxVolume; // 실제 Unity 오디오 소스의 볼륨에 반영
     }
-
+    
     internal float GetBGMVolume()
     {
         return bgmVolume;

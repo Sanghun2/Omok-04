@@ -6,58 +6,59 @@ using System.Collections.Generic;
 
 public class GameButtonManager : UIBase, IPointerDownHandler, IPointerUpHandler
 {
-    public BTNType currentType;
+    // public BTNType currentType;
     public Transform buttonScale;
 
-    public GameUIManger gameUIManger;
+    // public GameUIManger gameUIManger;
     Vector3 defaultScale;
 
     void Start()
     {
         defaultScale = buttonScale.localScale;
 
-        AutoSetButtonType();
+        // AutoSetButtonType();
     }
-    public void OnBtnClick()
-    {
-        switch (currentType)
-        {
-            case BTNType.STARTSINGLE:
-                Debug.Log("STARTSINGLE");
-                break;
+    //현재 안 쓰는 기능들
+//     public void OnBtnClick()
+    //     {
+    //         switch (currentType)
+    //         {
+    //             case BTNType.STARTSINGLE:
+    //                 Debug.Log("STARTSINGLE");
+    //                 break;
 
-            case BTNType.STARTMULTI:
-                gameUIManger.OnmMultiPopup();
-                Debug.Log("STARTMULTI");
-                break;
+    //             case BTNType.STARTMULTI:
+    //                 gameUIManger.OnmMultiPopup();
+    //                 Debug.Log("STARTMULTI");
+    //                 break;
 
-            case BTNType.SETTING:
-                gameUIManger.OnSettingPopup();
-                Debug.Log("SETTING");
-                break;
+    //             case BTNType.SETTING:
+    //                 gameUIManger.OnSettingPopup();
+    //                 Debug.Log("SETTING");
+    //                 break;
 
-            case BTNType.EXIT:
-                gameUIManger.OnExit();
-                Debug.Log("나가기");
-                break;
-        }
-    }
+    //             case BTNType.EXIT:
+    //                 gameUIManger.OnExit();
+    //                 Debug.Log("나가기");
+    //                 break;
+    //         }
+    //     }
 
-void AutoSetButtonType()
-    {
-        string objectName = gameObject.name.ToLower();
+    // void AutoSetButtonType()
+    //     {
+    //         string objectName = gameObject.name.ToLower();
 
-        if (objectName.Contains("single"))
-            currentType = BTNType.STARTSINGLE;
-        else if (objectName.Contains("multi"))
-            currentType = BTNType.STARTMULTI;
-        else if (objectName.Contains("setting"))
-            currentType = BTNType.SETTING;
-        else if (objectName.Contains("exit"))
-            currentType = BTNType.EXIT;
+    //         if (objectName.Contains("single"))
+    //             currentType = BTNType.STARTSINGLE;
+    //         else if (objectName.Contains("multi"))
+    //             currentType = BTNType.STARTMULTI;
+    //         else if (objectName.Contains("setting"))
+    //             currentType = BTNType.SETTING;
+    //         else if (objectName.Contains("exit"))
+    //             currentType = BTNType.EXIT;
 
-        Debug.Log($"{gameObject.name}의 버튼 타입: {currentType}");
-    }
+    //         Debug.Log($"{gameObject.name}의 버튼 타입: {currentType}");
+    //     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
