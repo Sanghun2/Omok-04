@@ -6,7 +6,7 @@ public class GameLogic
 {
     // 합칠 때 삭제
     public BoardController boardController;
-    public enum GameResult { NONE, WIN, LOSE, DRAW }
+    public enum GameResult { NONE, BlackStoneWin, WhiteStoneWin, DRAW }
 
     public BasePlayerState firstPlayerState;            // Player A
     public BasePlayerState secondPlayerState;           // Player B
@@ -115,9 +115,9 @@ public class GameLogic
 
         if (gameType == Define.Type.Game.Multi)
         {
-            if (gameResult == GameResult.WIN)
+            if (gameResult == GameResult.BlackStoneWin)
                 Managers.GameResult.SendGameResult(true);
-            else if (gameResult == GameResult.LOSE)
+            else if (gameResult == GameResult.WhiteStoneWin)
                 Managers.GameResult.SendGameResult(false);
             //else // Draw일 때
         }
@@ -129,9 +129,9 @@ public class GameLogic
         if (OmokAI.CheckGameWin(stoneType, board, row, col)) 
         {
             if(stoneType == Cell.StoneType.Black)
-                return GameResult.WIN;
+                return GameResult.BlackStoneWin;
             else if(stoneType == Cell.StoneType.White)
-                return GameResult.LOSE;
+                return GameResult.WhiteStoneWin;
         }
         else if (OmokAI.CheckGameDraw(board))
         {
