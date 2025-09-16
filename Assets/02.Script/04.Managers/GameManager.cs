@@ -33,8 +33,8 @@ public class GameManager
 
     #region Game Start
 
-    public void StartSinglePlay(Define.Type.GameLevel level = Define.Type.GameLevel.Easy) {
-        StartGame(Define.Type.Game.Single);
+    public void StartSinglePlay(Define.Type.GameLevel level) {
+        StartGame(Define.Type.Game.Single, level);
     }
 
     public void StartLocalPlay() {
@@ -54,7 +54,7 @@ public class GameManager
 
         switch (gameType) {
             case Define.Type.Game.Single:
-                //gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
+                gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
                 break;
             case Define.Type.Game.Local:
                 gameLogic = new GameLogic(Managers.Board.Board, gameType);

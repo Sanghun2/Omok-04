@@ -68,13 +68,11 @@ public static class OmokAI
             // 중심에 marker를 둔 상태로 해당 방향의 길이 9(오프셋 -4..+4) 문자열을 만든다
             char[] line = BuildLineWithPlacement(board, stoneType, row, col, rowDir, colDir);
 
-            if (HasOpenFour(line))
+            if (HasOpenThreeOrFour(line, 4))
                 openFourDirs++;
 
-            if (HasOpenThree(line))
-            {
-                openThreeDirs++;
-            }
+            if (HasOpenThreeOrFour(line, 3))            
+                openThreeDirs++;            
         }
 
         // 삼삼
@@ -82,8 +80,9 @@ public static class OmokAI
             return true;
 
         // 사사
-        if (openFourDirs >= 2)
+        if (openFourDirs >= 2)        
             return true;
+        
 
 
         return false;
@@ -95,12 +94,12 @@ public static class OmokAI
     /// </summary>
     private static char[] BuildLineWithPlacement(Cell[,] board, Cell.StoneType stoneType, int row, int col, int dr, int dc)
     {
-        char[] line = new char[9];
-        for (int offset = -4; offset <= 4; offset++)
+        char[] line = new char[11];
+        for (int offset = -5; offset <= 5; offset++)
         {
             int r = row + dr * offset;
             int c = col + dc * offset;
-            int idx = offset + 4;
+            int idx = offset + 5;
 
             if (offset == 0)
             {
@@ -121,21 +120,20 @@ public static class OmokAI
             }
         }
         return line;
-    }
 
-    /// <summary>
-    /// 주어진 라인에서 열린4이 있는지 검사
-    /// </summary>
-    private static bool HasOpenFour(char[] line)
+    }/// <summary>
+     /// 주어진 라인에서 열린 3 또는 4가 있는지 검사
+     /// </summary>
+    private static bool HasOpenThreeOrFour(char[] line, int number)
     {
-        // 길이 5 윈도우 검사
-        for (int s = 0; s <= line.Length - 5; s++)
+        // 윈도우 검사
+        for (int s = 5 - number; s <= line.Length - 6; s++)
         {
             int xCount = 0;
             int emptyCount = 0;
             bool hasBlock = false;
 
-            for (int k = s; k < s + 5; k++)
+            for (int k = s; k < s + 1 + number; k++)
             {
                 if (line[k] == 'X')
                     xCount++;
@@ -149,11 +147,11 @@ public static class OmokAI
             }
 
             // 4개의 돌 + 1개의 빈칸
-            if (!hasBlock && xCount == 4 && emptyCount == 1)
+            if (!hasBlock && xCount == number && emptyCount == 1)
             {
                 // 바깥쪽 양끝 확인
-                bool leftOpen = (s - 1 >= 0 && line[s - 1] == '_');
-                bool rightOpen = (s + 5 < line.Length && line[s + 5] == '_');
+                bool leftOpen = (s - 1 >= 4 - number && line[s - 1] == '_');
+                bool rightOpen = (s + 1 + number < line.Length - 4 + number && line[s + 1 + number] == '_');
 
                 if (leftOpen && rightOpen)
                     return true;
@@ -161,26 +159,4 @@ public static class OmokAI
         }
         return false;
     }
-
-    /// <summary>
-    /// 주어진 라인에서 열린 3이 있는지 검사
-    /// </summary>
-    private static bool HasOpenThree(char[] line)
-    {
-        for (int i = 0; i < line.Length; i++)
-        {
-            if (line[i] != '_') continue; // 빈칸만 시뮬레이션
-
-            // 시뮬레이션: 빈칸에 돌을 놓아본다
-            line[i] = 'X';
-            bool makesOpenFour = HasOpenFour(line);
-            // 되돌리기
-            line[i] = '_';
-
-            if (makesOpenFour) return true;
-        }
-        return false;
-    }
-
-
 }
