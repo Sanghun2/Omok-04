@@ -59,6 +59,10 @@ public class GameManager
                 break;
         }
 
+        Managers.Board.InitBoard();
+        Managers.Board.AssignLaunchRole();
+        GameLogic gameLogic = new GameLogic(Managers.Board.Board,gameType);
+
         // transition scene
         ProcessSceneChange(Define.Type.Scene.InGame);
     }
