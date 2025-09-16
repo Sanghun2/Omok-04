@@ -1982,7 +1982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7420566217552168547, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7428296500106521762, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3350,7 +3350,7 @@ PrefabInstance:
     - target: {fileID: 2566300747762401147, guid: ac46cdbe836ecc140aa7de17b4a26edf, type: 3}
       propertyPath: gameOverUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1961725787}
     - target: {fileID: 4419992123935647020, guid: ac46cdbe836ecc140aa7de17b4a26edf, type: 3}
       propertyPath: m_Name
       value: User Info Manager
@@ -5605,23 +5605,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8c6cfd1b3d5ad4ca1fe278bf1b3154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameUIManger
-  popup: {fileID: 0}
-  introPopup: {fileID: 0}
-  dim: {fileID: 0}
-  settingButton: {fileID: 0}
-  exitButton: {fileID: 0}
-  ButtonPopup: {fileID: 0}
+  popup: {fileID: 1059970234}
+  introPopup: {fileID: 1254416429}
+  dim: {fileID: 910555678}
+  settingButton: {fileID: 634029968}
+  exitButton: {fileID: 1527652526}
+  ButtonPopup: {fileID: 1254416429}
   isStart: 0
   isSetting: 0
-  startLevelPopup: {fileID: 0}
-  settingPopup: {fileID: 0}
-  MultiPopup: {fileID: 0}
+  startLevelPopup: {fileID: 904546773}
+  settingPopup: {fileID: 1059970234}
+  MultiPopup: {fileID: 1059970234}
   soundManager: {fileID: 7525157545017897759}
-  bgmVolumeSlider: {fileID: 0}
-  SfxVolumeSlider: {fileID: 0}
-  bgmTestButton: {fileID: 0}
-  SfxTestButton: {fileID: 0}
-  MainButton: {fileID: 0}
+  bgmVolumeSlider: {fileID: 800780792}
+  SfxVolumeSlider: {fileID: 2113894213}
+  bgmTestButton: {fileID: 626718996}
+  SfxTestButton: {fileID: 817359002}
+  MainButton: {fileID: 1254416429}
 --- !u!1 &1927939356
 GameObject:
   m_ObjectHideFlags: 0
