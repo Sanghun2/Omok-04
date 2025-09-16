@@ -77,7 +77,7 @@ public class GameLogic
             {
                 board[row, col].SetMarker(stoneType);
                 Managers.Board.PlaceMarker(stoneType, row, col);
-                Managers.Board.onMarkerSettedDelegate?.Invoke(stoneType);
+                Managers.Board.onStoneSettedDelegate?.Invoke(stoneType);
                 return true;
             }
         }
@@ -85,7 +85,7 @@ public class GameLogic
         {
             board[row, col].SetMarker(stoneType);
             Managers.Board.PlaceMarker(stoneType, row, col);
-            Managers.Board.onMarkerSettedDelegate?.Invoke(stoneType);
+            Managers.Board.onStoneSettedDelegate?.Invoke(stoneType);
             return true;
         }
         else
@@ -98,7 +98,6 @@ public class GameLogic
         SetState(null);
         firstPlayerState = null;
         secondPlayerState = null;
-        Managers.Board.DepiveLaunchRole();
 
         Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
 

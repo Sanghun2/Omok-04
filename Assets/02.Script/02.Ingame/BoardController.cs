@@ -21,17 +21,11 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public const int BoardCol = 15;
     public delegate void OnCellClicked(int row, int col);
     public OnCellClicked onCellClickedDelegate;
-    public delegate void OnMarkerSetted(Cell.StoneType stoneType);
-    public OnMarkerSetted onMarkerSettedDelegate;
+    public delegate void OnStoneSetted(Cell.StoneType stoneType);
+    public OnStoneSetted onStoneSettedDelegate;
     public Cell[,] Board => board;
 
-
-    public void AssignLaunchRole()
-    {
-        launchButton.onClick.AddListener(OnClickLaunchButton);
-    }
-
-    public void DepiveLaunchRole()
+    private void OnDisable()
     {
         launchButton?.onClick.RemoveListener(OnClickLaunchButton);
     }
@@ -42,6 +36,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public void InitBoard()
     {
         this.gameObject.SetActive(true);
+        launchButton.onClick.AddListener(OnClickLaunchButton);
 
         // 마커 초기화
         xMarker.SetActive(false);
@@ -49,7 +44,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         board = new Cell[BoardRow, BoardCol];
 
-        onMarkerSettedDelegate = (stoneType) =>
+        onStoneSettedDelegate = (stoneType) =>
         {
             Debug.Log("### DEV_JSH MarkerEvent Start ###");
             Debug.Log($"### DEV_JSH 이번에 놓인 돌은 {stoneType.ToString()}");
