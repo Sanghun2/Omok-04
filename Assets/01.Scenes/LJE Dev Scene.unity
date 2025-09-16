@@ -129,11 +129,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 10265117824091727, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 960
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 10265117824091727, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 540
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 10265117824091727, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -171,6 +171,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: omok-board_15x15_0
       objectReference: {fileID: 0}
+    - target: {fileID: 3577422467836143861, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
+      propertyPath: blackStone
+      value: 
+      objectReference: {fileID: 7456722119803856625, guid: bf360de42f7f37b4588c2fee33090bb5, type: 3}
+    - target: {fileID: 3577422467836143861, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
+      propertyPath: whiteStone
+      value: 
+      objectReference: {fileID: 1887957563566087329, guid: ed3c614acb00413478f6487dd9712652, type: 3}
+    - target: {fileID: 3577422467836143861, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
+      propertyPath: launchButton
+      value: 
+      objectReference: {fileID: 1434056942554306335}
     - target: {fileID: 6460495504595418595, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
       propertyPath: m_SortingOrder
       value: 0
@@ -715,11 +727,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Image] InGame UI'
       objectReference: {fileID: 0}
+    - target: {fileID: 9210501229621319572, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+--- !u!114 &1434056942554306335 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6735815026516761663, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+  m_PrefabInstance: {fileID: 1434056942554306334}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!224 &3638203311748966243 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6413018943664133595, guid: f0e3e55b2b1df454f8b162c760169116, type: 3}
@@ -836,6 +863,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
-  - {fileID: 232022065}
   - {fileID: 1153410392}
+  - {fileID: 232022065}
   - {fileID: 1783416323}
