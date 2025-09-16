@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [RequireComponent (typeof(Collider2D))]
 public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
@@ -13,6 +14,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField] private GameObject xMarker;
     [SerializeField] private GameObject lastPositionMarker;
     [SerializeField] private Define.Type.Game gameType;
+    [SerializeField] private Button launchButton;
 
     public const int BoardRow = 15;
     public const int BoardCol = 15;
@@ -26,6 +28,17 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
         InitBoard();
         GameLogic gameLogic = new GameLogic(this, board, gameType);
+        AssignLaunchRole();
+    }
+
+    public void AssignLaunchRole()
+    {
+        launchButton.onClick.AddListener(OnClickLaunchButton);
+    }
+
+    public void DepiveLaunchRole()
+    {
+        launchButton?.onClick.RemoveListener(OnClickLaunchButton);
     }
 
     /// <summary>

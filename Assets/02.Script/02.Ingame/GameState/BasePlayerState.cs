@@ -21,7 +21,6 @@ public abstract class BasePlayerState
             }
             else
             {
-                Debug.Log("### DEV_JSH Game End Called In ProcessMove ###");
                 gameLogic.EndGame(gameResult);
             }
         }
