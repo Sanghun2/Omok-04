@@ -204,6 +204,7 @@ public class GameUIManger : UIBase
     public void OnToMain()
     {
         isStart = false; // 게임 재시작 상태 초기화
+        Managers.Game.GoToMainMenu();
 
         // 메인 버튼 그룹을 활성화 (없으면 null 체크)
         if (MainButton != null && !MainButton.activeSelf)

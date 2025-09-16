@@ -99,6 +99,7 @@ public class GameLogic
         firstPlayerState = null;
         secondPlayerState = null;
 
+        Managers.GameResult.EndGame();
         Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
 
         if (gameType == Define.Type.Game.Multi)
