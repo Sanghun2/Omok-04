@@ -13,10 +13,8 @@ public enum BTNType
     SETTING,
     EXIT,
 }
-public class GameUIManger : MonoBehaviour
+public class GameUIManger : UIBase
 {
-
-
     [SerializeField] GameObject popup;
     [SerializeField] GameObject introPopup;
     [SerializeField] GameObject dim;
@@ -35,7 +33,7 @@ public class GameUIManger : MonoBehaviour
     // 팝업 버튼들
     [SerializeField] GameObject settingPopup;
     [SerializeField] GameObject MultiPopup;
-    [SerializeField] GameObject tipPopup; //디벨로퍼
+    // [SerializeField] GameObject tipPopup; //디벨로퍼
 
     [Header("사운드 셋팅 UI")]
     [SerializeField] SoundManager soundManager;
@@ -65,8 +63,6 @@ public class GameUIManger : MonoBehaviour
 
         //사운드
         OnSoundSetting();
-
-
         isStart = false;
     }
 
@@ -130,21 +126,21 @@ public class GameUIManger : MonoBehaviour
 
     }
 
-    public void OnPopup()
-    {
-        soundManager.BGMTestSound();
-        Time.timeScale = 0f;
+    // public void OnPopup()
+    // {
+    //     soundManager.BGMTestSound();
+    //     Time.timeScale = 0f;
 
-        popup.SetActive(true);
-        dim.SetActive(true);
+    //     popup.SetActive(true);
+    //     dim.SetActive(true);
 
-        if (!isStart)
-        {
-            ButtonPopup.SetActive(false);
-        }
-        isSetting = true;
+    //     if (!isStart)
+    //     {
+    //         ButtonPopup.SetActive(false);
+    //     }
+    //     isSetting = true;
 
-    }
+    // }
     public void OnExitSetting()
     {
         if (popup)
@@ -171,7 +167,7 @@ public class GameUIManger : MonoBehaviour
         if (isMulti || isTip)
         {
             MultiPopup.SetActive(false);
-            tipPopup.SetActive(false);
+            // tipPopup.SetActive(false);
 
             isMulti = false;
             isTip = false;
@@ -190,13 +186,12 @@ public class GameUIManger : MonoBehaviour
 
     public void OnSettingPopup()
     {
-        OnPopup();
         settingPopup.SetActive(true);
     }
 
-    //종료할 기능 넣기
-    public void OnExitPopup()
+    public void OnExit()
     {
+        Application.Quit();
     }
 
     public void OnToMain()
@@ -206,6 +201,12 @@ public class GameUIManger : MonoBehaviour
         if (MainButton != null && !MainButton.activeSelf)
             MainButton.SetActive(true);
 
+        SoundManager.Instance.SetBGMSound("Intro");
+        if (SoundManager.Instance.bgmsource != null)
+            SoundManager.Instance.bgmsource.volume = SoundManager.Instance.bgmVolume;
+
         Time.timeScale = 0f;
     }
+
+    
 }

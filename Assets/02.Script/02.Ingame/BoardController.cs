@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [RequireComponent (typeof(Collider2D))]
 public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
@@ -13,6 +14,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField] private GameObject xMarker;
     [SerializeField] private GameObject lastPositionMarker;
     [SerializeField] private Define.Type.Game gameType;
+    [SerializeField] private Button launchButton;
 
     public const int BoardRow = 15;
     public const int BoardCol = 15;
@@ -22,10 +24,15 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public OnMarkerSetted onMarkerSettedDelegate;
     public Cell[,] Board => board;
 
-    private void Start()
+
+    public void AssignLaunchRole()
     {
-        InitBoard();
-        GameLogic gameLogic = new GameLogic(this, board, gameType);
+        launchButton.onClick.AddListener(OnClickLaunchButton);
+    }
+
+    public void DepiveLaunchRole()
+    {
+        launchButton?.onClick.RemoveListener(OnClickLaunchButton);
     }
 
     /// <summary>
@@ -33,6 +40,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     /// </summary>
     public void InitBoard()
     {
+        this.gameObject.SetActive(true);
         board = new Cell[BoardRow, BoardCol];
 
         onMarkerSettedDelegate = (stoneType) =>
