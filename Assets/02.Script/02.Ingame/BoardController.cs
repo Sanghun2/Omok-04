@@ -24,12 +24,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public OnMarkerSetted onMarkerSettedDelegate;
     public Cell[,] Board => board;
 
-    private void Start()
-    {
-        InitBoard();
-        GameLogic gameLogic = new GameLogic(this, board, gameType);
-        AssignLaunchRole();
-    }
 
     public void AssignLaunchRole()
     {
@@ -46,6 +40,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     /// </summary>
     public void InitBoard()
     {
+        this.gameObject.SetActive(true);
         board = new Cell[BoardRow, BoardCol];
 
         onMarkerSettedDelegate = (stoneType) =>
