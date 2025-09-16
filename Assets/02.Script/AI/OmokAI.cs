@@ -11,6 +11,17 @@ public static class OmokAI
         (1, -1)   // 대각선 ↙ 방향
     };
 
+    public static bool CheckGameDraw(Cell[,] board)
+    {
+        foreach (var cell in board)
+        {
+            if(cell.Stone == Cell.StoneType.None)
+                return false;
+        }
+        
+        return true;
+    }
+
     public static bool CheckGameWin(Cell.StoneType stoneType, Cell[,] board, int row, int col)
     {
         foreach (var (rowDir, colDir) in directions)
@@ -171,8 +182,5 @@ public static class OmokAI
         return false;
     }
 
-    internal static bool CheckGameDraw(Cell[,] board)
-    {
-        return false;
-    }
+
 }
