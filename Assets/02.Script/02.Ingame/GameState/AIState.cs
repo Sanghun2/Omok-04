@@ -23,6 +23,14 @@ public class AIState : BasePlayerState
             ui.SetTurnChecks(true);
         }
 
+        // 타이머 초기화 및 25초 카운트 시작
+        var timer = Managers.Time.GetTimer();
+        if (timer != null)
+        {
+            timer.SetTime(25f, 25f);   // 25초 설정
+            timer.StartCount();        // 카운트 시작
+        }
+
         var board = gameLogic.Board;
 
         var result = await System.Threading.Tasks.Task.Run(() =>
@@ -47,6 +55,14 @@ public class AIState : BasePlayerState
         if (ui != null)
         {
             ui.SetTurnChecks(false);
+        }
+
+        // 타이머 초기화 및 25초 카운트 시작
+        var timer = Managers.Time.GetTimer();
+        if (timer != null)
+        {
+            timer.SetTime(25f, 25f);   // 25초 설정
+            timer.StartCount();        // 카운트 시작
         }
     }
 
