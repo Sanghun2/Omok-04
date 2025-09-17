@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TimeManager : IInitializable
 {
-    [SerializeField] Timer player1_Timer;
-    [SerializeField] Timer player2_Timer;
+    private Timer timer;
 
     public bool IsInit => isInit;
     private bool isInit;
@@ -19,31 +18,16 @@ public class TimeManager : IInitializable
     /// </summary>
     /// <param name="player"></param>
     /// <param name="timer"></param>
-    public void RegisterTimer(Define.Type.Player player, Timer timer) {
-        switch (player) {
-            case Define.Type.Player.Player1:
-                player1_Timer = timer;
-                Debug.LogAssertion($"player1 timer registered");
-                break;
-            case Define.Type.Player.Player2:
-                player2_Timer = timer;
-                Debug.LogAssertion($"player2 timer registered");
-                break;
-            default:
-                break;
-        }
-
+    public void RegisterTimer(Timer timer) {
+        this.timer = timer;
         timer.SetTimeAsDefault();
     }
-    public Timer GetTimer(Define.Type.Player player) {
-        switch (player) {
-            case Define.Type.Player.Player1:
-                return player1_Timer;
-            case Define.Type.Player.Player2:
-                return player2_Timer;
-            default:
-                return null;
+    public Timer GetTimer() {
+        if (timer == null) {
+            timer = GameObject.FindAnyObjectByType<Timer>(FindObjectsInactive.Include);
+            Debug.LogAssertion($"timer ÃÊ±âÈ­ µÊ");
         }
+        return timer;
     }
 
     #endregion
@@ -53,7 +37,7 @@ public class TimeManager : IInitializable
     public void Initialize() {
         Managers.Turn.OnTurnChanged.AddListener((targetPlayer) => {
             try {
-                GetTimer(targetPlayer).SetTimeAsDefault();
+                GetTimer().SetTimeAsDefault();
                 Debug.LogAssertion($"<color=green>timer init complete</color>");
                 isInit = true;
             }

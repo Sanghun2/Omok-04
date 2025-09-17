@@ -11,7 +11,7 @@ public class SampleTimeUI : UIBase
     [SerializeField] TextMeshProUGUI timeText;
 
     public override void InitUI() {
-        Timer targetTimer = Managers.Time.GetTimer(Define.Type.Player.Player1);
+        Timer targetTimer = Managers.Time.GetTimer();
         AddTimerEvent(targetTimer);
     }
     public void AddTimerEvent(Timer targetTimer) {
