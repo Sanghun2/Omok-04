@@ -25,10 +25,10 @@ public class TurnManager
     
     public void SwitchTurn() // 게임이 진행중일 때 차례를 다음 사람에게 넘기는 함수
     {
-        if (currentState != Define.Type.GameState.InProgress)
-        {
-            return;
-        }
+        //if (currentState != Define.Type.GameState.InProgress)
+        //{
+        //    return;
+        //}
 
         
         Define.Type.Player nextPlayer = (currentPlayer == Define.Type.Player.Player1) ? Define.Type.Player.Player2 : Define.Type.Player.Player1;
@@ -41,7 +41,7 @@ public class TurnManager
         currentPlayer = player;
 
         
-        OnTurnChanged?.Invoke(currentPlayer); 
+        //OnTurnChanged?.Invoke(currentPlayer); 
 
         Debug.Log($"현재 턴: {currentPlayer}");
     }

@@ -52,8 +52,8 @@ public class Define
         public enum StoneColor 
         {
             None,
-            White,
             Black,
+            White
         }
     }
 }

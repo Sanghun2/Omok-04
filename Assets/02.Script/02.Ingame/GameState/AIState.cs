@@ -12,14 +12,14 @@ public class AIState : BasePlayerState
     public override void HandleMove(GameLogic gameLogic, int row, int col)
     {
         Debug.Log("### DEV_JSH AI_HandleMove Called ###");
-        ProcessMove(gameLogic, Cell.StoneType.White, row, col);
+        ProcessMove(gameLogic, Define.Type.StoneColor.White, row, col);
     }
 
     public override void OnEnter(GameLogic gameLogic)
     {
         var board = gameLogic.Board;
 
-        var result = DualModeAI.GetBestMove(board,Cell.StoneType.White,level);
+        var result = DualModeAI.GetBestMove(board,Define.Type.StoneColor.White,level);
 
         if (result.HasValue)
         {
