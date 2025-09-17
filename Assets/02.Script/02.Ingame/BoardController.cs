@@ -15,22 +15,17 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField] private GameObject lastPositionMarker;
     [SerializeField] private Define.Type.Game gameType;
     [SerializeField] private Button launchButton;
+    [SerializeField] private Transform stones;
 
     public const int BoardRow = 15;
     public const int BoardCol = 15;
     public delegate void OnCellClicked(int row, int col);
     public OnCellClicked onCellClickedDelegate;
-    public delegate void OnMarkerSetted(Cell.StoneType stoneType);
-    public OnMarkerSetted onMarkerSettedDelegate;
+    public delegate void OnStoneSetted(Cell.StoneType stoneType);
+    public OnStoneSetted onStoneSettedDelegate;
     public Cell[,] Board => board;
 
-
-    public void AssignLaunchRole()
-    {
-        launchButton.onClick.AddListener(OnClickLaunchButton);
-    }
-
-    public void DepiveLaunchRole()
+    private void OnDisable()
     {
         launchButton?.onClick.RemoveListener(OnClickLaunchButton);
     }
@@ -41,9 +36,15 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public void InitBoard()
     {
         this.gameObject.SetActive(true);
+        launchButton.onClick.AddListener(OnClickLaunchButton);
+
+        // 마커 초기화
+        xMarker.SetActive(false);
+        lastPositionMarker.SetActive(false);
+
         board = new Cell[BoardRow, BoardCol];
 
-        onMarkerSettedDelegate = (stoneType) =>
+        onStoneSettedDelegate = (stoneType) =>
         {
             Debug.Log("### DEV_JSH MarkerEvent Start ###");
             Debug.Log($"### DEV_JSH 이번에 놓인 돌은 {stoneType.ToString()}");
@@ -61,6 +62,13 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
                     onCellClickedDelegate(i, j);
                 });
             }
+        }
+
+        // 돌이 있을 경우 모두 삭제
+        for (int i = stones.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform child = stones.transform.GetChild(i);
+            Destroy(child.gameObject);
         }
     }
 
@@ -126,7 +134,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
 
         // 돌 생성
-        GameObject stoneObj = stoneType == Cell.StoneType.Black ? Instantiate(blackStone, transform) : Instantiate(whiteStone, transform);
+        GameObject stoneObj = stoneType == Cell.StoneType.Black ? Instantiate(blackStone, stones) : Instantiate(whiteStone, stones);
         stoneObj.transform.position = markerPos;
 
         lastPositionMarker.SetActive(true);
