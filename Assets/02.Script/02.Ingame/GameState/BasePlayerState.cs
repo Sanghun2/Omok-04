@@ -15,7 +15,7 @@ public abstract class BasePlayerState
         {
             // 새로이 놓여진 Marker를 기반으로 게임의 결과를 판단
             var gameResult = gameLogic.CheckGameResult(marker, row, col);
-            if (gameResult == GameLogic.GameResult.NONE)
+            if (gameResult == Define.State.GameResult.NONE)
             {
                 HandleNextTurn(gameLogic);
                 Managers.Turn.SwitchTurn();
@@ -23,9 +23,6 @@ public abstract class BasePlayerState
             else
             {
                 gameLogic.EndGame(gameResult);
-                Define.Type.Player player = marker == Define.Type.StoneColor.Black ?
-                    Define.Type.Player.Player1 : Define.Type.Player.Player2;
-                Managers.Turn.EndGame(player);
             }
         }
     }

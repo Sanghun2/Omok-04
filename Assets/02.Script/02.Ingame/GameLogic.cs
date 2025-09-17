@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Text;
+using UnityEngine;
+using UnityEngine.Timeline;
 
 public class GameLogic
 {
-    public enum GameResult { NONE, BlackStoneWin, WhiteStoneWin, DRAW }
-
     public BasePlayerState firstPlayerState;            // Player A
     public BasePlayerState secondPlayerState;           // Player B
     public Cell[,] Board => board;
@@ -97,39 +96,54 @@ public class GameLogic
     }
 
     // Game Over 처리
-    public void EndGame(GameResult gameResult)
+    public void EndGame(Define.State.GameResult gameResult)
     {
         SetState(null);
         firstPlayerState = null;
         secondPlayerState = null;
 
+        Define.Type.Player player;
+
+        switch (gameResult)
+        {
+            case Define.State.GameResult.BlackStoneWin:
+                player = Define.Type.Player.Player1;
+                Managers.Turn.EndGame(player);
+                break;
+            case Define.State.GameResult.WhiteStoneWin:
+                player = Define.Type.Player.Player2;
+                Managers.Turn.EndGame(player);
+                break;
+            default:
+                break;
+        }
         Managers.GameResult.EndGame();
         Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
 
         if (gameType == Define.Type.Game.Multi)
         {
-            if (gameResult == GameResult.BlackStoneWin)
+            if (gameResult == Define.State.GameResult.BlackStoneWin)
                 Managers.GameResult.SendGameResult(true);
-            else if (gameResult == GameResult.WhiteStoneWin)
+            else if (gameResult == Define.State.GameResult.WhiteStoneWin)
                 Managers.GameResult.SendGameResult(false);
             //else // Draw일 때
         }
     }
 
     // 게임의 결과를 확인하는 함수
-    public GameResult CheckGameResult(Define.Type.StoneColor stoneType, int row, int col)
+    public Define.State.GameResult CheckGameResult(Define.Type.StoneColor stoneType, int row, int col)
     {
         if (OmokAI.CheckGameWin(stoneType, board, row, col)) 
         {
             if(stoneType == Define.Type.StoneColor.Black)
-                return GameResult.BlackStoneWin;
+                return Define.State.GameResult.BlackStoneWin;
             else if(stoneType == Define.Type.StoneColor.White)
-                return GameResult.WhiteStoneWin;
+                return Define.State.GameResult.WhiteStoneWin;
         }
         else if (OmokAI.CheckGameDraw(board))
         {
-            return GameResult.DRAW;
+            return Define.State.GameResult.DRAW;
         }
-        return GameResult.NONE;
+        return Define.State.GameResult.NONE;
     }
 }

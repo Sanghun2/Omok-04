@@ -23,6 +23,14 @@ public class Define
             InProgress,
             Ended
         }
+
+        public enum GameResult 
+        { 
+            NONE, 
+            BlackStoneWin, 
+            WhiteStoneWin, 
+            DRAW 
+        }
     }
 
     public class Type

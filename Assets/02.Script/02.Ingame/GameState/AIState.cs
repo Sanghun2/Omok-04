@@ -28,7 +28,7 @@ public class AIState : BasePlayerState
         else
         {
             Debug.Log("### DEV_JSH ∞‘¿” ∫Ò±Ë ###");
-            gameLogic.EndGame(GameLogic.GameResult.DRAW);
+            gameLogic.EndGame(Define.State.GameResult.DRAW);
         }
     }
 
