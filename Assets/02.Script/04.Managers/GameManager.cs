@@ -3,14 +3,18 @@ using UnityEngine;
 
 public class GameManager
 {
+    private Define.State.GameState currentGameState;
+
     #region Flow Control
 
     public void GoToMainMenu() {
         ProcessSceneChange(Define.Type.Scene.MainMenu);
+        currentGameState = Define.State.GameState.NotStarted;
     }
 
     public void GoToLogIn() {
         ProcessSceneChange(Define.Type.Scene.LogIn);
+        currentGameState = Define.State.GameState.NotStarted;
     }
 
     private void InitCurrentScene(Scene currentScene) {
@@ -33,15 +37,17 @@ public class GameManager
 
     #region Game Start
 
+
     public void StartSinglePlay(Define.Type.GameLevel level) {
         StartGame(Define.Type.Game.Single, level);
+
     }
 
-    public void StartLocalPlay() {
+    public void EnterLocalPlay() {
         StartGame(Define.Type.Game.Local);
     }
 
-    public void StartMultiPlay() {
+    public void EnterMultiPlay() {
         StartGame(Define.Type.Game.Multi);
     }
 
@@ -49,15 +55,18 @@ public class GameManager
 
         // setting game options
         Managers.Board.InitBoard();
+        currentGameState = Define.State.GameState.Ready;
 
         GameLogic gameLogic;
 
         switch (gameType) {
             case Define.Type.Game.Single:
                 gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
+                SetStatePlay();
                 break;
             case Define.Type.Game.Local:
                 gameLogic = new GameLogic(Managers.Board.Board, gameType);
+                SetStatePlay();
                 break;
             case Define.Type.Game.Multi:
                 //gameLogic = new GameLogic(Managers.Board.Board, gameType);
@@ -68,6 +77,13 @@ public class GameManager
 
         // transition scene
         ProcessSceneChange(Define.Type.Scene.InGame);
+    }
+
+    /// <summary>
+    /// 모든 플레이어가 준비되었을 때 실행하는 코드. 멀티플레이용
+    /// </summary>
+    public void SetStatePlay() {
+        currentGameState = Define.State.GameState.InProgress;
     }
 
     #endregion

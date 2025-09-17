@@ -7,11 +7,22 @@ public class Define
         public const float DEFAULT_TIME = 25f;
         public const int BoardRow = 15;
         public const int BoardCol = 15;
+
+        public class Photon
+        {
+            public const string PLAYER_TYPE = "playerType";
+        }
     }
 
     public class State
     {
-
+        public enum GameState
+        {
+            NotStarted,
+            Ready,
+            InProgress,
+            Ended
+        }
     }
 
     public class Type
@@ -31,12 +42,7 @@ public class Define
             Multi
         }
 
-        public enum GameState
-        {
-            NotStarted,
-            InProgress,
-            Ended
-        }
+        
 
         public enum Player
         {
