@@ -15,24 +15,24 @@ public static class OmokAI
     {
         foreach (var cell in board)
         {
-            if(cell.Stone == Cell.StoneType.None)
+            if(cell.Stone == Define.Type.StoneColor.None)
                 return false;
         }
         
         return true;
     }
 
-    public static bool CheckGameWin(Cell.StoneType stoneType, Cell[,] board, int row, int col)
+    public static bool CheckGameWin(Define.Type.StoneColor stoneColor, Cell[,] board, int row, int col)
     {
         foreach (var (rowDir, colDir) in directions)
         {
             int count = 1; // 현재 돌 포함
 
             // 한쪽 방향으로 체크
-            count += CountStones(stoneType, board, row, col, rowDir, colDir);
+            count += CountStones(stoneColor, board, row, col, rowDir, colDir);
 
             // 반대 방향으로 체크
-            count += CountStones(stoneType, board, row, col, -rowDir, -colDir);
+            count += CountStones(stoneColor, board, row, col, -rowDir, -colDir);
 
             if (count >= 5) return true;
         }
@@ -42,14 +42,14 @@ public static class OmokAI
     /// <summary>
     /// 연속된 마커 개수 확인
     /// </summary>
-    private static int CountStones(Cell.StoneType stoneType, Cell[,] board, int row, int col, int rowDir, int colDir)
+    private static int CountStones(Define.Type.StoneColor stoneColor, Cell[,] board, int row, int col, int rowDir, int colDir)
     {
         int count = 0;
         int r = row + rowDir;
         int c = col + colDir;
 
         // 한 칸 씩 이동하면서 Marker가 같다면 count++ 아니면 반복 종료
-        while (r >= 0 && r < BoardController.BoardRow && c >= 0 && c < BoardController.BoardCol && board[r, c].Stone == stoneType)
+        while (r >= 0 && r < BoardController.BoardRow && c >= 0 && c < BoardController.BoardCol && board[r, c].Stone == stoneColor)
         {
             count++;
             r += rowDir;
@@ -58,15 +58,18 @@ public static class OmokAI
         return count;
     }
 
-    public static bool CheckRenju(Cell.StoneType stoneType, Cell[,] board, int row, int col)
+    public static bool CheckRenju(Define.Type.StoneColor stoneColor, Cell[,] board, int row, int col)
     {
+        if (stoneColor == Define.Type.StoneColor.White)
+            return false;
+
         int openThreeDirs = 0; // 삼삼 판단용
         int openFourDirs = 0;  // 사사 판단용
 
         foreach (var (rowDir, colDir) in directions)
         {
             // 중심에 marker를 둔 상태로 해당 방향의 길이 9(오프셋 -4..+4) 문자열을 만든다
-            char[] line = BuildLineWithPlacement(board, stoneType, row, col, rowDir, colDir);
+            char[] line = BuildLineWithPlacement(board, stoneColor, row, col, rowDir, colDir);
 
             if (HasOpenThreeOrFour(line, 4))
                 openFourDirs++;
@@ -92,7 +95,7 @@ public static class OmokAI
     /// 중심에 돌을 둔다고 가정해서, 오프셋 -4..+4 으로 문자 배열을 만든다.
     /// 'X' = 내 돌(가정 포함), '_' = 빈칸, 'O' = 상대돌 또는 보드 밖(벽).
     /// </summary>
-    private static char[] BuildLineWithPlacement(Cell[,] board, Cell.StoneType stoneType, int row, int col, int dr, int dc)
+    private static char[] BuildLineWithPlacement(Cell[,] board, Define.Type.StoneColor stoneColor, int row, int col, int dr, int dc)
     {
         char[] line = new char[11];
         for (int offset = -5; offset <= 5; offset++)
@@ -114,8 +117,8 @@ public static class OmokAI
             else
             {
                 var m = board[r, c].Stone;
-                if (m == Cell.StoneType.None) line[idx] = '_'; // 빈칸은 '_'
-                else if (m == stoneType) line[idx] = 'X';
+                if (m == Define.Type.StoneColor.None) line[idx] = '_'; // 빈칸은 '_'
+                else if (m == stoneColor) line[idx] = 'X';
                 else line[idx] = 'O';
             }
         }

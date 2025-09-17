@@ -3,17 +3,17 @@ using UnityEngine;
 public class PlayerState : BasePlayerState
 {
     private bool isFirstPlayer;
-    private Cell.StoneType stoneType;
+    private Define.Type.StoneColor stoneColor;
     private string roomId;
     private bool isMultiplay;
 
-    public Cell.StoneType Stone => stoneType;
+    public Define.Type.StoneColor Stone => stoneColor;
 
     public PlayerState(bool isFirstPlayer)
     {
         this.isFirstPlayer = isFirstPlayer;
-        stoneType = isFirstPlayer ?
-            Cell.StoneType.Black : Cell.StoneType.White;
+        stoneColor = isFirstPlayer ?
+            Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
         isMultiplay = false;
     }
 
@@ -21,7 +21,7 @@ public class PlayerState : BasePlayerState
     public override void HandleMove(GameLogic gameLogic, int row, int col)
     {
         Debug.Log("### DEV_JSH Player_HandleMove Called ###");
-        ProcessMove(gameLogic, stoneType, row, col);
+        ProcessMove(gameLogic, stoneColor, row, col);
     }
 
     public override void OnEnter(GameLogic gameLogic)

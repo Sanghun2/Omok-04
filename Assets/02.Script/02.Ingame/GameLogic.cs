@@ -57,19 +57,21 @@ public class GameLogic
     /// board 배열에 새로운 Marker 값을 할당
     /// </summary>
     /// <returns></returns>
-    public bool SetNewBoardValue(Cell.StoneType stoneType, int row, int col)
+    public bool SetNewBoardValue(Define.Type.StoneColor stoneType, int row, int col)
     {
-        if (board[row, col].Stone != Cell.StoneType.None)
+        if (board[row, col].Stone != Define.Type.StoneColor.None)
         {
             Managers.Board.ActiveX_Marker(row,col);
+            Managers.Board.ResetCurretCell();
             return false;
         }
 
-        if (stoneType == Cell.StoneType.Black)
+        if (stoneType == Define.Type.StoneColor.Black)
         {
             if (OmokAI.CheckRenju(stoneType, board, row, col))
             {
                 Managers.Board.ActiveX_Marker(row,col);
+                Managers.Board.ResetCurretCell();
                 Debug.Log("### DEV_JSH 렌주룰상 금수 ###");
                 return false;
             }
@@ -77,14 +79,16 @@ public class GameLogic
             {
                 board[row, col].SetMarker(stoneType);
                 Managers.Board.PlaceMarker(stoneType, row, col);
+                Managers.Board.ResetCurretCell();
                 Managers.Board.onStoneSettedDelegate?.Invoke(stoneType);
                 return true;
             }
         }
-        else if (stoneType == Cell.StoneType.White)
+        else if (stoneType == Define.Type.StoneColor.White)
         {
             board[row, col].SetMarker(stoneType);
             Managers.Board.PlaceMarker(stoneType, row, col);
+            Managers.Board.ResetCurretCell();
             Managers.Board.onStoneSettedDelegate?.Invoke(stoneType);
             return true;
         }
@@ -113,13 +117,13 @@ public class GameLogic
     }
 
     // 게임의 결과를 확인하는 함수
-    public GameResult CheckGameResult(Cell.StoneType stoneType, int row, int col)
+    public GameResult CheckGameResult(Define.Type.StoneColor stoneType, int row, int col)
     {
         if (OmokAI.CheckGameWin(stoneType, board, row, col)) 
         {
-            if(stoneType == Cell.StoneType.Black)
+            if(stoneType == Define.Type.StoneColor.Black)
                 return GameResult.BlackStoneWin;
-            else if(stoneType == Cell.StoneType.White)
+            else if(stoneType == Define.Type.StoneColor.White)
                 return GameResult.WhiteStoneWin;
         }
         else if (OmokAI.CheckGameDraw(board))
