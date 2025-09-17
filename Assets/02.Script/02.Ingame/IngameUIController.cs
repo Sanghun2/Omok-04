@@ -11,6 +11,7 @@ public class IngameUIController : UIBase
     [SerializeField] public Button startButton;
     [SerializeField] public Button p2OKButton;
     [SerializeField] public Slider timeSlider;
+    [SerializeField] private TextMeshProUGUI p2Rank;
 
     private TextMeshProUGUI p1Name;
     private TextMeshProUGUI p1Result;
@@ -59,20 +60,25 @@ public class IngameUIController : UIBase
         if (Managers.Game.CurrentGameType == Define.Type.Game.Single)
         {
             if (p2Name != null) p2Name.text = "AI";
-            if (p2Result != null) p2Result.text = string.Empty;
+            if (p2Rank != null) p2Result.text = string.Empty;
             if (p2OKButton != null) p2OKButton.gameObject.SetActive(false);
         }
 
         // ★기존 타이머 초기화
         Timer timer = Managers.Time.GetTimer();
         if (timer != null)
-            BindTimer(timer);
+        { BindTimer(timer);
+            Debug.Log("Timer out");
+            timer.StartCount();
+        }
+
 
         Managers.Turn.OnTurnChanged.AddListener((player) =>
         {
             Managers.Time.GetTimer().SetTimeAsDefault();
 
         });
+
     }
 
     // ★기존 : 타이머 이벤트 연결
@@ -80,7 +86,7 @@ public class IngameUIController : UIBase
     {
         timer.OnTimeChanged -= UpdateTimerUI;
         timer.OnTimeChanged += UpdateTimerUI;
-        UpdateTimerUI(timer.CurrentTime, 30f);
+        timer.SetTimeAsDefault();
     }
 
     // ★기존 : TextMeshPro UI 갱신
@@ -95,16 +101,17 @@ public class IngameUIController : UIBase
             timeSlider.value = current / total;
     }
 
-    void Start()
+    protected override void Start()
     {
-        Debug.Log($"[TEST] Managers.Time null? : {Managers.Time == null}");
-        var t = Managers.Time?.GetTimer();
-        Debug.Log($"[TEST] Timer 찾음? : {t != null}");
-        if (t != null)
-        {
-            t.OnTimeChanged += (c, tot) => Debug.Log($"[TEST] Timer Tick : {c}");
-            t.SetTime(30, 30);
-            t.StartCount();
-        }
+        base.Start();
+        // Debug.Log($"[TEST] Managers.Time null? : {Managers.Time == null}");
+        //var t = Managers.Time?.GetTimer();
+        //Debug.Log($"[TEST] Timer 찾음? : {t != null}");
+        //if (t != null)
+        //{
+        //    t.OnTimeChanged += (c, tot) => Debug.Log($"[TEST] Timer Tick : {c}");
+        //    t.SetTime(30, 30);
+        //    t.StartCount();
+        //}
     }
 }

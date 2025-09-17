@@ -243,7 +243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3613071968443125213
 RectTransform:
   m_ObjectHideFlags: 0
@@ -410,7 +410,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: rank
+  m_text: '-'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 597f984e6a8bca6449e50dded0981bf8, type: 2}
   m_sharedMaterial: {fileID: -6156916054585843305, guid: 597f984e6a8bca6449e50dded0981bf8, type: 2}
@@ -797,7 +797,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: rank
+  m_text: '-
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 597f984e6a8bca6449e50dded0981bf8, type: 2}
   m_sharedMaterial: {fileID: -6156916054585843305, guid: 597f984e6a8bca6449e50dded0981bf8, type: 2}
@@ -2033,7 +2035,9 @@ MonoBehaviour:
   player2: {fileID: 1513001149364005590}
   pauseButton: {fileID: 5197165588435955637}
   startButton: {fileID: 4497459811443588694}
+  p2OKButton: {fileID: 8921065238443602695}
   timeSlider: {fileID: 3992632025316237283}
+  p2Rank: {fileID: 5186271901009303575}
   timerText: {fileID: 2417049842806786164}
 --- !u!1 &7176409182822036338
 GameObject:
