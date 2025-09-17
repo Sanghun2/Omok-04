@@ -49,7 +49,7 @@ public static class OmokAI
         int c = col + colDir;
 
         // 한 칸 씩 이동하면서 Marker가 같다면 count++ 아니면 반복 종료
-        while (r >= 0 && r < BoardController.BoardRow && c >= 0 && c < BoardController.BoardCol && board[r, c].Stone == stoneColor)
+        while (r >= 0 && r < Define.Value.BoardRow && c >= 0 && c < Define.Value.BoardCol && board[r, c].Stone == stoneColor)
         {
             count++;
             r += rowDir;
@@ -109,7 +109,7 @@ public static class OmokAI
                 // 우리가 놓는 돌 (가정)
                 line[idx] = 'X';
             }
-            else if (r < 0 || r >= BoardController.BoardRow || c < 0 || c >= BoardController.BoardCol)
+            else if (r < 0 || r >= Define.Value.BoardRow || c < 0 || c >= Define.Value.BoardCol)
             {
                 // 보드 밖은 벽으로 취급
                 line[idx] = 'O';
