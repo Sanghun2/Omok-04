@@ -5,11 +5,23 @@ public class Cell
     private int cellRow;
     private int cellCol;
     private Define.Type.StoneColor stoneColor;
+    private bool isRenju = false;
+    private bool onMarker = false;
 
     public int CellRow => cellRow;
     public int CellCol => cellCol;
 
     public Define.Type.StoneColor Stone => stoneColor;
+    public bool IsRenju
+    {
+        get { return isRenju; }
+        set { isRenju = value; }
+    }
+    public bool OnX_Marker
+    {
+        get { return onMarker; }
+        set { onMarker = value; }
+    }
     public delegate void OnCellClicked(int row, int col);  
     public OnCellClicked onCellClicked;
 
