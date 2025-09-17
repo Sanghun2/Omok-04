@@ -20,7 +20,7 @@ public partial class UIManager
         get
         {
             if (_mainUICanvas == null) {
-                _mainUICanvas = GameObject.FindGameObjectWithTag(Define.Path.MAIN_CANVAS_TAG).GetComponent<Canvas>();    
+                _mainUICanvas = GameObject.FindGameObjectWithTag(Define.Tag.MAIN_CANVAS_TAG).GetComponent<Canvas>();    
             }
 
             return _mainUICanvas;
@@ -31,7 +31,7 @@ public partial class UIManager
         get
         {
             if (_frontUICanvas == null) {
-                var canvsObj = GameObject.FindGameObjectWithTag(Define.Path.FRONT_CANVAS_TAG);
+                var canvsObj = GameObject.FindGameObjectWithTag(Define.Tag.FRONT_CANVAS_TAG);
                 if (canvsObj == null) {
                     var frontCanvasPrefb = Resources.Load<GameObject>(Define.Path.FRONT_CANVAS_PATH);
                     canvsObj = GameObject.Instantiate(frontCanvasPrefb);
