@@ -1,17 +1,24 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq; // LINQ 사용
+using System.Linq;
+using System;
+using System.Collections;
 
 public class IngameUIController : UIBase
 {
     [SerializeField] public GameObject player1;
     [SerializeField] public GameObject player2;
+    [SerializeField] public GameObject AITurn;  // Ai 생각 중.. 문구 표시
+
     [SerializeField] public Button pauseButton;
     [SerializeField] public Button startButton;
     [SerializeField] public Button p2OKButton;
+    [SerializeField] Button GoBackButton;
+
     [SerializeField] public Slider timeSlider;
     [SerializeField] private TextMeshProUGUI p2Rank;
+    [SerializeField] private TextMeshProUGUI timerText;
 
     private TextMeshProUGUI p1Name;
     private TextMeshProUGUI p1Result;
@@ -20,8 +27,7 @@ public class IngameUIController : UIBase
     private GameObject[] p1TurnChecks;
     private GameObject[] p2TurnChecks;
 
-    // ★추가 : 타이머 표시용 TextMeshPro (씬에 하나만 존재)
-    [SerializeField] private TextMeshProUGUI timerText;
+    private Coroutine aiTurnCoroutine;
 
     void Awake()
     {
@@ -56,7 +62,12 @@ public class IngameUIController : UIBase
     {
         base.InitUI();
 
-        // ★추가 : 싱글모드일 때 player2 UI 설정
+        GoBackButton.onClick.AddListener(() =>
+        {
+            Managers.Scene.ShowScene(Define.Type.Scene.MainMenu);
+        });
+
+        // 싱글모드일 때 player2 UI 설정
         if (Managers.Game.CurrentGameType == Define.Type.Game.Single)
         {
             if (p2Name != null) p2Name.text = "AI";
@@ -64,7 +75,7 @@ public class IngameUIController : UIBase
             if (p2OKButton != null) p2OKButton.gameObject.SetActive(false);
         }
 
-        // ★기존 타이머 초기화
+        // 기존 타이머 초기화
         Timer timer = Managers.Time.GetTimer();
         if (timer != null)
         { BindTimer(timer);
@@ -76,12 +87,51 @@ public class IngameUIController : UIBase
         Managers.Turn.OnTurnChanged.AddListener((player) =>
         {
             Managers.Time.GetTimer().SetTimeAsDefault();
-
         });
+        
+        Managers.Turn.OnTurnChanged.AddListener(HandleTurnChanged);
 
     }
 
-    // ★기존 : 타이머 이벤트 연결
+
+    private void HandleTurnChanged(Define.Type.Player player)
+    {
+
+        // AI 턴일 때
+        if (Managers.Game.CurrentGameType == Define.Type.Game.Single &&
+            player == Define.Type.Player.Player2)
+        {
+            // 이전 Coroutine이 있으면 중지
+            if (aiTurnCoroutine != null)
+            {
+                StopCoroutine(aiTurnCoroutine);
+                aiTurnCoroutine = null;
+            }
+            aiTurnCoroutine = StartCoroutine(ShowAITurnAfterDelay(1f));
+        }
+        else
+        {
+            // AI가 아닌 플레이어 차례면 바로 끄기
+            if (aiTurnCoroutine != null)
+            {
+                StopCoroutine(aiTurnCoroutine);
+                aiTurnCoroutine = null;
+            }
+            if (AITurn != null)
+                AITurn.SetActive(false);
+        }
+    }
+
+    private IEnumerator ShowAITurnAfterDelay(float delay)
+    {
+        // delay만큼 기다린 후
+        yield return new WaitForSeconds(delay);
+        if (AITurn != null)
+            AITurn.SetActive(true);
+    }
+
+
+    // 타이머 이벤트 연결
     private void BindTimer(Timer timer)
     {
         timer.OnTimeChanged -= UpdateTimerUI;
@@ -89,7 +139,7 @@ public class IngameUIController : UIBase
         timer.SetTimeAsDefault();
     }
 
-    // ★기존 : TextMeshPro UI 갱신
+    // TextMeshPro UI 갱신
     private void UpdateTimerUI(float current, float total)
     {
         if (timerText == null) return;

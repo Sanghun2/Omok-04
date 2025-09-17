@@ -9,8 +9,9 @@ public class LevelUIManager : UIBase
     [SerializeField] Button EasyModeButton;
     [SerializeField] Button NormalModeButton;
     [SerializeField] Button HardModeButton;
+    [SerializeField] Button GoBackButton;
 
-    [SerializeField] private UIBase inGameUI;
+    // [SerializeField] private UIBase inGameUI;
 
     // UI 초기화 시 버튼 이벤트 연결
     public override void InitUI()
@@ -20,6 +21,11 @@ public class LevelUIManager : UIBase
         EasyModeButton.onClick.AddListener(() => SetLevel(Define.Type.GameLevel.Easy));
         NormalModeButton.onClick.AddListener(() => SetLevel(Define.Type.GameLevel.Normal));
         HardModeButton.onClick.AddListener(() => SetLevel(Define.Type.GameLevel.Hard));
+
+        GoBackButton.onClick.AddListener(() =>
+        {
+            Managers.Scene.ShowScene(Define.Type.Scene.MainMenu);
+        });
     }
 
     public void SetLevel(Define.Type.GameLevel selectedLevel)
