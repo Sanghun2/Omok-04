@@ -20,13 +20,13 @@ public class UIManager
         get
         {
             if (_mainUICanvas == null) {
-                _mainUICanvas = GameObject.FindAnyObjectByType<Canvas>();    
+                _mainUICanvas = GameObject.FindGameObjectWithTag("Main Canvas").GetComponent<Canvas>();    
             }
 
             return _mainUICanvas;
         }
     }
-    public Canvas FrontCanvas
+    public FrontCanvas FrontCanvas
     {
         get
         {
@@ -37,7 +37,7 @@ public class UIManager
                     canvsObj = GameObject.Instantiate(frontCanvasPrefb);
                 }
 
-                _frontUICanvas = canvsObj.GetComponent<Canvas>();   
+                _frontUICanvas = canvsObj.GetComponent<FrontCanvas>();   
             }
 
             return _frontUICanvas;
@@ -48,7 +48,7 @@ public class UIManager
     private Dictionary<Type, UIBase> uiDict = new Dictionary<Type, UIBase>();
     private Stack<UIBase> _openedUIStack = new Stack<UIBase>();
     private Canvas _mainUICanvas;
-    private Canvas _frontUICanvas;
+    private FrontCanvas _frontUICanvas;
     private float scaleFactor;
 
     public void ClearUIs() {
@@ -56,18 +56,24 @@ public class UIManager
         uiDict.Clear();
         _openedUIStack.Clear();
     }
-    public T GetUI<T>() where T : UIBase {
+    public T GetUI<T>(string uiPrefabPath="") where T : UIBase {
         if (uiDict.TryGetValue(typeof(T), out UIBase result)) {
             return result as T;
         }
 
         result = GameObject.FindAnyObjectByType<T>(FindObjectsInactive.Include);
+
+        if (result == null && !string.IsNullOrEmpty(uiPrefabPath)) {
+            GameObject uiPrefab = Resources.Load<GameObject>(uiPrefabPath);
+            result = GameObject.Instantiate(uiPrefab).GetComponent<UIBase>();
+        }
+
         uiDict.Add(typeof(T), result);
         return result as T;
     }
 
-    public UIBase OpenUI<T>() where T : UIBase {
-        var targetUI = GetUI<T>();
+    public UIBase OpenUI<T>(string uiPrefabPath="") where T : UIBase {
+        var targetUI = GetUI<T>(uiPrefabPath);
         targetUI?.OpenUI();
         _openedUIStack.Push(targetUI); 
         return targetUI;

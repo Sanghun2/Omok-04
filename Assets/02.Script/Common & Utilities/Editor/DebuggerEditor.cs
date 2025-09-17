@@ -10,6 +10,44 @@ public class DebuggerEditor : Editor
         var _script = (Debugger)target;
         GUILayout.Space(20);
 
+        #region UI
+
+        GUI.enabled = EditorApplication.isPlaying;
+        GUI.color = Color.saddleBrown;
+        GUILayout.BeginHorizontal();
+        {
+            if (GUILayout.Button("Open Pop Up Front")) {
+                _script.Test_OpenPopUpFront();
+            }
+            if (GUILayout.Button("Open Pop Up Main")) {
+                _script.Test_OpenPopUpMain();
+            }
+        }
+        GUILayout.EndHorizontal();
+        if (GUILayout.Button("Hide Pop Up")) {
+            _script.Test_HidePopUp();
+        }
+        GUI.color = Color.white;
+        GUI.enabled = true;
+
+        #endregion
+
+        #region Match Making
+
+        GUILayout.Space(20);
+        GUI.enabled = EditorApplication.isPlaying;
+        GUI.color = Color.yellow;
+        if (GUILayout.Button("Quick Match")) {
+            _script.Test_QuickMatch();
+        }
+        GUI.color = Color.white;
+        GUI.enabled = true;
+
+        #endregion
+
+        #region Player
+
+        GUILayout.Space(20);
         GUI.enabled = EditorApplication.isPlaying;
         GUI.color = Color.green;
         if (GUILayout.Button("Init Player")) {
@@ -17,6 +55,10 @@ public class DebuggerEditor : Editor
         }
         GUI.color = Color.white;
         GUI.enabled = true;
+
+        #endregion
+
+        #region Scene
 
         GUILayout.Space(20);
         GUI.color = Color.orange;
@@ -38,6 +80,10 @@ public class DebuggerEditor : Editor
         GUILayout.EndHorizontal();
         GUI.color = Color.white;
 
+        #endregion
+
+        #region Timer
+
         GUI.enabled = EditorApplication.isPlaying;
         GUILayout.Space(20);
         GUI.color = Color.cyan;
@@ -56,5 +102,7 @@ public class DebuggerEditor : Editor
         }
         GUILayout.EndHorizontal();
         GUI.enabled = true;
+
+        #endregion
     }
 }

@@ -10,17 +10,27 @@ public class RegistrationManager : MonoBehaviour
     [SerializeField] TMP_InputField usernameInput;
     [SerializeField] TMP_InputField passwordInput;
     [SerializeField] TMP_InputField confirmPasswordInput;
+    [SerializeField] Button showPasswordButton;
     [SerializeField] Button registerButton;
     [SerializeField] TextMeshProUGUI statusText;
 
     [SerializeField] GameObject errorPopup;
 
 
+    void OnEnable()
+    {
+        statusText.text = "회원가입";
+    }
     void Start()
     {
-        // 버튼이 클릭되었을 때 Register 함수를 실행하도록 연결
-        registerButton.onClick.AddListener(() => {
+
+        registerButton.onClick.AddListener(() =>
+        {
             StartCoroutine(Register());
+        });
+        showPasswordButton.onClick.AddListener(() =>
+        {
+            ShowPassword();
         });
     }
 
@@ -47,9 +57,9 @@ public class RegistrationManager : MonoBehaviour
 
         string json = $"{{ \"username\": \"{username}\", \"password\": \"{password}\" }}";
 
-        
 
-
+        // "http://localhost:3000/auth/register"
+        // "https://omokserver-04.onrender.com/auth/register"
         using (UnityWebRequest request = new UnityWebRequest("https://omokserver-04.onrender.com/auth/register", "POST"))
         {
             // 데이터와 헤더 설정
@@ -75,6 +85,23 @@ public class RegistrationManager : MonoBehaviour
                 Debug.LogError("서버 응답: " + request.error);
                 statusText.text = "회원가입 실패";
             }
+        }
+    }
+    void ShowPassword()
+    {
+        if (passwordInput.contentType == TMP_InputField.ContentType.Password)
+        {
+            passwordInput.contentType = TMP_InputField.ContentType.Standard;
+            confirmPasswordInput.contentType = TMP_InputField.ContentType.Standard;
+            passwordInput.ForceLabelUpdate();
+            confirmPasswordInput.ForceLabelUpdate();
+        }
+        else
+        {
+            passwordInput.contentType = TMP_InputField.ContentType.Password;
+            confirmPasswordInput.contentType = TMP_InputField.ContentType.Password;
+            passwordInput.ForceLabelUpdate();
+            confirmPasswordInput.ForceLabelUpdate();
         }
     }
 }

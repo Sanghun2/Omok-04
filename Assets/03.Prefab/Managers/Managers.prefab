@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2928761425019302627}
   - component: {fileID: 7867372196785171462}
   - component: {fileID: 1762990115497524668}
+  - component: {fileID: 4182108965287594781}
+  - component: {fileID: 1671015680558231338}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -84,6 +86,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2702b11388149cc4697823752e3e79cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Debugger
+  targetPlayer: 0
+  playerName: 
   targetScene: 0
   testTimer: {fileID: 0}
   testTime: 3
+--- !u!114 &4182108965287594781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2150337205909338493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c03cb8b57ca304fab397ffc8683498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PhotonNetworkController
+--- !u!114 &1671015680558231338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2150337205909338493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
