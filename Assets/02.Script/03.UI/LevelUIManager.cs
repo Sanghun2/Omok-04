@@ -24,8 +24,29 @@ public class LevelUIManager : UIBase
 
         GoBackButton.onClick.AddListener(() =>
         {
-            Managers.Scene.ShowScene(Define.Type.Scene.MainMenu);
+            // Level UI를 닫음
+            this.CloseUI();
+
+            // 부모(Main Menu UI)를 열기
+            if (transform.parent != null)
+            {
+                var parentUI = transform.parent.GetComponent<UIBase>();
+                if (parentUI != null)
+                {
+                    parentUI.OpenUI();
+                }
+            }
+            var introButton = transform.parent.Find("[Intro]Button");
+            if (introButton != null)
+            {
+                introButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("[Intro]Button을 찾을 수 없습니다.");
+            }
         });
+
     }
 
     public void SetLevel(Define.Type.GameLevel selectedLevel)
