@@ -5,6 +5,11 @@ public class Define
     public class Value
     {
         public const float DEFAULT_TIME = 25f;
+
+        public class Photon
+        {
+            public const string PLAYER_TYPE = "playerType";
+        }
     }
 
     public class State
