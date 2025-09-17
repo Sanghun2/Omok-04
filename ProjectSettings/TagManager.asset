@@ -9,6 +9,7 @@ TagManager:
   - TurnCheck
   - Front Canvas
   - Main Canvas
+  - Background Canvas
   layers:
   - Default
   - TransparentFX

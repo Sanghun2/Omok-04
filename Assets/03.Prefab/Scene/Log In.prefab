@@ -2050,7 +2050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9193606004177880219
 Transform:
   m_ObjectHideFlags: 0
@@ -2080,11 +2080,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4afe0ed842df984994ba3873ee2085b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoginManager
-  usernameInput: {fileID: 3512291746243887699}
-  passwordInput: {fileID: 3893297876748409309}
-  loginButton: {fileID: 4408164418159924389}
-  statusText: {fileID: 6680489186217018086}
-  errorPopup: {fileID: 9087508208147401531}
+  usernameInput: {fileID: 0}
+  passwordInput: {fileID: 0}
+  showPasswordButton: {fileID: 0}
+  loginButton: {fileID: 0}
+  statusText: {fileID: 0}
+  errorPopup: {fileID: 0}
 --- !u!114 &3925078274775611565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2097,12 +2098,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0d2a7a625e33943b237f3016a5feb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RegistrationManager
-  usernameInput: {fileID: 177627431555640236}
-  passwordInput: {fileID: 2008431190002741463}
-  confirmPasswordInput: {fileID: 8280018697240169269}
-  registerButton: {fileID: 958766992360992532}
-  statusText: {fileID: 6582756687917784173}
-  errorPopup: {fileID: 250798972124844610}
+  usernameInput: {fileID: 0}
+  passwordInput: {fileID: 0}
+  confirmPasswordInput: {fileID: 0}
+  showPasswordButton: {fileID: 0}
+  registerButton: {fileID: 0}
+  statusText: {fileID: 0}
+  errorPopup: {fileID: 0}
 --- !u!114 &804290354503012944
 MonoBehaviour:
   m_ObjectHideFlags: 0
