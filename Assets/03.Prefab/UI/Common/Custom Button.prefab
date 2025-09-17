@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4848044819611524427}
   - component: {fileID: 1059481135795954296}
   - component: {fileID: 3988407438638128266}
+  - component: {fileID: 547409478578994221}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Custom Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,6 +122,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &547409478578994221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571153537705752776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6839e3317ca34944d8ef8384a2cc44ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustomButton
+  targetButton: {fileID: 3988407438638128266}
+  buttonTitleText: {fileID: 1352191722057592500}
 --- !u!1 &4167010366315155257
 GameObject:
   m_ObjectHideFlags: 0

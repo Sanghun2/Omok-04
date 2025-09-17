@@ -25,7 +25,6 @@ public class TimeManager : IInitializable
     public Timer GetTimer() {
         if (timer == null) {
             timer = GameObject.FindAnyObjectByType<Timer>(FindObjectsInactive.Include);
-            Debug.LogAssertion($"timer √ ±‚»≠ µ ");
         }
         return timer;
     }
