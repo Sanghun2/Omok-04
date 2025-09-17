@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 public class GameManager
@@ -28,12 +28,12 @@ public class GameManager
     }
     
     private void ProcessSceneChange(Define.Type.Scene targetSceneType) {
-        if (Managers.Scene.CurrentSceneType == targetSceneType) { Debug.LogAssertion($"°°Àº ¾ÀÀÌ¹Ç·Î ÀÌµ¿ÇÏÁö ¾ÊÀ½"); return; }
+        //if (Managers.Scene.CurrentSceneType == targetSceneType) { Debug.LogAssertion($"ê°™ì€ ì”¬ì´ë¯€ë¡œ ì´ë™í•˜ì§€ ì•ŠìŒ"); return; }
 
         var prevScene = Managers.Scene.CurrentScene;
         ReleasePrevScene(prevScene);
         Managers.Scene.ShowScene(targetSceneType);
-        InitCurrentScene(Managers.Scene.CurrentScene);
+        Managers.Coroutine.WaitFrame(1, () => InitCurrentScene(Managers.Scene.CurrentScene));
     }
 
     #endregion
@@ -85,7 +85,7 @@ public class GameManager
     }
 
     /// <summary>
-    /// ¸ğµç ÇÃ·¹ÀÌ¾î°¡ ÁØºñµÇ¾úÀ» ¶§ ½ÇÇàÇÏ´Â ÄÚµå. ¸ÖÆ¼ÇÃ·¹ÀÌ¿ë
+    /// ëª¨ë“  í”Œë ˆì´ì–´ê°€ ì¤€ë¹„ë˜ì—ˆì„ ë•Œ ì‹¤í–‰í•˜ëŠ” ì½”ë“œ. ë©€í‹°í”Œë ˆì´ìš©
     /// </summary>
     public void SetStatePlay() {
         currentGameState = Define.State.GameState.InProgress;

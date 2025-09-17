@@ -52,7 +52,8 @@ public class TimeManager : IInitializable
 
 public partial class Timer : MonoBehaviour
 {
-    public void SetTimeAsDefault() {
+    public Timer SetTimeAsDefault() {
         SetTime(Define.Value.DEFAULT_TIME, Define.Value.DEFAULT_TIME);
+        return this;
     }
 }

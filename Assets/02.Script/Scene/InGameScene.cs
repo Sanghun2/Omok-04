@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class InGameScene : Scene
 {
@@ -13,8 +13,14 @@ public class InGameScene : Scene
         }
         else
         {
-            Debug.LogAssertion($"<color=orange>¿¬°áµÈ GameObject°¡ ¾øÀ½</color>");
+            Debug.LogAssertion($"<color=orange>ì—°ê²°ëœ GameObjectê°€ ì—†ìŒ</color>");
         }
 
+    }
+
+    public override void InitScene() {
+        //Managers.UI.GetUI<IngameUIController>().InitUI();
+        Managers.Time.GetTimer().SetTimeAsDefault().StartCount();
+        Debug.LogAssertion($"in game scene init");
     }
 }
