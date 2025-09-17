@@ -26,10 +26,11 @@ public class PlayerManager : IInitializable
         isInit = true;
     }
     private void FindPlayers() {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        PlayerUI[] players = GameObject.FindGameObjectWithTag(Define.Tag.BACKGROUND_CANVAS_TAG).GetComponentsInChildren<PlayerUI>(true);
+        Debug.LogAssertion($"found player: {players.Length}");
 
         for (int i = 0; i < players.Length; i++) {
-            PlayerUI targetPlayer = players[i].GetComponent<PlayerUI>();
+            PlayerUI targetPlayer = players[i];
             if (targetPlayer.PlayerType == Define.Type.Player.Player1) {
                 player1 = targetPlayer;
                 Debug.LogAssertion($"<color=green>player1 found</color>");

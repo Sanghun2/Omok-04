@@ -14,15 +14,18 @@ public class Define
         }
     }
 
+    public class Tag
+    {
+        public const string MAIN_CANVAS_TAG = "Main Canvas";
+        public const string FRONT_CANVAS_TAG = "Front Canvas";
+        public const string BACKGROUND_CANVAS_TAG = "Background Canvas";
+    }
+
     public class Path
     {
         // Prefab
         public const string POP_UP_UI_PATH = "UI/Pop Up UI";
         public const string FRONT_CANVAS_PATH = "UI/Front Canvas";
-
-        // Tag
-        public const string MAIN_CANVAS_TAG = "Main Canvas";
-        public const string FRONT_CANVAS_TAG = "Front Canvas";
     }
 
     public class State
