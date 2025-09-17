@@ -19,7 +19,7 @@ public class Debugger : MonoBehaviour
     #region UI
 
     public void Test_OpenPopUpFront() {
-        var ui = Managers.UI.OpenUI<PopUpUI>("UI/Pop Up UI");
+        var ui = Managers.UI.OpenUI<PopUpUI>(Define.Value.POP_UP_UI_PATH);
         Managers.UI.FrontCanvas.ActiveTouchBlockPanel(true);
         ui.transform.SetParent(Managers.UI.FrontCanvas.transform);
         ui.transform.SetAsLastSibling();
@@ -30,7 +30,7 @@ public class Debugger : MonoBehaviour
     }
     public void Test_OpenPopUpMain() {
         Managers.UI.FrontCanvas.ActiveTouchBlockPanel(false);
-        var ui = Managers.UI.OpenUI<PopUpUI>("UI/Pop Up UI");
+        var ui = Managers.UI.OpenUI<PopUpUI>(Define.Value.POP_UP_UI_PATH);
         ui.transform.SetParent(Managers.UI.MainCanvas.transform);
         ui.transform.SetAsLastSibling();
         ui.transform.localPosition = Vector3.zero;
