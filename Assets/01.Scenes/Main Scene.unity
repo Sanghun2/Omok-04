@@ -3374,6 +3374,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8233560253406888296, guid: 973ef9ed9753dc240b6a358acfacb04b, type: 3}
+      propertyPath: m_TagString
+      value: Background Canvas
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

@@ -134,14 +134,17 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
         foreach (var cell in board)
         {
-            if(cell.IsRenju && !cell.OnX_Marker)
+            if (cell.IsRenju && !cell.OnX_Marker)
             {
                 cell.OnX_Marker = true;
                 GameObject x_MarkerObj = Instantiate(x_MarkerPrefab, markers);
                 x_MarkerObj.transform.position = new Vector3((cell.CellRow - 7) * 0.45f, (cell.CellCol - 7) * 0.45f, 0);
             }
-            else if(!cell.IsRenju && cell.OnX_Marker)
+            else if (!cell.IsRenju && cell.OnX_Marker)
+            {
+                cell.OnX_Marker = false;
                 DestroyX_Marker(cell.CellRow, cell.CellCol);
+            }
         }
     }
 
