@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class GameManager
 {
+    public Define.Type.Game CurrentGameType => currentGameType;
+
     private Define.State.GameState currentGameState;
+    private Define.Type.Game currentGameType;
 
     #region Flow Control
 
@@ -56,6 +59,7 @@ public class GameManager
         // setting game options
         Managers.Board.InitBoard();
         currentGameState = Define.State.GameState.Ready;
+        currentGameType = gameType;
 
         GameLogic gameLogic;
 
