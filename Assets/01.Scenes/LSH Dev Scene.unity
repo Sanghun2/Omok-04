@@ -611,6 +611,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4263925318876994990, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4700554279417667693, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: sceneUI
       value: 
@@ -675,6 +679,14 @@ PrefabInstance:
     - target: {fileID: 594562647804621048, guid: e9259eb15551e8a488386a16e44d3099, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257478250646095889, guid: e9259eb15551e8a488386a16e44d3099, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671015680558231338, guid: e9259eb15551e8a488386a16e44d3099, type: 3}
+      propertyPath: sceneViewId
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1762990115497524668, guid: e9259eb15551e8a488386a16e44d3099, type: 3}
       propertyPath: testTimer
@@ -760,7 +772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1036628945
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1844,7 +1856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1854083502
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2242,7 +2254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7986939443346863323, guid: de2d3da267e459448a8d6f3fb79cea76, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8212886055650033687, guid: de2d3da267e459448a8d6f3fb79cea76, type: 3}
       propertyPath: sceneUI

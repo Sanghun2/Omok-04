@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 public class GameManager
@@ -7,33 +7,39 @@ public class GameManager
 
     private Define.State.GameState currentGameState;
     private Define.Type.Game currentGameType;
+    private Define.Type.GameLevel lastGameLevel;
 
     #region Flow Control
 
-    public void GoToMainMenu() {
+    public void GoToMainMenu()
+    {
         ProcessSceneChange(Define.Type.Scene.MainMenu);
         currentGameState = Define.State.GameState.NotStarted;
     }
 
-    public void GoToLogIn() {
+    public void GoToLogIn()
+    {
         ProcessSceneChange(Define.Type.Scene.LogIn);
         currentGameState = Define.State.GameState.NotStarted;
     }
 
-    private void InitCurrentScene(Scene currentScene) {
+    private void InitCurrentScene(Scene currentScene)
+    {
         currentScene.InitScene();
     }
-    private void ReleasePrevScene(Scene prevScene) {
+    private void ReleasePrevScene(Scene prevScene)
+    {
         prevScene?.ReleaseScene();
     }
-    
-    private void ProcessSceneChange(Define.Type.Scene targetSceneType) {
-        if (Managers.Scene.CurrentSceneType == targetSceneType) { Debug.LogAssertion($"°°Àº ¾ÀÀÌ¹Ç·Î ÀÌµ¿ÇÏÁö ¾ÊÀ½"); return; }
+
+    private void ProcessSceneChange(Define.Type.Scene targetSceneType)
+    {
+        //if (Managers.Scene.CurrentSceneType == targetSceneType) { Debug.LogAssertion($"ê°™ì€ ì”¬ì´ë¯€ë¡œ ì´ë™í•˜ì§€ ì•ŠìŒ"); return; }
 
         var prevScene = Managers.Scene.CurrentScene;
         ReleasePrevScene(prevScene);
         Managers.Scene.ShowScene(targetSceneType);
-        InitCurrentScene(Managers.Scene.CurrentScene);
+        Managers.Coroutine.WaitFrame(1, () => InitCurrentScene(Managers.Scene.CurrentScene));
     }
 
     #endregion
@@ -41,20 +47,27 @@ public class GameManager
     #region Game Start
 
 
-    public void StartSinglePlay(Define.Type.GameLevel level) {
+    public void StartSinglePlay(Define.Type.GameLevel level)
+    {
         StartGame(Define.Type.Game.Single, level);
 
     }
 
-    public void EnterLocalPlay() {
+    public void EnterLocalPlay()
+    {
         StartGame(Define.Type.Game.Local);
     }
 
-    public void EnterMultiPlay() {
+    public void EnterMultiPlay()
+    {
         StartGame(Define.Type.Game.Multi);
     }
 
-    private void StartGame(Define.Type.Game gameType, Define.Type.GameLevel level = Define.Type.GameLevel.Easy) {
+    private void StartGame(Define.Type.Game gameType, Define.Type.GameLevel level = Define.Type.GameLevel.Easy)
+    {
+        //ê²Œì„ ë‹¤ì‹œí•˜ê¸° ê¸°ëŠ¥ë•Œë¬¸ì— ì¶”ê°€í•¨
+        this.currentGameType = gameType;
+        this.lastGameLevel = level;
 
         // setting game options
         Managers.Board.InitBoard();
@@ -64,7 +77,8 @@ public class GameManager
 
         GameLogic gameLogic;
 
-        switch (gameType) {
+        switch (gameType)
+        {
             case Define.Type.Game.Single:
                 gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
                 SetStatePlay();
@@ -85,12 +99,20 @@ public class GameManager
     }
 
     /// <summary>
-    /// ¸ğµç ÇÃ·¹ÀÌ¾î°¡ ÁØºñµÇ¾úÀ» ¶§ ½ÇÇàÇÏ´Â ÄÚµå. ¸ÖÆ¼ÇÃ·¹ÀÌ¿ë
+    /// ëª¨ë“  í”Œë ˆì´ì–´ê°€ ì¤€ë¹„ë˜ì—ˆì„ ë•Œ ì‹¤í–‰í•˜ëŠ” ì½”ë“œ. ë©€í‹°í”Œë ˆì´ìš©
     /// </summary>
-    public void SetStatePlay() {
+    public void SetStatePlay()
+    {
         currentGameState = Define.State.GameState.InProgress;
     }
 
     #endregion
-
+    
+    #region Restart Game
+    public void RestartLastGame()
+    {
+        Debug.Log($"ê²Œì„ ì¬ì‹œì‘. ëª¨ë“œ: {currentGameType}, ë‚œì´ë„: {lastGameLevel}");
+        StartGame(currentGameType, lastGameLevel);
+    }
+    #endregion
 }

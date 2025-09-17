@@ -16,6 +16,32 @@ public class Debugger : MonoBehaviour
     [SerializeField] Timer testTimer;
     [SerializeField] float testTime = 3f;
 
+    #region UI
+
+    public void Test_OpenPopUpFront() {
+        var ui = Managers.UI.OpenUI<PopUpUI>("UI/Pop Up UI");
+        Managers.UI.FrontCanvas.ActiveTouchBlockPanel(true);
+        ui.transform.SetParent(Managers.UI.FrontCanvas.transform);
+        ui.transform.SetAsLastSibling();
+        ui.transform.localPosition = Vector3.zero;
+        var popup = ui as PopUpUI;
+        popup.InitPopUp(new PopUpInfo("대전 상대를 찾는중..", string.Empty,
+            new PopUpButtonInfo("취소", () => Managers.UI.CloseUI<PopUpUI>())));
+    }
+    public void Test_OpenPopUpMain() {
+        Managers.UI.FrontCanvas.ActiveTouchBlockPanel(false);
+        var ui = Managers.UI.OpenUI<PopUpUI>("UI/Pop Up UI");
+        ui.transform.SetParent(Managers.UI.MainCanvas.transform);
+        ui.transform.SetAsLastSibling();
+        ui.transform.localPosition = Vector3.zero;
+    }
+    public void Test_HidePopUp() {
+        Managers.UI.FrontCanvas.ActiveTouchBlockPanel(false);
+        Managers.UI.CloseUI<PopUpUI>();
+    }
+
+    #endregion
+
     #region Match Making
 
     public void Test_QuickMatch() {

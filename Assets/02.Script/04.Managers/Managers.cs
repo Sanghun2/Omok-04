@@ -40,7 +40,7 @@ public class Managers : MonoBehaviour
     }
     public static TimeManager Time => timeManager;
     public static GameManager Game => gameManager;
-    //public static NetworkManager Network => networkManager;
+    public static NetworkManager Network => networkManager;
     public static TurnManager Turn => turnManager;
     public static UserInfoManager UserInfo
     {
@@ -82,7 +82,7 @@ public class Managers : MonoBehaviour
     static GameResultManager gameResultManager;
     static UserInfoManager userInfoManager;
     static TurnManager turnManager = new TurnManager();
-    //static NetworkManager networkManager = new NetworkManager();
+    static NetworkManager networkManager = new NetworkManager();
     static GameManager gameManager => new GameManager();
     static TimeManager timeManager = new TimeManager();
     static CoroutineManager coroutineManager;
@@ -95,6 +95,7 @@ public class Managers : MonoBehaviour
             Scene,
             Time,
             Player,
+            Network,
         };
 
         InitializeAll(initializeList);
@@ -103,7 +104,7 @@ public class Managers : MonoBehaviour
     }
 
     private void LoadFirstScene() {
-        Debug.LogAssertion($"ù �� �ε� �ʿ�");
+        Debug.LogAssertion($"시작 씬 로드 필요");
     }
 
     private void InitializeAll(List<IInitializable> initializeList) {

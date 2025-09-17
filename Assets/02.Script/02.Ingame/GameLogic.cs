@@ -67,9 +67,8 @@ public class GameLogic
 
         if (stoneType == Define.Type.StoneColor.Black)
         {
-            if (OmokAI.CheckRenju(stoneType, board, row, col))
+            if (board[row,col].IsRenju)
             {
-                Managers.Board.ActiveX_Marker(row,col);
                 Managers.Board.ResetCurretCell();
                 Debug.Log("### DEV_JSH 렌주룰상 금수 ###");
                 return false;
@@ -80,12 +79,24 @@ public class GameLogic
                 Managers.Board.PlaceMarker(stoneType, row, col);
                 Managers.Board.ResetCurretCell();
                 Managers.Board.onStoneSettedDelegate?.Invoke(stoneType);
+
+                foreach (var cell in board)
+                {
+                    if (cell.Stone == Define.Type.StoneColor.None)
+                        OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
+                }
+
+                Managers.Board.ShowAllRenju(board);
+
                 return true;
             }
         }
         else if (stoneType == Define.Type.StoneColor.White)
         {
+            board[row, col].IsRenju = false;
+            board[row, col].OnX_Marker = false;
             board[row, col].SetMarker(stoneType);
+            Managers.Board.DestroyX_Marker(row, col);
             Managers.Board.PlaceMarker(stoneType, row, col);
             Managers.Board.ResetCurretCell();
             Managers.Board.onStoneSettedDelegate?.Invoke(stoneType);
