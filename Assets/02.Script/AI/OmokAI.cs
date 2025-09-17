@@ -63,6 +63,8 @@ public static class OmokAI
         if (stoneColor == Define.Type.StoneColor.White)
             return false;
 
+        Debug.Log($"¹Þ¾Æ¿Â Row : {row} / Col : {col}");
+
         int openThreeDirs = 0; // »ï»ï ÆÇ´Ü¿ë
         int openFourDirs = 0;  // »ç»ç ÆÇ´Ü¿ë
 
@@ -80,14 +82,19 @@ public static class OmokAI
 
         // »ï»ï
         if (openThreeDirs >= 2)
+        {
+            board[row,col].IsRenju = true;
             return true;
+        }
 
         // »ç»ç
-        if (openFourDirs >= 2)        
+        if (openFourDirs >= 2)
+        {
+            board[row, col].IsRenju = true;
             return true;
-        
+        }
 
-
+        board[row,col].IsRenju = false;
         return false;
     }
 
