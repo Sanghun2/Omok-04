@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
@@ -54,7 +55,7 @@ public class NetworkManager : IInitializable
     private INetworkController networkController;
     private PhotonNetworkController photonNetworkController;
 
-    public void QuickMatch() {
+    public void FindMatch() {
         networkController.QuickMatch(matchPlayers:2);
     }
 
@@ -84,5 +85,9 @@ public class NetworkManager : IInitializable
         networkController = Photon;
         networkController.InitConnect();
         isInit = true;
+    }
+
+    public void CancelFindMatch() {
+        Debug.LogAssertion($"<color=orange>대전 상대 탐색 중지</color>");
     }
 }
