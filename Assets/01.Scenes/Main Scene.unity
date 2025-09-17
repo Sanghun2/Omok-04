@@ -1732,6 +1732,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 634029966}
   m_CullTransparentMesh: 1
+--- !u!114 &735923472 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5873055724567867423, guid: 7121039228ec01742ab6f40334546337, type: 3}
+  m_PrefabInstance: {fileID: 1961725785}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &750501953
 GameObject:
   m_ObjectHideFlags: 0
@@ -4968,6 +4979,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1671015680558231338, guid: e9259eb15551e8a488386a16e44d3099, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1762990115497524668, guid: e9259eb15551e8a488386a16e44d3099, type: 3}
       propertyPath: targetScene
       value: 0
@@ -5276,7 +5291,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2414757160182648438, guid: 7121039228ec01742ab6f40334546337, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1961725788}
   m_SourcePrefab: {fileID: 100100000, guid: 7121039228ec01742ab6f40334546337, type: 3}
 --- !u!224 &1961725786 stripped
 RectTransform:
@@ -5288,6 +5306,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2414757160182648438, guid: 7121039228ec01742ab6f40334546337, type: 3}
   m_PrefabInstance: {fileID: 1961725785}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1961725788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961725787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97d078236f420d4cb3fabd7c4dfb2e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RestartButton
+  restartButton: {fileID: 735923472}
+  gameOverUI: {fileID: 1961725787}
 --- !u!1 &1999376433
 GameObject:
   m_ObjectHideFlags: 0
