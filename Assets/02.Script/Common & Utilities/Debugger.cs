@@ -37,7 +37,7 @@ public class Debugger : MonoBehaviour
         Managers.Game.GoToLogIn();
     }
     public void Test_GoToInGame() {
-        Managers.Game.StartLocalPlay();
+        Managers.Game.StartSinglePlay(Define.Type.GameLevel.Easy);
     }
 
     #endregion

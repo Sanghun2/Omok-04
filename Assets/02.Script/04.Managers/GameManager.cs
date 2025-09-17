@@ -9,12 +9,12 @@ public class GameManager
 
     public void GoToMainMenu() {
         ProcessSceneChange(Define.Type.Scene.MainMenu);
-        currentGameState = Define.State.GameState.None;
+        currentGameState = Define.State.GameState.NotStarted;
     }
 
     public void GoToLogIn() {
         ProcessSceneChange(Define.Type.Scene.LogIn);
-        currentGameState = Define.State.GameState.None;
+        currentGameState = Define.State.GameState.NotStarted;
     }
 
     private void InitCurrentScene(Scene currentScene) {
@@ -83,7 +83,7 @@ public class GameManager
     /// 모든 플레이어가 준비되었을 때 실행하는 코드. 멀티플레이용
     /// </summary>
     public void SetStatePlay() {
-        currentGameState = Define.State.GameState.Playing;
+        currentGameState = Define.State.GameState.InProgress;
     }
 
     #endregion
