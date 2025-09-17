@@ -46,6 +46,11 @@ public class Define
 
     public class Type
     {
+        public enum PopUpParent {
+            Front,
+            Main,
+        }
+
         public enum Scene
         {
             None = -1,

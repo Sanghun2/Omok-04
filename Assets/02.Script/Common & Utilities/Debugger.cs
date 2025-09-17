@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Debugger : MonoBehaviour
 {
@@ -19,25 +20,24 @@ public class Debugger : MonoBehaviour
     #region UI
 
     public void Test_OpenPopUpFront() {
-        var ui = Managers.UI.OpenUI<PopUpUI>(Define.Path.POP_UP_UI_PATH);
-        Managers.UI.FrontCanvas.ActiveTouchBlockPanel(true);
-        ui.transform.SetParent(Managers.UI.FrontCanvas.transform);
-        ui.transform.SetAsLastSibling();
-        ui.transform.localPosition = Vector3.zero;
-        var popup = ui as PopUpUI;
-        popup.InitPopUp(new PopUpInfo("대전 상대를 찾는중..", string.Empty,
-            new PopUpButtonInfo("취소", () => Managers.UI.CloseUI<PopUpUI>())));
+        Managers.UI.OpenPopUp(new PopUpInfo(
+            "대전 상대를 찾는중..", 
+            string.Empty,
+            new PopUpButtonInfo(
+                "취소", () => Managers.UI.CloseUI<PopUpUI>()                
+            )), Define.Type.PopUpParent.Front);
+
     }
     public void Test_OpenPopUpMain() {
-        Managers.UI.FrontCanvas.ActiveTouchBlockPanel(false);
-        var ui = Managers.UI.OpenUI<PopUpUI>(Define.Path.POP_UP_UI_PATH);
-        ui.transform.SetParent(Managers.UI.MainCanvas.transform);
-        ui.transform.SetAsLastSibling();
-        ui.transform.localPosition = Vector3.zero;
+        Managers.UI.OpenPopUp(new PopUpInfo(
+            "대전 상대를 찾는중..",
+            string.Empty,
+            new PopUpButtonInfo(
+                "취소", () => Managers.UI.CloseUI<PopUpUI>()
+            )));
     }
     public void Test_HidePopUp() {
-        Managers.UI.FrontCanvas.ActiveTouchBlockPanel(false);
-        Managers.UI.CloseUI<PopUpUI>();
+        Managers.UI.ClosePopUp();
     }
 
     #endregion
@@ -111,5 +111,23 @@ public class Debugger : MonoBehaviour
         }
 
         //Managers.UI.GetUI<SampleTimeUI>().CloseUI();
+    }
+}
+
+public partial class UIManager
+{
+    public void OpenPopUp(PopUpInfo popUpInfo, Define.Type.PopUpParent popUpParent=Define.Type.PopUpParent.Main) {
+        var ui = Managers.UI.OpenUI<PopUpUI>(Define.Path.POP_UP_UI_PATH);
+        PopUpUI popUpUI = ui as PopUpUI;
+        Managers.UI.FrontCanvas.ActiveTouchBlockPanel(popUpParent == Define.Type.PopUpParent.Front);
+        popUpUI.transform.SetParent(popUpParent == Define.Type.PopUpParent.Front ? Managers.UI.FrontCanvas.transform : Managers.UI.MainCanvas.transform);
+        popUpUI.transform.SetAsLastSibling();
+        popUpUI.transform.localPosition = Vector3.zero;
+        popUpUI.InitPopUp(popUpInfo);
+    }
+
+    public void ClosePopUp() {
+        Managers.UI.FrontCanvas.ActiveTouchBlockPanel(false);
+        Managers.UI.CloseUI<PopUpUI>();
     }
 }
