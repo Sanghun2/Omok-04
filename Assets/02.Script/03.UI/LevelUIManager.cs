@@ -22,7 +22,7 @@ public class LevelUIManager : UIBase
         HardModeButton.onClick.AddListener(() => SetLevel(Define.Type.GameLevel.Hard));
     }
 
-    private void SetLevel(Define.Type.GameLevel selectedLevel)
+    public void SetLevel(Define.Type.GameLevel selectedLevel)
     {
         level = selectedLevel;
         Debug.Log($"선택된 난이도 : {level}");

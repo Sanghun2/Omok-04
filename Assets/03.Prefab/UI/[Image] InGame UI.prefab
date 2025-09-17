@@ -2034,6 +2034,7 @@ MonoBehaviour:
   pauseButton: {fileID: 5197165588435955637}
   startButton: {fileID: 4497459811443588694}
   timeSlider: {fileID: 3992632025316237283}
+  timerText: {fileID: 2417049842806786164}
 --- !u!1 &7176409182822036338
 GameObject:
   m_ObjectHideFlags: 0
@@ -2181,6 +2182,7 @@ GameObject:
   - component: {fileID: 1767947545407819070}
   - component: {fileID: 3013532546366825632}
   - component: {fileID: 2417049842806786164}
+  - component: {fileID: 3003517649312559113}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -2309,6 +2311,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3003517649312559113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7946258829207929329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576cdb1ad5ab3f24f8eb7126bcedebdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Timer
+  _pause: 0
+  currentTime: 0
+  totalTime: 0
 --- !u!1 &8250423541278755915
 GameObject:
   m_ObjectHideFlags: 0
