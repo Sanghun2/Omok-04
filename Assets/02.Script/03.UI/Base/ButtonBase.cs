@@ -21,7 +21,7 @@ public abstract class ButtonBase : UIBase
         }
     }
 
-    private void Reset() {
+    protected virtual void Reset() {
         if (targetButton == null) targetButton = GetComponentInChildren<Button>();
     }
 

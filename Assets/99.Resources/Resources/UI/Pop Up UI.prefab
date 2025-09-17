@@ -507,8 +507,8 @@ MonoBehaviour:
   titleText: {fileID: 4691479471049171305}
   contentText: {fileID: 3788369218282745920}
   buttonList:
-  - {fileID: 65895309970130165}
-  - {fileID: 6558164844323931640}
+  - {fileID: 3471002100883694674}
+  - {fileID: 7764814095925044575}
 --- !u!1001 &4013745208988489855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -606,22 +606,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc110449e3afcd5498a71e3fadab898f, type: 3}
---- !u!114 &65895309970130165 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3988407438638128266, guid: cc110449e3afcd5498a71e3fadab898f, type: 3}
-  m_PrefabInstance: {fileID: 4013745208988489855}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!224 &1755703782529874155 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3453754355955523732, guid: cc110449e3afcd5498a71e3fadab898f, type: 3}
   m_PrefabInstance: {fileID: 4013745208988489855}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3471002100883694674 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 547409478578994221, guid: cc110449e3afcd5498a71e3fadab898f, type: 3}
+  m_PrefabInstance: {fileID: 4013745208988489855}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6839e3317ca34944d8ef8384a2cc44ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustomButton
 --- !u!1001 &7807802780700055922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -724,14 +724,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3453754355955523732, guid: cc110449e3afcd5498a71e3fadab898f, type: 3}
   m_PrefabInstance: {fileID: 7807802780700055922}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6558164844323931640 stripped
+--- !u!114 &7764814095925044575 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3988407438638128266, guid: cc110449e3afcd5498a71e3fadab898f, type: 3}
+  m_CorrespondingSourceObject: {fileID: 547409478578994221, guid: cc110449e3afcd5498a71e3fadab898f, type: 3}
   m_PrefabInstance: {fileID: 7807802780700055922}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 6839e3317ca34944d8ef8384a2cc44ff, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_EditorClassIdentifier: Assembly-CSharp::CustomButton
