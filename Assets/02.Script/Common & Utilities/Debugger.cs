@@ -45,7 +45,7 @@ public class Debugger : MonoBehaviour
     #region Match Making
 
     public void Test_QuickMatch() {
-        //Managers.Network.QuickMatch();
+        Managers.Network.QuickMatch();
     }
 
     #endregion
@@ -123,6 +123,7 @@ public partial class UIManager
         popUpUI.transform.SetParent(popUpParent == Define.Type.PopUpParent.Front ? Managers.UI.FrontCanvas.transform : Managers.UI.MainCanvas.transform);
         popUpUI.transform.SetAsLastSibling();
         popUpUI.transform.localPosition = Vector3.zero;
+        popUpUI.transform.localScale = Vector3.one;
         popUpUI.InitPopUp(popUpInfo);
     }
 
