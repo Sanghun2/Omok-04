@@ -23,6 +23,9 @@ public abstract class BasePlayerState
             else
             {
                 gameLogic.EndGame(gameResult);
+                Define.Type.Player player = marker == Define.Type.StoneColor.Black ?
+                    Define.Type.Player.Player1 : Define.Type.Player.Player2;
+                Managers.Turn.EndGame(player);
             }
         }
     }
