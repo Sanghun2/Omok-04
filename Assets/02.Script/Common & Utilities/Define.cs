@@ -9,7 +9,13 @@ public class Define
 
     public class State
     {
-
+        public enum GameState
+        {
+            NotStarted,
+            Ready,
+            InProgress,
+            Ended
+        }
     }
 
     public class Type
@@ -29,12 +35,7 @@ public class Define
             Multi
         }
 
-        public enum GameState
-        {
-            NotStarted,
-            InProgress,
-            Ended
-        }
+        
 
         public enum Player
         {
