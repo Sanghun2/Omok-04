@@ -28,8 +28,9 @@ public class LevelUIManager : UIBase
         Debug.Log($"선택된 난이도 : {level}");
 
         // UI 전환
-        this.CloseUI();         
-        inGameUI.OpenUI();  
+        //this.CloseUI();         
+        //inGameUI.OpenUI();
 
+        Managers.Game.StartSinglePlay(level);
     }
 }

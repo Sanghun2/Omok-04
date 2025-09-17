@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &548379824236854153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4406865373338173777}
+  m_Layer: 0
+  m_Name: Stones
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4406865373338173777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548379824236854153}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 10265117824091727}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1429598395655927607
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,6 +66,7 @@ Transform:
   - {fileID: 4011401733321429727}
   - {fileID: 703367286323221230}
   - {fileID: 7503717815714399959}
+  - {fileID: 4406865373338173777}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6460495504595418595
@@ -154,10 +186,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Board
   positionSelector: {fileID: 3059836018512702626}
-  blackMarker: {fileID: 7456722119803856625, guid: bf360de42f7f37b4588c2fee33090bb5, type: 3}
-  whiteMarker: {fileID: 1887957563566087329, guid: ed3c614acb00413478f6487dd9712652, type: 3}
+  blackStone: {fileID: 7456722119803856625, guid: bf360de42f7f37b4588c2fee33090bb5, type: 3}
+  whiteStone: {fileID: 1887957563566087329, guid: ed3c614acb00413478f6487dd9712652, type: 3}
   xMarker: {fileID: 8615217859289253563}
   lastPositionMarker: {fileID: 5041705154867018770}
+  gameType: 0
+  launchButton: {fileID: 0}
+  stones: {fileID: 4406865373338173777}
 --- !u!1 &3059836018512702626
 GameObject:
   m_ObjectHideFlags: 0

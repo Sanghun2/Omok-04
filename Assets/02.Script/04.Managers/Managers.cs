@@ -103,7 +103,7 @@ public class Managers : MonoBehaviour
     }
 
     private void LoadFirstScene() {
-        Debug.LogAssertion($"Ã¹ ¾À ·Îµå ÇÊ¿ä");
+        Debug.LogAssertion($"Ã¹ ï¿½ï¿½ ï¿½Îµï¿½ ï¿½Ê¿ï¿½");
     }
 
     private void InitializeAll(List<IInitializable> initializeList) {

@@ -90,9 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0307c361c2cda24c88424e6e4380cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameButtonManager
-  currentType: 0
   buttonScale: {fileID: 6770034322131480246}
-  gameUIManger: {fileID: 0}
 --- !u!114 &8389115264786165868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,9 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0307c361c2cda24c88424e6e4380cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameButtonManager
-  currentType: 1
   buttonScale: {fileID: 6201608738692685529}
-  gameUIManger: {fileID: 0}
 --- !u!114 &5881333695986811509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -945,7 +941,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -49.5}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2688996007825587556
@@ -1358,9 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0307c361c2cda24c88424e6e4380cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameButtonManager
-  currentType: 3
   buttonScale: {fileID: 1196892823254506875}
-  gameUIManger: {fileID: 0}
 --- !u!114 &3898610815146446732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1645,7 +1639,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -192, y: 0}
+  m_AnchoredPosition: {x: -192, y: 0.000003516674}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4021216389820296476
