@@ -56,7 +56,7 @@ public class IngameUIController : UIBase
         base.InitUI();
 
         // ★추가 : 싱글모드일 때 player2 UI 설정
-        if (Managers.Game.Mode == Define.Type.Game.Single)
+        if (Managers.Game.CurrentGameType == Define.Type.Game.Single)
         {
             if (p2Name != null) p2Name.text = "AI";
             if (p2Result != null) p2Result.text = string.Empty;
@@ -64,15 +64,14 @@ public class IngameUIController : UIBase
         }
 
         // ★기존 타이머 초기화
-        Timer timer = Managers.Time.GetTimer(Define.Type.Player.Player1);
+        Timer timer = Managers.Time.GetTimer();
         if (timer != null)
             BindTimer(timer);
 
         Managers.Turn.OnTurnChanged.AddListener((player) =>
         {
-            Timer t = Managers.Time.GetTimer(player);
-            if (t != null)
-                BindTimer(t);
+            Managers.Time.GetTimer().SetTimeAsDefault();
+
         });
     }
 
@@ -99,7 +98,7 @@ public class IngameUIController : UIBase
     void Start()
     {
         Debug.Log($"[TEST] Managers.Time null? : {Managers.Time == null}");
-        var t = Managers.Time?.GetTimer(Define.Type.Player.Player1);
+        var t = Managers.Time?.GetTimer();
         Debug.Log($"[TEST] Timer 찾음? : {t != null}");
         if (t != null)
         {
