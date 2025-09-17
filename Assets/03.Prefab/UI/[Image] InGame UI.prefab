@@ -2349,6 +2349,8 @@ MonoBehaviour:
   timeSlider: {fileID: 3992632025316237283}
   p2Rank: {fileID: 5186271901009303575}
   timerText: {fileID: 2417049842806786164}
+  p1TurnChecks: []
+  p2TurnChecks: []
 --- !u!1 &7176409182822036338
 GameObject:
   m_ObjectHideFlags: 0

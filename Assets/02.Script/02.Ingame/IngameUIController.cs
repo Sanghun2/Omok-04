@@ -24,8 +24,8 @@ public class IngameUIController : UIBase
     private TextMeshProUGUI p1Result;
     private TextMeshProUGUI p2Name;
     private TextMeshProUGUI p2Result;
-    private GameObject[] p1TurnChecks;
-    private GameObject[] p2TurnChecks;
+    public GameObject[] p1TurnChecks;
+    public GameObject[] p2TurnChecks;
 
 
 
@@ -58,28 +58,69 @@ public class IngameUIController : UIBase
                 .GetComponent<TextMeshProUGUI>();
     }
 
-    public void UpdateTurnUI(Define.Type.StoneColor currentStone)
+
+    // 돌 색깔 기준으로 체크표시
+    //public void UpdateTurnUI(Define.Type.StoneColor currentStone)
+    //{
+    //    if (currentStone == Define.Type.StoneColor.Black)
+    //    {
+    //        SetTurnChecksActive(p1TurnChecks, true);
+    //        SetTurnChecksActive(p2TurnChecks, false);
+    //    }
+    //    else if (currentStone == Define.Type.StoneColor.White)
+    //    {
+    //        SetTurnChecksActive(p1TurnChecks, false);
+    //        SetTurnChecksActive(p2TurnChecks, true);
+    //    }
+    //}
+
+    //private void SetTurnChecksActive(GameObject[] turnChecks, bool isActive)
+    //{
+    //    if (turnChecks == null) return;
+    //    foreach (var obj in turnChecks)
+    //    {
+    //        obj.SetActive(isActive);
+    //    }
+    //}
+
+
+    public void SetTurnChecks(bool aiTurn)
     {
-        if (currentStone == Define.Type.StoneColor.Black)
+        if (AITurn != null) AITurn.gameObject.SetActive(aiTurn);
+        if (p1TurnChecks != null)
         {
-            SetTurnChecksActive(p1TurnChecks, true);
-            SetTurnChecksActive(p2TurnChecks, false);
+            foreach (var obj in p1TurnChecks)
+                obj.SetActive(!aiTurn);   // AI 턴이면 Player1 체크는 꺼짐
         }
-        else if (currentStone == Define.Type.StoneColor.White)
+
+        if (p2TurnChecks != null)
         {
-            SetTurnChecksActive(p1TurnChecks, false);
-            SetTurnChecksActive(p2TurnChecks, true);
+            foreach (var obj in p2TurnChecks)
+                obj.SetActive(aiTurn);    // AI 턴이면 Player2 체크는 켜짐
         }
     }
 
-    private void SetTurnChecksActive(GameObject[] turnChecks, bool isActive)
+
+    /// AI 턴 표시, Player 체크 초기화
+    public void ResetTurnUI()
     {
-        if (turnChecks == null) return;
-        foreach (var obj in turnChecks)
-        {
-            obj.SetActive(isActive);
-        }
+        // AI 턴 표시 끄기
+        if (AITurn != null)
+            AITurn.SetActive(false);
+
+        // Player1 체크 끄기
+        if (p1TurnChecks != null)
+            foreach (var obj in p1TurnChecks)
+                obj.SetActive(true);
+
+        // Player2 체크 끄기
+        if (p2TurnChecks != null)
+            foreach (var obj in p2TurnChecks)
+                obj.SetActive(false);
     }
+
+
+
 
     public override void InitUI()
     {
@@ -87,6 +128,7 @@ public class IngameUIController : UIBase
 
         GoBackButton.onClick.AddListener(() =>
         {
+            ResetTurnUI();
             Managers.Scene.ShowScene(Define.Type.Scene.MainMenu);
         });
 
@@ -96,9 +138,11 @@ public class IngameUIController : UIBase
             if (p2Name != null) p2Name.text = "AI";
             if (p2Rank != null) p2Result.text = string.Empty;
             if (p2OKButton != null) p2OKButton.gameObject.SetActive(false);
+
         }
 
-
+        // 보드 초기화
+        Managers.Board.InitBoard();
 
         // 타이머 초기화
         Timer timer = Managers.Time.GetTimer();
@@ -108,19 +152,17 @@ public class IngameUIController : UIBase
             // timer.StartCount();
         }
 
-
         Managers.Turn.OnTurnChanged.AddListener((player) =>
         {
             Managers.Time.GetTimer().SetTimeAsDefault();
         });
 
-        Managers.Turn.OnTurnChanged.AddListener((player) =>
-        {
-            var stone = player == Define.Type.Player.Player1 ?
-                        Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
-
-            UpdateTurnUI(stone);
-        });
+        //Managers.Turn.OnTurnChanged.AddListener((player) =>
+        //{
+        //    var stone = player == Define.Type.Player.Player1 ?
+        //                Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
+        //    UpdateTurnUI(stone);
+        //});
 
     }
 
