@@ -16,6 +16,14 @@ public class Debugger : MonoBehaviour
     [SerializeField] Timer testTimer;
     [SerializeField] float testTime = 3f;
 
+    #region Match Making
+
+    public void Test_QuickMatch() {
+        //Managers.Network.QuickMatch();
+    }
+
+    #endregion
+
     #region Player
 
     public void Test_InitPlayer() {
@@ -50,7 +58,7 @@ public class Debugger : MonoBehaviour
         else timerUI.OpenUI();
     }
     public void Test_SetTimeAsDefault() {
-        Managers.Time.RegisterTimer(Define.Type.Player.Player1, testTimer);
+        Managers.Time.RegisterTimer(testTimer);
         Managers.UI.GetUI<SampleTimeUI>().AddTimerEvent(testTimer);
         testTimer.SetTime(testTime, testTime);
     }
