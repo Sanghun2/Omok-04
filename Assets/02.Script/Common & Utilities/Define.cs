@@ -5,11 +5,22 @@ public class Define
     public class Value
     {
         public const float DEFAULT_TIME = 25f;
+
+        public class Photon
+        {
+            public const string PLAYER_TYPE = "playerType";
+        }
     }
 
     public class State
     {
-
+        public enum GameState
+        {
+            NotStarted,
+            Ready,
+            InProgress,
+            Ended
+        }
     }
 
     public class Type
@@ -29,12 +40,7 @@ public class Define
             Multi
         }
 
-        public enum GameState
-        {
-            NotStarted,
-            InProgress,
-            Ended
-        }
+        
 
         public enum Player
         {
@@ -52,8 +58,8 @@ public class Define
         public enum StoneColor 
         {
             None,
-            White,
             Black,
+            White
         }
     }
 }

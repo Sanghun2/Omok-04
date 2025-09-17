@@ -21,7 +21,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public const int BoardCol = 15;
     public delegate void OnCellClicked(int row, int col);
     public OnCellClicked onCellClickedDelegate;
-    public delegate void OnStoneSetted(Cell.StoneType stoneType);
+    public delegate void OnStoneSetted(Define.Type.StoneColor stoneType);
     public OnStoneSetted onStoneSettedDelegate;
     public Cell[,] Board => board;
 
@@ -74,6 +74,9 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+        positionSelector.SetActive(true);
+        xMarker.SetActive(false);
+
         // 스크린 지점 -> 월드 지점 변환
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
 
@@ -91,6 +94,15 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         // 현재 셀렉터의 위치를 기준으로 셀 선택
         currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
+
+        Define.Type.StoneColor sc = Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1 ?
+            Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
+
+        if(OmokAI.CheckRenju(sc, board, currentCell.CellRow, currentCell.CellCol))
+        {
+            positionSelector.SetActive(false);
+            ActiveX_Marker(currentCell.CellRow, currentCell.CellCol);
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -107,6 +119,15 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         // 현재 셀렉터의 위치를 기준으로 셀 선택
         currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
+
+        Define.Type.StoneColor sc = Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1 ?
+            Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
+
+        if (OmokAI.CheckRenju(sc, board, currentCell.CellRow, currentCell.CellCol))
+        {
+            positionSelector.SetActive(false);
+            ActiveX_Marker(currentCell.CellRow, currentCell.CellCol);
+        }
     }
 
     public void OnClickLaunchButton()
@@ -119,26 +140,30 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         currentCell.onCellClicked?.Invoke(currentCell.CellRow,currentCell.CellCol);
     }
 
-    #region 자동 호출 메서드 / 금지 표시, 돌 생성
+    #region 자동 호출 메서드 / 금지 표시, 돌 생성, 셀 초기화
     public void ActiveX_Marker(int row, int col)
     {
         Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
 
         xMarker.SetActive(true);
         xMarker.transform.position = markerPos;
-        currentCell = null;
     }
 
-    public void PlaceMarker(Cell.StoneType stoneType, int row, int col)
+    public void PlaceMarker(Define.Type.StoneColor stoneColor, int row, int col)
     {
         Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
 
         // 돌 생성
-        GameObject stoneObj = stoneType == Cell.StoneType.Black ? Instantiate(blackStone, stones) : Instantiate(whiteStone, stones);
+        GameObject stoneObj = stoneColor == Define.Type.StoneColor.Black ? Instantiate(blackStone, stones) : Instantiate(whiteStone, stones);
         stoneObj.transform.position = markerPos;
 
         lastPositionMarker.SetActive(true);
         lastPositionMarker.transform.position = markerPos;
+    }
+
+    public void ResetCurretCell()
+    {
+        currentCell= null;
     }
     #endregion
 }
