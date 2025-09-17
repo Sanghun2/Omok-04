@@ -27,7 +27,7 @@ public class IngameUIController : UIBase
     private GameObject[] p1TurnChecks;
     private GameObject[] p2TurnChecks;
 
-    private Coroutine aiTurnCoroutine;
+
 
     void Awake()
     {
@@ -58,6 +58,29 @@ public class IngameUIController : UIBase
                 .GetComponent<TextMeshProUGUI>();
     }
 
+    public void UpdateTurnUI(Define.Type.StoneColor currentStone)
+    {
+        if (currentStone == Define.Type.StoneColor.Black)
+        {
+            SetTurnChecksActive(p1TurnChecks, true);
+            SetTurnChecksActive(p2TurnChecks, false);
+        }
+        else if (currentStone == Define.Type.StoneColor.White)
+        {
+            SetTurnChecksActive(p1TurnChecks, false);
+            SetTurnChecksActive(p2TurnChecks, true);
+        }
+    }
+
+    private void SetTurnChecksActive(GameObject[] turnChecks, bool isActive)
+    {
+        if (turnChecks == null) return;
+        foreach (var obj in turnChecks)
+        {
+            obj.SetActive(isActive);
+        }
+    }
+
     public override void InitUI()
     {
         base.InitUI();
@@ -75,7 +98,9 @@ public class IngameUIController : UIBase
             if (p2OKButton != null) p2OKButton.gameObject.SetActive(false);
         }
 
-        // 기존 타이머 초기화
+
+
+        // 타이머 초기화
         Timer timer = Managers.Time.GetTimer();
         if (timer != null)
         { BindTimer(timer);
@@ -88,47 +113,20 @@ public class IngameUIController : UIBase
         {
             Managers.Time.GetTimer().SetTimeAsDefault();
         });
-        
-        Managers.Turn.OnTurnChanged.AddListener(HandleTurnChanged);
 
-    }
-
-
-    private void HandleTurnChanged(Define.Type.Player player)
-    {
-
-        // AI 턴일 때
-        if (Managers.Game.CurrentGameType == Define.Type.Game.Single &&
-            player == Define.Type.Player.Player2)
+        Managers.Turn.OnTurnChanged.AddListener((player) =>
         {
-            // 이전 Coroutine이 있으면 중지
-            if (aiTurnCoroutine != null)
-            {
-                StopCoroutine(aiTurnCoroutine);
-                aiTurnCoroutine = null;
-            }
-            aiTurnCoroutine = StartCoroutine(ShowAITurnAfterDelay(1f));
-        }
-        else
-        {
-            // AI가 아닌 플레이어 차례면 바로 끄기
-            if (aiTurnCoroutine != null)
-            {
-                StopCoroutine(aiTurnCoroutine);
-                aiTurnCoroutine = null;
-            }
-            if (AITurn != null)
-                AITurn.SetActive(false);
-        }
+            var stone = player == Define.Type.Player.Player1 ?
+                        Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
+
+            UpdateTurnUI(stone);
+        });
+
     }
 
-    private IEnumerator ShowAITurnAfterDelay(float delay)
-    {
-        // delay만큼 기다린 후
-        yield return new WaitForSeconds(delay);
-        if (AITurn != null)
-            AITurn.SetActive(true);
-    }
+
+  
+
 
 
     // 타이머 이벤트 연결
