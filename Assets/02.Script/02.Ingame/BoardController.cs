@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 [RequireComponent (typeof(Collider2D))]
 public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
@@ -11,11 +12,12 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField] private GameObject positionSelector;
     [SerializeField] private GameObject blackStone;
     [SerializeField] private GameObject whiteStone;
-    [SerializeField] private GameObject xMarker;
-    [SerializeField] private GameObject lastPositionMarker;
-    [SerializeField] private Define.Type.Game gameType;
-    [SerializeField] private Button launchButton;
     [SerializeField] private Transform stones;
+    [SerializeField] private GameObject xMarker;
+    [SerializeField] private GameObject x_MarkerPrefab;
+    [SerializeField] private Transform markers;
+    [SerializeField] private GameObject lastPositionMarker;
+    [SerializeField] private Button launchButton;
 
     public delegate void OnCellClicked(int row, int col);
     public OnCellClicked onCellClickedDelegate;
@@ -65,8 +67,15 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         // 돌이 있을 경우 모두 삭제
         for (int i = stones.transform.childCount - 1; i >= 0; i--)
         {
-            Transform child = stones.transform.GetChild(i);
-            Destroy(child.gameObject);
+            Transform childStone = stones.transform.GetChild(i);
+            Destroy(childStone.gameObject);
+        }
+
+        // X 마커가 있을 경우 모두 삭제
+        for (int i = markers.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform childMarker = markers.transform.GetChild(i);
+            Destroy(childMarker.gameObject);
         }
     }
 
@@ -92,15 +101,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         // 현재 셀렉터의 위치를 기준으로 셀 선택
         currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
-
-        Define.Type.StoneColor sc = Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1 ?
-            Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
-
-        if(OmokAI.CheckRenju(sc, board, currentCell.CellRow, currentCell.CellCol))
-        {
-            positionSelector.SetActive(false);
-            ActiveX_Marker(currentCell.CellRow, currentCell.CellCol);
-        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -117,15 +117,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         // 현재 셀렉터의 위치를 기준으로 셀 선택
         currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
-
-        Define.Type.StoneColor sc = Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1 ?
-            Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
-
-        if (OmokAI.CheckRenju(sc, board, currentCell.CellRow, currentCell.CellCol))
-        {
-            positionSelector.SetActive(false);
-            ActiveX_Marker(currentCell.CellRow, currentCell.CellCol);
-        }
     }
 
     public void OnClickLaunchButton()
@@ -137,8 +128,36 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         currentCell.onCellClicked?.Invoke(currentCell.CellRow,currentCell.CellCol);
     }
-
+    
     #region 자동 호출 메서드 / 금지 표시, 돌 생성, 셀 초기화
+    public void ShowAllRenju(Cell[,] board)
+    {
+        foreach (var cell in board)
+        {
+            if(cell.IsRenju && !cell.OnX_Marker)
+            {
+                cell.OnX_Marker = true;
+                GameObject x_MarkerObj = Instantiate(x_MarkerPrefab, markers);
+                x_MarkerObj.transform.position = new Vector3((cell.CellRow - 7) * 0.45f, (cell.CellCol - 7) * 0.45f, 0);
+            }
+            else if(!cell.IsRenju && cell.OnX_Marker)
+                DestroyX_Marker(cell.CellRow, cell.CellCol);
+        }
+    }
+
+    public void DestroyX_Marker(int row, int col)
+    {
+        Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
+
+        foreach (Transform x_marker in markers)
+        {
+            if(x_marker.position == markerPos)
+            {
+                Destroy(x_marker.gameObject);
+            }
+        }
+    }
+
     public void ActiveX_Marker(int row, int col)
     {
         Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);

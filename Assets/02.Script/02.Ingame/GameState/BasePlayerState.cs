@@ -17,8 +17,8 @@ public abstract class BasePlayerState
             var gameResult = gameLogic.CheckGameResult(marker, row, col);
             if (gameResult == Define.State.GameResult.NONE)
             {
-                HandleNextTurn(gameLogic);
                 Managers.Turn.SwitchTurn();
+                HandleNextTurn(gameLogic);
             }
             else
             {

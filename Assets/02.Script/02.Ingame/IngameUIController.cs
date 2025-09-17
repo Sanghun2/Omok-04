@@ -69,7 +69,7 @@ public class IngameUIController : UIBase
         if (timer != null)
         { BindTimer(timer);
             Debug.Log("Timer out");
-            timer.StartCount();
+            // timer.StartCount();
         }
 
 
