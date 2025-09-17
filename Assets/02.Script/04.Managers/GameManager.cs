@@ -7,27 +7,33 @@ public class GameManager
 
     private Define.State.GameState currentGameState;
     private Define.Type.Game currentGameType;
+    private Define.Type.GameLevel lastGameLevel;
 
     #region Flow Control
 
-    public void GoToMainMenu() {
+    public void GoToMainMenu()
+    {
         ProcessSceneChange(Define.Type.Scene.MainMenu);
         currentGameState = Define.State.GameState.NotStarted;
     }
 
-    public void GoToLogIn() {
+    public void GoToLogIn()
+    {
         ProcessSceneChange(Define.Type.Scene.LogIn);
         currentGameState = Define.State.GameState.NotStarted;
     }
 
-    private void InitCurrentScene(Scene currentScene) {
+    private void InitCurrentScene(Scene currentScene)
+    {
         currentScene.InitScene();
     }
-    private void ReleasePrevScene(Scene prevScene) {
+    private void ReleasePrevScene(Scene prevScene)
+    {
         prevScene?.ReleaseScene();
     }
-    
-    private void ProcessSceneChange(Define.Type.Scene targetSceneType) {
+
+    private void ProcessSceneChange(Define.Type.Scene targetSceneType)
+    {
         //if (Managers.Scene.CurrentSceneType == targetSceneType) { Debug.LogAssertion($"같은 씬이므로 이동하지 않음"); return; }
 
         var prevScene = Managers.Scene.CurrentScene;
@@ -41,20 +47,27 @@ public class GameManager
     #region Game Start
 
 
-    public void StartSinglePlay(Define.Type.GameLevel level) {
+    public void StartSinglePlay(Define.Type.GameLevel level)
+    {
         StartGame(Define.Type.Game.Single, level);
 
     }
 
-    public void EnterLocalPlay() {
+    public void EnterLocalPlay()
+    {
         StartGame(Define.Type.Game.Local);
     }
 
-    public void EnterMultiPlay() {
+    public void EnterMultiPlay()
+    {
         StartGame(Define.Type.Game.Multi);
     }
 
-    private void StartGame(Define.Type.Game gameType, Define.Type.GameLevel level = Define.Type.GameLevel.Easy) {
+    private void StartGame(Define.Type.Game gameType, Define.Type.GameLevel level = Define.Type.GameLevel.Easy)
+    {
+        //게임 다시하기 기능때문에 추가함
+        this.currentGameType = gameType;
+        this.lastGameLevel = level;
 
         // setting game options
         Managers.Board.InitBoard();
@@ -64,7 +77,8 @@ public class GameManager
 
         GameLogic gameLogic;
 
-        switch (gameType) {
+        switch (gameType)
+        {
             case Define.Type.Game.Single:
                 gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
                 SetStatePlay();
@@ -87,10 +101,18 @@ public class GameManager
     /// <summary>
     /// 모든 플레이어가 준비되었을 때 실행하는 코드. 멀티플레이용
     /// </summary>
-    public void SetStatePlay() {
+    public void SetStatePlay()
+    {
         currentGameState = Define.State.GameState.InProgress;
     }
 
     #endregion
-
+    
+    #region Restart Game
+    public void RestartLastGame()
+    {
+        Debug.Log($"게임 재시작. 모드: {currentGameType}, 난이도: {lastGameLevel}");
+        StartGame(currentGameType, lastGameLevel);
+    }
+    #endregion
 }
