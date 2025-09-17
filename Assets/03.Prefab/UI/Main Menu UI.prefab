@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -471538171, guid: 13e8ba67342044f4590ac6cd9dc47aa5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d375656854b7a2c4f8c05c95b58e467f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -90,9 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0307c361c2cda24c88424e6e4380cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameButtonManager
-  currentType: 0
   buttonScale: {fileID: 5892340469624347881}
-  gameUIManger: {fileID: 0}
 --- !u!114 &5383087889218501628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,7 +499,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -471538171, guid: 13e8ba67342044f4590ac6cd9dc47aa5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d375656854b7a2c4f8c05c95b58e467f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -523,9 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0307c361c2cda24c88424e6e4380cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameButtonManager
-  currentType: 3
   buttonScale: {fileID: 5654645449671258992}
-  gameUIManger: {fileID: 0}
 --- !u!114 &2563848806314216339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,8 +645,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Omok
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 749b9069dc4742c5bfa5c74644049926, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 597f984e6a8bca6449e50dded0981bf8, type: 2}
+  m_sharedMaterial: {fileID: -6156916054585843305, guid: 597f984e6a8bca6449e50dded0981bf8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -821,7 +817,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ad114bf55a4010b42bf61344e2763096, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 756efcd3f80a9f6478425865c64d8168, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1110,7 +1106,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -471538171, guid: 13e8ba67342044f4590ac6cd9dc47aa5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d375656854b7a2c4f8c05c95b58e467f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1132,9 +1128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0307c361c2cda24c88424e6e4380cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameButtonManager
-  currentType: 1
   buttonScale: {fileID: 5765853716913655075}
-  gameUIManger: {fileID: 0}
 --- !u!114 &7185627197605508322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,6 +1205,30 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1705846719155300823, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d375656854b7a2c4f8c05c95b58e467f, type: 3}
+    - target: {fileID: 3037314003852375826, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3037314003852375826, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3037314003852375826, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3037314003852375826, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3151887368472776718, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9f08a56f1cd01ce4d93724b8cece1a83, type: 3}
     - target: {fileID: 4324164773611852183, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.504
@@ -1307,6 +1325,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7897584981528464117, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897584981528464117, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897584981528464117, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7897584981528464117, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911548887121950970, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d375656854b7a2c4f8c05c95b58e467f, type: 3}
     - target: {fileID: 9133936277938536039, guid: 3f50f3f0b9c86474e82f481fc01e9521, type: 3}
       propertyPath: m_Name
       value: Setting UI
