@@ -9,22 +9,28 @@ public class LoginManager : MonoBehaviour
 
     [SerializeField] TMP_InputField usernameInput;
     [SerializeField] TMP_InputField passwordInput;
+    [SerializeField] Button showPasswordButton;
     [SerializeField] Button loginButton;
     [SerializeField] TextMeshProUGUI statusText;
 
     [SerializeField] GameObject errorPopup;
-    SceneManager sceneManager;
 
+
+    void OnEnable()
+    {
+        statusText.text = "로그인";
+    }
     void Start()
     {
         loginButton.onClick.AddListener(() =>
         {
             StartCoroutine(Login());
         });
-        sceneManager = Managers.Scene;
-        if (sceneManager == null) {
-            Debug.LogError("SceneManager를 찾을 수 없습니다!");
-        }
+        showPasswordButton.onClick.AddListener(() =>
+        {
+            ShowPassword();
+        });
+        
     }
 
     IEnumerator Login()
@@ -64,11 +70,10 @@ public class LoginManager : MonoBehaviour
                 Debug.Log("유저 랭크포인트: " + loggedInUser.rankpoint);
 
                 statusText.text = "로그인 성공!";
+
                 
-                if (sceneManager != null)
-                {
-                    sceneManager.ShowScene(Define.Type.Scene.MainMenu);
-                }
+                Managers.Scene.ShowScene(Define.Type.Scene.MainMenu);
+                
             }
             else
             {
@@ -77,7 +82,21 @@ public class LoginManager : MonoBehaviour
                 statusText.text = "로그인 실패";
             }
         }
-        
 
+
+    }
+    
+    void ShowPassword()
+    {
+        if (passwordInput.contentType == TMP_InputField.ContentType.Password)
+        {
+            passwordInput.contentType = TMP_InputField.ContentType.Standard;
+            passwordInput.ForceLabelUpdate();
+        }
+        else
+        {
+            passwordInput.contentType = TMP_InputField.ContentType.Password;
+            passwordInput.ForceLabelUpdate();
+        }
     }
 }
