@@ -5,6 +5,8 @@ public class Define
     public class Value
     {
         public const float DEFAULT_TIME = 25f;
+        public const int BoardRow = 15;
+        public const int BoardCol = 15;
     }
 
     public class State

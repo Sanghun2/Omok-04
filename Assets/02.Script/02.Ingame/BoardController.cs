@@ -17,8 +17,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField] private Button launchButton;
     [SerializeField] private Transform stones;
 
-    public const int BoardRow = 15;
-    public const int BoardCol = 15;
     public delegate void OnCellClicked(int row, int col);
     public OnCellClicked onCellClickedDelegate;
     public delegate void OnStoneSetted(Define.Type.StoneColor stoneType);
@@ -42,7 +40,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         xMarker.SetActive(false);
         lastPositionMarker.SetActive(false);
 
-        board = new Cell[BoardRow, BoardCol];
+        board = new Cell[Define.Value.BoardRow, Define.Value.BoardCol];
 
         onStoneSettedDelegate = (stoneType) =>
         {
