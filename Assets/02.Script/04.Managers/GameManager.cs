@@ -58,6 +58,7 @@ public class GameManager
 
         // setting game options
         Managers.Board.InitBoard();
+        Managers.Turn.StartGame();
         currentGameState = Define.State.GameState.Ready;
         currentGameType = gameType;
 
