@@ -104,7 +104,7 @@ public class Managers : MonoBehaviour
     }
 
     private void LoadFirstScene() {
-        Debug.LogAssertion($"시작 씬 로드 필요");
+        Managers.Game.GoToLogIn();
     }
 
     private void InitializeAll(List<IInitializable> initializeList) {
