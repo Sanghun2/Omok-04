@@ -125,7 +125,7 @@ public class GameUIManger : UIBase
     }
 
     // 게임을 실제로 시작(인트로에서 플레이로 넘어갈 때)하는 처리
-    public void OnStartSetting()
+    public void OnSelectLevelSetting()
     {
         
         introPopup.SetActive(false);
@@ -143,6 +143,18 @@ public class GameUIManger : UIBase
         // BGM 재생 시작
         if (soundManager != null)
             soundManager.SetBGMSound("Play");
+    }
+
+    public void OnStartLocalPlay()
+    {
+        Managers.Game.EnterLocalPlay();
+
+        isStart = true; // 게임이 시작되었음을 표시
+
+        // BGM 재생 시작
+        if (soundManager != null)
+            soundManager.SetBGMSound("Play");
+
     }
 
     //팝업 닫기
@@ -197,11 +209,17 @@ public class GameUIManger : UIBase
 
     public void OnExit()
     {
+        Debug.Log("게임 종료");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; //에디터 실행중지
+#else
         Application.Quit();
+#endif
     }
 
-    // 메인(인트로) 화면으로 돌아가는 공통 처리
-    public void OnToMain()
+    //메인(인트로) 화면으로 돌아가는 공통 처리
+    // 현재 사용 안 함
+     public void OnToMain()
     {
         isStart = false; // 게임 재시작 상태 초기화
         Managers.Game.GoToMainMenu();

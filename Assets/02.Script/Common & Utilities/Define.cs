@@ -14,8 +14,28 @@ public class Define
         }
     }
 
+    public class Tag
+    {
+        public const string MAIN_CANVAS_TAG = "Main Canvas";
+        public const string FRONT_CANVAS_TAG = "Front Canvas";
+        public const string BACKGROUND_CANVAS_TAG = "Background Canvas";
+    }
+
+    public class Path
+    {
+        // Prefab
+        public const string POP_UP_UI_PATH = "UI/Pop Up UI";
+        public const string FRONT_CANVAS_PATH = "UI/Front Canvas";
+    }
+
     public class State
     {
+        public enum Match {
+            None,
+            MatchMaking,
+            MatchFound,
+        }
+
         public enum GameState
         {
             NotStarted,
@@ -35,6 +55,11 @@ public class Define
 
     public class Type
     {
+        public enum PopUpParent {
+            Front,
+            Main,
+        }
+
         public enum Scene
         {
             None = -1,
@@ -54,8 +79,8 @@ public class Define
 
         public enum Player
         {
-            Player1,
-            Player2,
+            Player1 = 1,
+            Player2 = 2,
         }
 
         public enum GameLevel

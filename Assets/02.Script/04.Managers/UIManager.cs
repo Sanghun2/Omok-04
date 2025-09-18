@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager
+public partial class UIManager
 {
     public float ScaleFactor
     {
@@ -20,7 +20,7 @@ public class UIManager
         get
         {
             if (_mainUICanvas == null) {
-                _mainUICanvas = GameObject.FindGameObjectWithTag("Main Canvas").GetComponent<Canvas>();    
+                _mainUICanvas = GameObject.FindGameObjectWithTag(Define.Tag.MAIN_CANVAS_TAG).GetComponent<Canvas>();    
             }
 
             return _mainUICanvas;
@@ -31,9 +31,9 @@ public class UIManager
         get
         {
             if (_frontUICanvas == null) {
-                var canvsObj = GameObject.FindGameObjectWithTag("Front Canvas");
+                var canvsObj = GameObject.FindGameObjectWithTag(Define.Tag.FRONT_CANVAS_TAG);
                 if (canvsObj == null) {
-                    var frontCanvasPrefb = Resources.Load<GameObject>("UI/Front Canvas");
+                    var frontCanvasPrefb = Resources.Load<GameObject>(Define.Path.FRONT_CANVAS_PATH);
                     canvsObj = GameObject.Instantiate(frontCanvasPrefb);
                 }
 
@@ -82,7 +82,7 @@ public class UIManager
         var tempUIStack = new Stack<UIBase>(_openedUIStack.Count);
         while (_openedUIStack.Count > 0) {
             var ui = _openedUIStack.Pop();
-            if (typeof(T) == ui.GetType()) {
+            if (typeof(T) == ui.GetType() && ui.IsOpened) {
                 ui.CloseUI();
             }
             else {

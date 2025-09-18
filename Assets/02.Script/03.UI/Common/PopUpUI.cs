@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -36,6 +36,14 @@ public class PopUpUI : UIBase
 [Serializable]
 public class PopUpInfo
 {
+    public static readonly PopUpInfo FindMatchPlayer = new PopUpInfo(
+            "대전 상대 찾는중",
+            string.Empty,
+            new PopUpButtonInfo(
+                "취소", 
+                () => { Managers.UI.ClosePopUp(); Managers.Network.CancelFindMatch(); }
+            ));
+
     public string Title => title;
     public string Content => content;
     public IReadOnlyList<PopUpButtonInfo> ButtonActions => buttonInfos;

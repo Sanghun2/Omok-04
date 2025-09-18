@@ -17,7 +17,8 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField] private GameObject x_MarkerPrefab;
     [SerializeField] private Transform markers;
     [SerializeField] private GameObject lastPositionMarker;
-    [SerializeField] private Button launchButton;
+    [SerializeField] private Button blackStoneLaunchButton;
+    [SerializeField] private Button whiteStoneLaunchButton;
 
     public delegate void OnCellClicked(int row, int col);
     public OnCellClicked onCellClickedDelegate;
@@ -27,7 +28,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
     private void OnDisable()
     {
-        launchButton?.onClick.RemoveListener(OnClickLaunchButton);
+        DeactiveLaunchButton();
     }
 
     /// <summary>
@@ -36,7 +37,8 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public void InitBoard()
     {
         this.gameObject.SetActive(true);
-        launchButton.onClick.AddListener(OnClickLaunchButton);
+        blackStoneLaunchButton.onClick.AddListener(OnClickBlackStoneLaunchButton);
+        whiteStoneLaunchButton.onClick.AddListener(OnClickWhiteStoneLaunchButton);
 
         // 마커 초기화
         xMarker.SetActive(false);
@@ -46,6 +48,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         onStoneSettedDelegate = (stoneType) =>
         {
+            SoundManager.Instance.OnAttackSound();
             Debug.Log("### DEV_JSH MarkerEvent Start ###");
             Debug.Log($"### DEV_JSH 이번에 놓인 돌은 {stoneType.ToString()}");
             Debug.Log("### DEV_JSH MarkerEvent End ###");
@@ -119,14 +122,24 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
     }
 
-    public void OnClickLaunchButton()
+    public void OnClickBlackStoneLaunchButton()
     {
-        if (currentCell == null)
+        if (currentCell == null || Managers.Turn.GetCurrentPlayer() != Define.Type.Player.Player1)
             return;
 
         positionSelector.SetActive(false);
 
         currentCell.onCellClicked?.Invoke(currentCell.CellRow,currentCell.CellCol);
+    }
+
+    public void OnClickWhiteStoneLaunchButton()
+    {
+        if (currentCell == null || Managers.Turn.GetCurrentPlayer() != Define.Type.Player.Player2)
+            return;
+
+        positionSelector.SetActive(false);
+
+        currentCell.onCellClicked?.Invoke(currentCell.CellRow, currentCell.CellCol);
     }
     
     #region 자동 호출 메서드 / 금지 표시, 돌 생성, 셀 초기화
@@ -146,6 +159,12 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
                 DestroyX_Marker(cell.CellRow, cell.CellCol);
             }
         }
+    }
+
+    public void DeactiveLaunchButton()
+    {
+        blackStoneLaunchButton?.onClick.RemoveListener(OnClickBlackStoneLaunchButton);
+        whiteStoneLaunchButton?.onClick.RemoveListener(OnClickWhiteStoneLaunchButton);
     }
 
     public void DestroyX_Marker(int row, int col)

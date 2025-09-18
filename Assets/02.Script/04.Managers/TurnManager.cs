@@ -7,7 +7,7 @@ public class TurnManager
     private Define.State.GameState currentState = Define.State.GameState.NotStarted;
     private Define.Type.Player currentPlayer = Define.Type.Player.Player1;
     public UnityEvent<Define.Type.Player> OnTurnChanged = new UnityEvent<Define.Type.Player>();
-
+    public Define.State.GameState CurrentState => currentState;
    
 
 

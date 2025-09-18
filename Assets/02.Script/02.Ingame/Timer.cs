@@ -34,7 +34,7 @@ public partial class Timer : MonoBehaviour
 
     private void Update() {
         if (!_pause && isInit) {
-            CountTime(Time.deltaTime);
+            CountTime(Time.unscaledDeltaTime);
         }
     }
 
@@ -49,6 +49,7 @@ public partial class Timer : MonoBehaviour
         if (Mathf.Approximately(currentTime, 0)) {
             Pause();
             OnTimeOver?.Invoke(0, totalTime);
+            Debug.LogAssertion($"게임오버. 남은 시간: {currentTime}");
         }
     }
 }

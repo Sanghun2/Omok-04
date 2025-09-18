@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerUI : MonoBehaviour
 {
     public Define.Type.Player PlayerType => playerType;
 

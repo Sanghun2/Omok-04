@@ -83,7 +83,7 @@ public class Managers : MonoBehaviour
     static UserInfoManager userInfoManager;
     static TurnManager turnManager = new TurnManager();
     static NetworkManager networkManager = new NetworkManager();
-    static GameManager gameManager => new GameManager();
+    static GameManager gameManager = new GameManager();
     static TimeManager timeManager = new TimeManager();
     static CoroutineManager coroutineManager;
     static Managers _instance;
@@ -104,7 +104,7 @@ public class Managers : MonoBehaviour
     }
 
     private void LoadFirstScene() {
-        Debug.LogAssertion($"시작 씬 로드 필요");
+        Managers.Game.GoToLogIn();
     }
 
     private void InitializeAll(List<IInitializable> initializeList) {
