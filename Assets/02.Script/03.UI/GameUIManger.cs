@@ -209,25 +209,31 @@ public class GameUIManger : UIBase
 
     public void OnExit()
     {
+        Debug.Log("게임 종료");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; //에디터 실행중지
+#else
         Application.Quit();
+#endif
     }
 
-    // 메인(인트로) 화면으로 돌아가는 공통 처리
-    public void OnToMain()
-    {
-        isStart = false; // 게임 재시작 상태 초기화
-        Managers.Game.GoToMainMenu();
+    // 메인(인트로) 화면으로 돌아가는 공통 처리 
+    // 현재 사용 안 함
+    // public void OnToMain()
+    // {
+    //     isStart = false; // 게임 재시작 상태 초기화
+    //     Managers.Game.GoToMainMenu();
 
-        // 메인 버튼 그룹을 활성화 (없으면 null 체크)
-        if (MainButton != null && !MainButton.activeSelf)
-            MainButton.SetActive(true);
+    //     // 메인 버튼 그룹을 활성화 (없으면 null 체크)
+    //     if (MainButton != null && !MainButton.activeSelf)
+    //         MainButton.SetActive(true);
 
-        // BGM을 인트로 트랙으로 변경 (사운드 매니저 싱글톤 사용 가정)
-        SoundManager.Instance.SetBGMSound("Intro");
-        if (SoundManager.Instance.bgmsource != null)
-            SoundManager.Instance.bgmsource.volume = SoundManager.Instance.bgmVolume;
+    //     // BGM을 인트로 트랙으로 변경 (사운드 매니저 싱글톤 사용 가정)
+    //     SoundManager.Instance.SetBGMSound("Intro");
+    //     if (SoundManager.Instance.bgmsource != null)
+    //         SoundManager.Instance.bgmsource.volume = SoundManager.Instance.bgmVolume;
 
-        // 인트로는 시간 정지 상태로 유지
-        // Time.timeScale = 0f;
-    }
+    //     // 인트로는 시간 정지 상태로 유지
+    //     // Time.timeScale = 0f;
+    // }
 }

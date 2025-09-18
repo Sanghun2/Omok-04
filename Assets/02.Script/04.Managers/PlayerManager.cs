@@ -11,7 +11,7 @@ public class PlayerManager : IInitializable
 
     #region Interface
 
-    public void InitPlayer(Define.Type.Player playerType, PlayerInfo playerInfo) {
+    public void InitPlayerUI(Define.Type.Player playerType, PlayerInfo playerInfo) {
         GetPlayer(playerType).InitPlayer(playerInfo);
     }
 

@@ -27,7 +27,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
     private void OnDisable()
     {
-        launchButton?.onClick.RemoveListener(OnClickLaunchButton);
+        DeactiveLaunchButton();
     }
 
     /// <summary>
@@ -147,6 +147,11 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
                 DestroyX_Marker(cell.CellRow, cell.CellCol);
             }
         }
+    }
+
+    public void DeactiveLaunchButton()
+    {
+        launchButton?.onClick.RemoveListener(OnClickLaunchButton);
     }
 
     public void DestroyX_Marker(int row, int col)
