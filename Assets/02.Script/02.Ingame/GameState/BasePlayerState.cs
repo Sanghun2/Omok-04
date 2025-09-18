@@ -22,7 +22,7 @@ public abstract class BasePlayerState
             }
             else
             {
-                gameLogic.EndGame(gameResult);
+                Managers.Game.EndGame(gameResult);
             }
         }
     }

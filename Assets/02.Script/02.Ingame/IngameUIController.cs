@@ -149,7 +149,6 @@ public class IngameUIController : UIBase
         Timer timer = Managers.Time.GetTimer();
         if (timer != null)
         { BindTimer(timer);
-            Debug.Log("Timer out");
             // timer.StartCount();
         }
 
@@ -183,13 +182,23 @@ public class IngameUIController : UIBase
     // TextMeshPro UI °»½Å
     private void UpdateTimerUI(float current, float total)
     {
-        if (timerText == null) return;
+        if (timerText == null || Managers.Turn.CurrentState != Define.State.GameState.InProgress) return;
 
         int seconds = Mathf.CeilToInt(current);
         timerText.text = seconds.ToString();
 
         if (timeSlider != null && total > 0)
+        {
             timeSlider.value = current / total;
+            if (current <= 0.01f)
+            {
+                if(Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1)
+                    Managers.Game.EndGame(Define.State.GameResult.WhiteStoneWin);
+                else if(Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player2)
+                    Managers.Game.EndGame(Define.State.GameResult.BlackStoneWin);
+            }
+                            
+        }
     }
 
     protected override void Start()
