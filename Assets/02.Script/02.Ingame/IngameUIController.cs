@@ -18,7 +18,9 @@ public class IngameUIController : UIBase
 
     [SerializeField] public Slider timeSlider;
     [SerializeField] private TextMeshProUGUI p1Rank;
+    [SerializeField] private TextMeshProUGUI p1Result;
     [SerializeField] private TextMeshProUGUI p2Rank;
+    [SerializeField] private TextMeshProUGUI p2Result;
     [SerializeField] private TextMeshProUGUI timerText;
 
     private TextMeshProUGUI p1Name;

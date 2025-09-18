@@ -20,7 +20,15 @@ public class AIState : BasePlayerState
         var ui = Object.FindObjectOfType<IngameUIController>();
         if (ui != null)
         {
-            ui.SetTurnChecks(true);
+            // 0.5초 후에 아직 이 상태면 SetTurnChecks(true) 실행
+            Managers.Coroutine.Wait(0.5f, () =>
+            {
+                // 아직 AIState 상태인지 확인
+                if (gameLogic.CurrentState == this)
+                {
+                    ui.SetTurnChecks(true);
+                }
+            });
         }
 
         // 타이머 초기화 및 25초 카운트 시작

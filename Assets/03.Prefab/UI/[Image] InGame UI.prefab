@@ -2348,7 +2348,9 @@ MonoBehaviour:
   GoBackButton: {fileID: 8309341889626034743}
   timeSlider: {fileID: 3992632025316237283}
   p1Rank: {fileID: 713554972148318652}
+  p1Result: {fileID: 4560105818188246725}
   p2Rank: {fileID: 5186271901009303575}
+  p2Result: {fileID: 8968330880704489954}
   timerText: {fileID: 2417049842806786164}
   p1TurnChecks: []
   p2TurnChecks: []
