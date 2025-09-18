@@ -2,25 +2,14 @@
 
 public class InGameScene : Scene
 {
-    [SerializeField] GameObject InGameObjects;
+    public override void InitScene() {
+        Managers.Time.GetTimer().SetTimeAsDefault().StartCount();
 
-    public override void ActiveScene(bool active)
-    {
-        base.ActiveScene(active);
-        if (InGameObjects != null)
-        {
-            InGameObjects.SetActive(active);
-        }
-        else
-        {
-            Debug.LogAssertion($"<color=orange>연결된 GameObject가 없음</color>");
-        }
-
+        OnSceneShown();
     }
 
-    public override void InitScene() {
-        //Managers.UI.GetUI<IngameUIController>().InitUI();
-        Managers.Time.GetTimer().SetTimeAsDefault().StartCount();
-        Debug.LogAssertion($"in game scene init");
+    protected override void OnSceneShown() {
+        Managers.UI.CloseUI<GameOverUI>();
+        Debug.LogAssertion("game over ui closed");
     }
 }

@@ -124,7 +124,8 @@ public class IngameUIController : UIBase
 
     public override void InitUI()
     {
-        base.InitUI();
+        Debug.Log("[IngameUIController] AddListener 등록됨");
+        Debug.Log($"현재 리스너 개수: {Managers.Turn.OnTurnChanged.GetPersistentEventCount()}");
 
         GoBackButton.onClick.AddListener(() =>
         {

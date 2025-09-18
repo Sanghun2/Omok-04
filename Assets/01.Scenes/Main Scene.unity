@@ -2502,6 +2502,26 @@ PrefabInstance:
       propertyPath: InGameObjects
       value: 
       objectReference: {fileID: 296886359}
+    - target: {fileID: 7601521556907767231, guid: c07fc6178240b4243a48c223c5945dad, type: 3}
+      propertyPath: sceneUIs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7601521556907767231, guid: c07fc6178240b4243a48c223c5945dad, type: 3}
+      propertyPath: ingameObjs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7601521556907767231, guid: c07fc6178240b4243a48c223c5945dad, type: 3}
+      propertyPath: 'sceneUIs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 378636158}
+    - target: {fileID: 7601521556907767231, guid: c07fc6178240b4243a48c223c5945dad, type: 3}
+      propertyPath: 'sceneUIs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1961725787}
+    - target: {fileID: 7601521556907767231, guid: c07fc6178240b4243a48c223c5945dad, type: 3}
+      propertyPath: 'ingameObjs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 296886359}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4380,6 +4400,14 @@ PrefabInstance:
       propertyPath: sceneUI
       value: 
       objectReference: {fileID: 2086107668}
+    - target: {fileID: 8212886055650033687, guid: de2d3da267e459448a8d6f3fb79cea76, type: 3}
+      propertyPath: sceneUIs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212886055650033687, guid: de2d3da267e459448a8d6f3fb79cea76, type: 3}
+      propertyPath: 'sceneUIs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2086107668}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4454,6 +4482,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 804290354503012944, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: sceneUI
+      value: 
+      objectReference: {fileID: 932206592}
+    - target: {fileID: 804290354503012944, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
+      propertyPath: sceneUIs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 804290354503012944, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
+      propertyPath: 'sceneUIs.Array.data[0]'
       value: 
       objectReference: {fileID: 932206592}
     - target: {fileID: 3176037173910531258, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
@@ -5313,7 +5349,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2414757160182648438, guid: 7121039228ec01742ab6f40334546337, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7494130868925859441, guid: 7121039228ec01742ab6f40334546337, type: 3}
       propertyPath: m_Pivot.x
@@ -5398,7 +5434,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6967016109440697696, guid: 7121039228ec01742ab6f40334546337, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1961725790}
   m_SourcePrefab: {fileID: 100100000, guid: 7121039228ec01742ab6f40334546337, type: 3}
 --- !u!224 &1961725786 stripped
 RectTransform:
@@ -5410,6 +5449,36 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2414757160182648438, guid: 7121039228ec01742ab6f40334546337, type: 3}
   m_PrefabInstance: {fileID: 1961725785}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1961725788 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6967016109440697696, guid: 7121039228ec01742ab6f40334546337, type: 3}
+  m_PrefabInstance: {fileID: 1961725785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1961725789 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5873055724567867423, guid: 7121039228ec01742ab6f40334546337, type: 3}
+  m_PrefabInstance: {fileID: 1961725785}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961725788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!114 &1961725790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961725788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97d078236f420d4cb3fabd7c4dfb2e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RestartButton
+  targetButton: {fileID: 1961725789}
+  gameOverUI: {fileID: 1961725787}
 --- !u!1 &1999376433
 GameObject:
   m_ObjectHideFlags: 0
