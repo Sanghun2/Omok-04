@@ -57,7 +57,7 @@ public class LevelUIManager : UIBase
         // UI 전환
         //this.CloseUI();         
         //inGameUI.OpenUI();
-
+        gameObject.SetActive(false);
         Managers.Game.StartSinglePlay(level);
     }
 }
