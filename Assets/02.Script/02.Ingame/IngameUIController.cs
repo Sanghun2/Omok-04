@@ -131,6 +131,8 @@ public class IngameUIController : UIBase
             ResetTurnUI();
         });
 
+        Debug.Log($"[IngameUIController] CurrentGameType: {Managers.Game.CurrentGameType}");
+
         // 싱글모드일 때 player2 UI 설정
         if (Managers.Game.CurrentGameType == Define.Type.Game.Single)
         {
