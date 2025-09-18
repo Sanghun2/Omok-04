@@ -63,7 +63,6 @@ public static class OmokAI
         if (stoneColor == Define.Type.StoneColor.White)
             return false;
 
-        Debug.Log($"받아온 Row : {row} / Col : {col}");
 
         int openThreeDirs = 0; // 삼삼 판단용
         int openFourDirs = 0;  // 사사 판단용

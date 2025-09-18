@@ -3,11 +3,17 @@ using UnityEngine;
 
 public class GameManager
 {
+    public GameManager()
+    {
+        Debug.Log("GameManager 생성");
+    }
+
     public Define.Type.Game CurrentGameType => currentGameType;
 
     private Define.State.GameState currentGameState;
     private Define.Type.Game currentGameType;
     private Define.Type.GameLevel lastGameLevel;
+    private GameLogic gameLogic;
 
     #region Flow Control
 
@@ -65,17 +71,16 @@ public class GameManager
 
     private void StartGame(Define.Type.Game gameType, Define.Type.GameLevel level = Define.Type.GameLevel.Easy)
     {
+        Debug.Log($"게임 시작. 모드: {gameType}, 난이도: {level}");
         //게임 다시하기 기능때문에 추가함
         this.currentGameType = gameType;
         this.lastGameLevel = level;
+
 
         // setting game options
         Managers.Board.InitBoard();
         Managers.Turn.StartGame();
         currentGameState = Define.State.GameState.Ready;
-        currentGameType = gameType;
-
-        GameLogic gameLogic;
 
         switch (gameType)
         {
@@ -107,7 +112,15 @@ public class GameManager
     }
 
     #endregion
-    
+
+    #region End Game
+    public void EndGame()
+    {
+        Debug.Log($"게임 종료. 모드: {currentGameType}, 난이도: {lastGameLevel}");
+        gameLogic = null;
+    }
+    #endregion
+
     #region Restart Game
     public void RestartLastGame()
     {

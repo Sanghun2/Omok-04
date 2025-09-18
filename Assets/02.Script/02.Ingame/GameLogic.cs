@@ -128,8 +128,6 @@ public class GameLogic
             default:
                 break;
         }
-        Managers.GameResult.EndGame();
-        Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
 
         if (gameType == Define.Type.Game.Multi)
         {
@@ -139,6 +137,10 @@ public class GameLogic
                 Managers.GameResult.SendGameResult(false);
             //else // Draw일 때
         }
+
+        Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
+        Managers.GameResult.EndGame();
+        Managers.Game.EndGame();
     }
 
     // 게임의 결과를 확인하는 함수
