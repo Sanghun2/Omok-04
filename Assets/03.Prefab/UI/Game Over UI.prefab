@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97d078236f420d4cb3fabd7c4dfb2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RestartButton
-  restartButton: {fileID: 5873055724567867423}
+  targetButton: {fileID: 5873055724567867423}
   gameOverUI: {fileID: 2414757160182648438}
 --- !u!1 &5486811387292643898
 GameObject:
