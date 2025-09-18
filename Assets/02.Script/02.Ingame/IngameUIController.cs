@@ -129,7 +129,6 @@ public class IngameUIController : UIBase
         GoBackButton.onClick.AddListener(() =>
         {
             ResetTurnUI();
-            Managers.Scene.ShowScene(Define.Type.Scene.MainMenu);
         });
 
         // 싱글모드일 때 player2 UI 설정
