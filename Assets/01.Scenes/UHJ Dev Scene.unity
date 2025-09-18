@@ -923,14 +923,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Log In
       objectReference: {fileID: 0}
-    - target: {fileID: 6651083586672842097, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8407582128501215734, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
