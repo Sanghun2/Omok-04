@@ -121,6 +121,7 @@ public class IngameUIController : UIBase
         Debug.Log("[IngameUIController] AddListener 등록됨");
         Debug.Log($"현재 리스너 개수: {Managers.Turn.OnTurnChanged.GetPersistentEventCount()}");
 
+        // Managers.Turn.OnTurnChanged.RemoveAllListeners();
 
         Debug.Log("[IngameUIController] AddListener 등록됨");
         Debug.Log($"현재 리스너 개수: {Managers.Turn.OnTurnChanged.GetPersistentEventCount()}");
@@ -180,6 +181,8 @@ public class IngameUIController : UIBase
             Debug.Log($"[IngameUIController] Managers.Turn 인스턴스 해시: {Managers.Turn.GetHashCode()}");
 
         });
+
+         Managers.Turn.OnTurnChanged.RemoveAllListeners();
 
     }
 
