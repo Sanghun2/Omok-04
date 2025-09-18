@@ -2469,6 +2469,62 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1745490216}
     m_Modifications:
+    - target: {fileID: 3710439411442943815, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710439411442943815, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710439411442943815, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 902559659}
+    - target: {fileID: 3710439411442943815, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710439411442943815, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710439411442943815, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710439411442943815, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878308314227439355, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878308314227439355, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878308314227439355, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 902559653}
+    - target: {fileID: 3878308314227439355, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878308314227439355, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878308314227439355, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878308314227439355, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6113120045088834804, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2527,6 +2583,142 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6113120045088834804, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
   m_PrefabInstance: {fileID: 902559650}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &902559652 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3996256178845533239, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!1 &902559653 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4911989982506430997, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &902559654 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4075296919272347501, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!114 &902559655 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5003610489923025132, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
+--- !u!114 &902559656 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2292201226131043528, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
+--- !u!114 &902559657 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3621569285860666426, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
+--- !u!114 &902559658 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7449185718870581372, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!1 &902559659 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8407582128501215734, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &902559660 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8839884035770563599, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!1 &902559661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3736307860414900086, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &902559662 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5758346142077138672, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!114 &902559663 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9026028593494159595, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
+--- !u!114 &902559664 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5396222195809345364, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_InputField
+--- !u!114 &902559665 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2793246331152084617, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &910255218
 GameObject:
   m_ObjectHideFlags: 0
@@ -4448,47 +4640,55 @@ PrefabInstance:
     - target: {fileID: 3176037173910531258, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: errorPopup
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559661}
     - target: {fileID: 3176037173910531258, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: statusText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559665}
     - target: {fileID: 3176037173910531258, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: loginButton
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559662}
     - target: {fileID: 3176037173910531258, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: passwordInput
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559663}
     - target: {fileID: 3176037173910531258, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: usernameInput
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559664}
+    - target: {fileID: 3176037173910531258, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
+      propertyPath: showPasswordButton
+      value: 
+      objectReference: {fileID: 902559660}
     - target: {fileID: 3925078274775611565, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: errorPopup
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559653}
     - target: {fileID: 3925078274775611565, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: statusText
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559658}
     - target: {fileID: 3925078274775611565, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: passwordInput
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559656}
     - target: {fileID: 3925078274775611565, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: usernameInput
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559657}
     - target: {fileID: 3925078274775611565, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: registerButton
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559654}
+    - target: {fileID: 3925078274775611565, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
+      propertyPath: showPasswordButton
+      value: 
+      objectReference: {fileID: 902559652}
     - target: {fileID: 3925078274775611565, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: confirmPasswordInput
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 902559655}
     - target: {fileID: 4263925318876994990, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: m_Name
       value: Log In
