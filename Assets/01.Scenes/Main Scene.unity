@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1832281 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6461109491725964223, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+  m_PrefabInstance: {fileID: 777920473}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5326694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,6 +1163,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424731601}
   m_CullTransparentMesh: 1
+--- !u!1 &441832346 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8637904224073388180, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+  m_PrefabInstance: {fileID: 777920473}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &489200272 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6081992345660670091, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
@@ -2013,6 +2023,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1115334370938673509, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: p1TurnChecks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: p2TurnChecks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: 'p1TurnChecks.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1364253691}
+    - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: 'p1TurnChecks.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1832281}
+    - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: 'p2TurnChecks.Array.data[0]'
+      value: 
+      objectReference: {fileID: 441832346}
+    - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: 'p2TurnChecks.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1736740601}
+    - target: {fileID: 2313958580829411067, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5296568530865187489, guid: e27876cdfd3175943aa25043d4354300, type: 3}
@@ -3850,6 +3888,11 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 7858018862210691386, guid: dc6a7009f277b834db265b7f3dea3ba1, type: 3}
   m_PrefabInstance: {fileID: 3344158631091936841}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1364253691 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9105151851989091806, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+  m_PrefabInstance: {fileID: 777920473}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1527652524
 GameObject:
   m_ObjectHideFlags: 0
@@ -4320,6 +4363,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1572657807}
   m_CullTransparentMesh: 1
+--- !u!114 &1585146355 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8921065238443602695, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+  m_PrefabInstance: {fileID: 777920473}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1001 &1654611852
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4406,6 +4460,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9854ea2ed2cdcef4d816cf46e6dd5ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuScene
+--- !u!1 &1736740601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8415416621002495576, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+  m_PrefabInstance: {fileID: 777920473}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1745490215
 GameObject:
   m_ObjectHideFlags: 0
@@ -5706,6 +5765,14 @@ PrefabInstance:
       propertyPath: launchButton
       value: 
       objectReference: {fileID: 777920475}
+    - target: {fileID: 3577422467836143861, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
+      propertyPath: blackStoneLaunchButton
+      value: 
+      objectReference: {fileID: 777920475}
+    - target: {fileID: 3577422467836143861, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
+      propertyPath: whiteStoneLaunchButton
+      value: 
+      objectReference: {fileID: 1585146355}
     - target: {fileID: 6330972286458895890, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.03

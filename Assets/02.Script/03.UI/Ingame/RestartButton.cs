@@ -13,7 +13,6 @@ public class RestartButton : MonoBehaviour
             restartButton.onClick.AddListener(() =>
             {
                 Managers.Game.RestartLastGame();
-                Managers.Board.InitBoard(); // 보드 ui 초기화
 
                 // UI 재초기화
                 var ui = Object.FindObjectOfType<IngameUIController>();
@@ -22,8 +21,12 @@ public class RestartButton : MonoBehaviour
                     ui.ResetTurnUI();   // 턴 체크 초기화
                     ui.InitUI();        // 타이머 & 이벤트 다시 연결
                 }
+                else
+                {
+                    Debug.Log("ui is null!");
+                }
 
-                gameOverUI.SetActive(false);
+                    gameOverUI.SetActive(false);
             });
         }
     }
