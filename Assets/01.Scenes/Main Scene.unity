@@ -4282,7 +4282,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1923283831}
         m_TargetAssemblyTypeName: GameUIManger, Assembly-CSharp
-        m_MethodName: OnStartSetting
+        m_MethodName: OnSelectLevelSetting
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4846,7 +4846,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1923283831}
         m_TargetAssemblyTypeName: GameUIManger, Assembly-CSharp
-        m_MethodName: OnStartSetting
+        m_MethodName: OnStartLocalPlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
