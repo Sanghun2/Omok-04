@@ -14,6 +14,7 @@ public class Debugger : MonoBehaviour
 
     [Space]
     [Header("Timer")]
+    [SerializeField] float customTimeScale = 1;
     [SerializeField] Timer testTimer;
     [SerializeField] float testTime = 3f;
 
@@ -94,13 +95,12 @@ public class Debugger : MonoBehaviour
         testTimer.StartCount();
     }
 
-
-    private void Test_CheckTimeOver(float currentTime, float totalTime) {
-        Debug.LogAssertion($"<color=magenta>time over</color>");
-    }
-
     private void Test_CheckTime(float currentTime, float totalTime) {
         Debug.LogAssertion($"{currentTime} / {totalTime}");
+    }
+
+    public void Test_ChangeTimeScale() {
+        Managers.Time.Timer.CustomTimeScale = customTimeScale;
     }
 
     #endregion
@@ -112,6 +112,10 @@ public class Debugger : MonoBehaviour
         }
 
         //Managers.UI.GetUI<SampleTimeUI>().CloseUI();
+    }
+
+    private void Test_CheckTimeOver() {
+        Debug.LogAssertion($"<color=magenta>time over</color>");
     }
 }
 

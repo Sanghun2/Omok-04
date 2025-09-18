@@ -1,3 +1,4 @@
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -37,8 +38,9 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public void InitBoard()
     {
         this.gameObject.SetActive(true);
-        blackStoneLaunchButton.onClick.AddListener(OnClickBlackStoneLaunchButton);
-        whiteStoneLaunchButton.onClick.AddListener(OnClickWhiteStoneLaunchButton);
+
+        //blackStoneLaunchButton.onClick.AddListener(OnClickBlackStoneLaunchButton);
+        //whiteStoneLaunchButton.onClick.AddListener(OnClickWhiteStoneLaunchButton);
 
         // ¸¶Ä¿ ÃÊ±âÈ­
         xMarker.SetActive(false);
@@ -60,8 +62,8 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
             {
                 board[i, j] = new Cell();
 
-                board[i,j].InitCell(i, j, (i,j) =>
-                {
+                board[i,j].InitCell(i, j, (i,j) => {
+                    Managers.Time.Timer.SetTimeAsDefault().StartCount();
                     onCellClickedDelegate(i, j);
                 });
             }
@@ -128,6 +130,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
             return;
 
         positionSelector.SetActive(false);
+        Debug.LogAssertion($"Black Âø¼ö");
 
         currentCell.onCellClicked?.Invoke(currentCell.CellRow,currentCell.CellCol);
     }
@@ -139,6 +142,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         positionSelector.SetActive(false);
 
+        Debug.LogAssertion($"White Âø¼ö");
         currentCell.onCellClicked?.Invoke(currentCell.CellRow, currentCell.CellCol);
     }
     

@@ -4,12 +4,10 @@ public class InGameScene : Scene
 {
     public override void InitScene() {
         Managers.Time.GetTimer().SetTimeAsDefault().StartCount();
-
-        OnSceneShown();
+        Managers.InGameUI.InitUIs(Managers.Game.CurrentGameType, Managers.Turn.GetCurrentPlayer());
+        Managers.UI.GetUI<GameOverUI>().CloseUI();
     }
 
-    protected override void OnSceneShown() {
-        Managers.UI.CloseUI<GameOverUI>();
-        Debug.LogAssertion("game over ui closed");
+    public override void ReleaseScene() {
     }
 }

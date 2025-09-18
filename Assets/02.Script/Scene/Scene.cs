@@ -38,6 +38,4 @@ public abstract class Scene : MonoBehaviour
     public virtual void ReleaseScene() {
         Debug.LogAssertion($"{SceneType} Scene Release");
     }
-
-    protected virtual void OnSceneShown() { }
 }

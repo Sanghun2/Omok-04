@@ -17,33 +17,28 @@ public class AIState : BasePlayerState
 
     public override async void OnEnter(GameLogic gameLogic)
     {
-        var ui = Object.FindObjectOfType<IngameUIController>();
-        if (ui != null)
+        var ui = Managers.InGameUI;
+        // 0.5초 후에 아직 이 상태면 ActiveTurnMarkUI(true) 실행
+        Managers.Coroutine.Wait(0.5f, () =>
         {
-            // 0.5초 후에 아직 이 상태면 SetTurnChecks(true) 실행
-            Managers.Coroutine.Wait(0.5f, () =>
-            {
-                // 아직 AIState 상태인지 확인
-                if (gameLogic.CurrentState == this)
-                {
-                    ui.SetTurnChecks(true);
-                }
-            });
-        }
+            // 아직 AIState 상태인지 확인
+            if (gameLogic.CurrentState == this) {
+                ui.ActiveTurnMarkUI(true);
+            }
+        });
 
         // 타이머 초기화 및 25초 카운트 시작
+        Debug.LogAssertion($"on enter timer reset");
         var timer = Managers.Time.GetTimer();
         if (timer != null)
         {
-            timer.SetTimeAsDefault();   // 25초 설정
-            timer.StartCount();        // 카운트 시작
+            timer.SetTimeAsDefault();
+            timer.StartCount();
         }
 
         var board = gameLogic.Board;
 
-        var result = await System.Threading.Tasks.Task.Run(() =>
-            DualModeAI.GetBestMove(board, Define.Type.StoneColor.White, level)
-        );
+        var result = await System.Threading.Tasks.Task.Run(() => DualModeAI.GetBestMove(board, Define.Type.StoneColor.White, level));
 
         if (result.HasValue)
             HandleMove(gameLogic, result.Value.row, result.Value.col);
@@ -54,24 +49,12 @@ public class AIState : BasePlayerState
         }
 
         if (ui != null)
-            ui.SetTurnChecks(false);
+            ui.ActiveTurnMarkUI(false);
     }
 
     public override void OnExit(GameLogic gameLogic)
     {
-        var ui = Object.FindObjectOfType<IngameUIController>();
-        if (ui != null)
-        {
-            ui.SetTurnChecks(false);
-        }
-
-        // 타이머 초기화 및 25초 카운트 시작
-        var timer = Managers.Time.GetTimer();
-        if (timer != null)
-        {
-            timer.SetTimeAsDefault();   // 25초 설정
-            timer.StartCount();        // 카운트 시작
-        }
+        Managers.InGameUI.ActiveTurnMarkUI(false);
     }
 
     protected override void HandleNextTurn(GameLogic gameLogic)

@@ -108,6 +108,7 @@ public class Managers : MonoBehaviour
             Time,
             Player,
             Network,
+            Game,   
         };
 
         InitializeAll(initializeList);
