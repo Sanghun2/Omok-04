@@ -988,6 +988,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424731601}
   m_CullTransparentMesh: 1
+--- !u!1 &489200272 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6081992345660670091, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &489200276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489200272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae7d6030de5d854eb455b810dad5077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TabNavigation
+  inputFields:
+  - {fileID: 902559664}
+  - {fileID: 902559663}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,7 +1880,7 @@ PrefabInstance:
     - target: {fileID: 7222522683350673005, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -9042028117199634284, guid: c5ae4b325bd72554b97a084758dd82f0, type: 3}
+      objectReference: {fileID: 21300000, guid: c5ae4b325bd72554b97a084758dd82f0, type: 3}
     - target: {fileID: 7420566217552168547, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: m_Type
       value: 1
@@ -2588,12 +2608,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6651083586672842097, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6081992345660670091, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 489200276}
+    - targetCorrespondingSourceObject: {fileID: 8407582128501215734, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1882567132}
   m_SourcePrefab: {fileID: 100100000, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
 --- !u!4 &902559651 stripped
 Transform:
@@ -5064,6 +5090,22 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 571106565246559950, guid: fde2a8fd4d5a4b54d83fb84d2b512093, type: 3}
   m_PrefabInstance: {fileID: 1879580485}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1882567132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902559659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae7d6030de5d854eb455b810dad5077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TabNavigation
+  inputFields:
+  - {fileID: 902559657}
+  - {fileID: 902559656}
+  - {fileID: 902559655}
 --- !u!1 &1902765581
 GameObject:
   m_ObjectHideFlags: 0
