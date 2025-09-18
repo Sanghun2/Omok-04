@@ -2096,6 +2096,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: AITurn
+      value: 
+      objectReference: {fileID: 1312856007}
+    - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: p1Rank
+      value: 
+      objectReference: {fileID: 1991075277}
+    - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: GoBackButton
+      value: 
+      objectReference: {fileID: 1355658615}
+    - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: p1TurnChecks.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -3813,6 +3825,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1312856007 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2313958580829411067, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+  m_PrefabInstance: {fileID: 777920473}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1333528773
 GameObject:
   m_ObjectHideFlags: 0
@@ -3954,6 +3971,17 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 7858018862210691386, guid: dc6a7009f277b834db265b7f3dea3ba1, type: 3}
   m_PrefabInstance: {fileID: 3344158631091936841}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1355658615 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8309341889626034743, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+  m_PrefabInstance: {fileID: 777920473}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1364253691 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9105151851989091806, guid: e27876cdfd3175943aa25043d4354300, type: 3}
@@ -5535,6 +5563,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2414757160182648438, guid: 7121039228ec01742ab6f40334546337, type: 3}
   m_PrefabInstance: {fileID: 1961725785}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1991075277 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 713554972148318652, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+  m_PrefabInstance: {fileID: 777920473}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1999376433
 GameObject:
   m_ObjectHideFlags: 0
