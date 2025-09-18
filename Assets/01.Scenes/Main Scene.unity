@@ -2469,6 +2469,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1745490216}
     m_Modifications:
+    - target: {fileID: 1682225976343748399, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 902559659}
     - target: {fileID: 3710439411442943815, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -2826,6 +2830,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 910555678}
   m_CullTransparentMesh: 1
+--- !u!1 &932206592 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6651083586672842097, guid: 569a07bd39609664598bd888ebde8ffb, type: 3}
+  m_PrefabInstance: {fileID: 902559650}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &941985172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4636,7 +4645,7 @@ PrefabInstance:
     - target: {fileID: 804290354503012944, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: sceneUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 932206592}
     - target: {fileID: 3176037173910531258, guid: 8061a9af64549514d9849fcbfbdf141d, type: 3}
       propertyPath: errorPopup
       value: 
