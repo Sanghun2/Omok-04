@@ -72,6 +72,12 @@ public class GameManager
         // setting game options
         Managers.Board.InitBoard();
         Managers.Turn.StartGame();
+
+        var timer = Managers.Time.GetTimer();
+        if (timer != null) {
+            timer.SetTimeAsDefault();   // 25초 설정
+        }
+
         currentGameState = Define.State.GameState.Ready;
         currentGameType = gameType;
 
@@ -81,11 +87,11 @@ public class GameManager
         {
             case Define.Type.Game.Single:
                 gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
-                SetStatePlay();
+                SetGameStatePlay();
                 break;
             case Define.Type.Game.Local:
                 gameLogic = new GameLogic(Managers.Board.Board, gameType);
-                SetStatePlay();
+                SetGameStatePlay();
                 break;
             case Define.Type.Game.Multi:
                 //gameLogic = new GameLogic(Managers.Board.Board, gameType);
@@ -101,9 +107,10 @@ public class GameManager
     /// <summary>
     /// 모든 플레이어가 준비되었을 때 실행하는 코드. 멀티플레이용
     /// </summary>
-    public void SetStatePlay()
+    public void SetGameStatePlay()
     {
         currentGameState = Define.State.GameState.InProgress;
+        Managers.Time.GetTimer().StartCount();
     }
 
     #endregion
