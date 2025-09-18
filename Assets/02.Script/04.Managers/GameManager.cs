@@ -148,6 +148,7 @@ public class GameManager
         }
 
         Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
+        Managers.Board.DeactiveLaunchButton();
         Managers.GameResult.EndGame();
         gameLogic = null;
     }
