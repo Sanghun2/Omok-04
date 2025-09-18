@@ -103,7 +103,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
         Debug.LogAssertion($"actor number: {PhotonNetwork.LocalPlayer.ActorNumber}");
         Managers.Game.EnterMultiPlay();
-        Managers.Game.SetStatePlay();
+        //Managers.Game.SetStatePlay();
         Debug.LogAssertion($"<color=magenta>게임 시작!</color>");
     }
 
