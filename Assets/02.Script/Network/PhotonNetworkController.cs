@@ -20,11 +20,14 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     public event INetworkController.MatchHandler OnAllPlayerReady;
     public event INetworkController.MatchHandler OnGameStart; //
 
-    public event INetworkController.PlayHandler OnChooseFirstPlayer; //
-    public event INetworkController.PlayHandler OnGameInit;
-    public event INetworkController.PlayHandler OnPlaceStone;
-    public event INetworkController.PlayHandler OnTurnChanged;
-    public event INetworkController.PlayHandler OnGameFinish;
+    public event INetworkController.PlayerHandler OnChooseFirstPlayer; //
+    public event INetworkController.PlayerHandler OnPlayerInit;
+    public event INetworkController.PlayerHandler OnPlaceStone;
+    public event INetworkController.PlayerHandler OnTurnChanged;
+    public event INetworkController.PlayerHandler OnGameFinish;
+
+    public delegate void PlayerHandler(Define.Type.Player targetPlayer, string playerName, int rank);
+    public event PlayerHandler OnGameInit;
 
     #region interface
 
@@ -82,9 +85,6 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     public void SetPlayerAndFirstPlayer(Define.Type.Player playerType, Define.Type.Player firstPlayer) {
         OnChooseFirstPlayer?.Invoke(firstPlayer);
     }
-    public void StartGame() {
-        photonView.RPC(nameof(RPC_GameStart), RpcTarget.AllViaServer);
-    }
 
     /// <summary>
     /// Place Stone을 실행할 수 있는지 판단
@@ -121,92 +121,105 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    
-   
-
     public void Initialize() {
         InitConnect();
         OnChooseFirstPlayer += InitGame;
-        OnGameInit += ReadyPlayer;
+        OnGameInit += UpdatePlayerUI;
+        OnPlayerInit += ReadyGame;
         OnAllPlayerReady += SetGameStatePlay;// game start에서 전부 처리 후 ready처리. 모두 ready이면 game state inprogress로 변경
     }
 
-    private void ReadyPlayer(Define.Type.Player localPayerType) {
-        photonView.RPC(nameof(RPC_PlayerReady), RpcTarget.MasterClient, (int)localPayerType);
-    }
-
-    private void SetFirstPlayer() {
+    private void SetFirstPlayer() { //
         photonView.RPC(nameof(RPC_SetFirstPlayer), RpcTarget.AllViaServer);
     }
 
-    
-    private void InitGame(Define.Type.Player firstPlayer) {
+
+    /// <summary>
+    /// Local의 인게임 PlayerState 및 PlayerUI Init
+    /// </summary>
+    /// <param name="firstPlayer"></param>
+    private void InitGame(Define.Type.Player firstPlayer) { //
         // 이전 step에서 master client가 아니면 return 했으므로 이 코드는 master만 실행함
         photonView.RPC(nameof(RPC_InitGame), RpcTarget.AllViaServer, firstPlayer);
     }
 
-    private void PlayerReady() {
-        photonView.RPC(nameof(RPC_PlayerReady), RpcTarget.MasterClient, LocalActorNumber);
+    
+    /// <summary>
+    /// 다른 플레이어의 PlayerUI를 현재 내가 Init한 정보로 Init
+    /// </summary>
+    /// <param name="targetPlayer"></param>
+    /// <param name="playerName"></param>
+    /// <param name="rank"></param>
+    private void UpdatePlayerUI(Define.Type.Player targetPlayer, string playerName, int rank) {
+        photonView.RPC(nameof(RPC_UpdatePlayerUI), RpcTarget.OthersBuffered, targetPlayer, playerName, rank);
+    } //
+
+
+    /// <summary>
+    /// 씬 이동 후 game ready RPC 호출
+    /// </summary>
+    /// <param name="localPayerType"></param>
+    private void ReadyGame(Define.Type.Player localPayerType) { //
+        Managers.UI.ClosePopUp();
+        Managers.Game.EnterMultiPlay();
+        photonView.RPC(nameof(RPC_ReadyGame), RpcTarget.MasterClient, (int)localPayerType);
     }
-    private void SetGameStatePlay() {
+
+    private void SetGameStatePlay() { //
         if (PhotonNetwork.IsMasterClient) {
             photonView.RPC(nameof(RPC_SetGameStateplay), RpcTarget.AllViaServer);
         }
     }
 
-    [PunRPC]
+    [PunRPC] //
     private void RPC_SetFirstPlayer() {
 
         if (!PhotonNetwork.IsMasterClient) return;
 
         int firstPlayerIndex = Random.Range(1, 3);
         int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-        Debug.LogAssertion($"선택된 first player index: {firstPlayerIndex}, local actor: {actorNumber}");
+        TestLog($"선택된 first player index: {firstPlayerIndex}, local actor: {actorNumber}");
         Define.Type.Player firstPlayer = actorNumber == firstPlayerIndex ? Define.Type.Player.Player1 : Define.Type.Player.Player2;
 
-        Debug.LogAssertion($"local player type: {LocalPlayerType}, first player: {firstPlayer == LocalPlayerType}");
+        TestLog($"local player type: {LocalPlayerType}, first player: {firstPlayer == LocalPlayerType}");
         OnChooseFirstPlayer?.Invoke(firstPlayer);
     }
 
-    [PunRPC]
+    [PunRPC] //
     private void RPC_InitGame(Define.Type.Player firstPlayer) {
-        Managers.UI.ClosePopUp();
-        Managers.Game.EnterMultiPlay();
+        // 모든 플레이어 인게임 진입
 
-        // 모든 플레이어가 개별적으로 board 초기화 및 플레이어 초기화
+        // 모든 플레이어가 개별적으로 같은 값으로 board 초기화 및 플레이어 초기화
         var gameLogic = new GameLogic(Managers.Board.Board, Define.Type.Game.Multi);
 
         if (LocalPlayerType == Define.Type.Player.Player1) {
             gameLogic.firstPlayerState = new PlayerState(firstPlayer == LocalPlayerType);
             gameLogic.secondPlayerState = new PlayerState(firstPlayer == LocalPlayerType);
-            Debug.LogAssertion($"first player로 set");
+            TestLog("first player로 set");
         }
         else {
             gameLogic.firstPlayerState = new PlayerState(firstPlayer == LocalPlayerType);
             gameLogic.secondPlayerState = new PlayerState(firstPlayer == LocalPlayerType);
-            Debug.LogAssertion($"second player로 set");
+            TestLog("second player로 set");
         }
-
-
-        Debug.LogAssertion($"actor number: {PhotonNetwork.LocalPlayer.ActorNumber}");
-        Managers.Game.EnterMultiPlay();
-        OnGameInit?.Invoke(LocalPlayerType);
+        ;
+        var currentUser = Managers.UserInfo.GetCurrentUser();
+        // Player UI Init
+        Managers.Player.InitPlayerUI(LocalPlayerType, new PlayerInfo(currentUser.username, currentUser.rank.ToString())); // 이 부분 RPC로 동기화
+        
+        TestLog($"actor number: {PhotonNetwork.LocalPlayer.ActorNumber}");
+        OnGameInit?.Invoke(LocalPlayerType, currentUser.username, currentUser.rank);
     }
 
-    [PunRPC]
-    private void RPC_GameStart() {
-        Managers.UI.ClosePopUp();
+    [PunRPC] //
+    private void RPC_UpdatePlayerUI(Define.Type.Player targetPlayer, string playerName, int rank) {
+        Managers.Player.InitPlayerUI(targetPlayer, new PlayerInfo(playerName, rank.ToString()));
 
-        // 자신이 할당받은 player type으로 set. master에서 rpc로 호출해서 동시에 set
-        Managers.Player.InitPlayerUI(LocalPlayerType, new PlayerInfo(PhotonNetwork.NickName, "1급")); // 이 부분 RPC로 동기화
-
-
-        PlayerReady();
+        OnPlayerInit?.Invoke(targetPlayer);
     }
 
-
-    [PunRPC]
-    private void RPC_PlayerReady(int actorNumber) {
+    [PunRPC] //
+    private void RPC_ReadyGame(int actorNumber) {
         if (PhotonNetwork.IsMasterClient) {
             readiedPlayers.Add(actorNumber);
 
@@ -216,10 +229,10 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         }
     }
 
-    [PunRPC]
+    [PunRPC] //
     private void RPC_SetGameStateplay() {
         Managers.Game.SetGameStatePlay();
-        Debug.LogAssertion($"<color=magenta>게임 시작!</color>");
+        TestLog("게임 시작!", "magenta");
     }
 
     [PunRPC]
@@ -228,4 +241,8 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     }
 
     #endregion
+
+    private void TestLog(string text, string textColor="purple") {
+        Debug.LogAssertion($"<color={textColor}>{text}</color>");
+    }
 }

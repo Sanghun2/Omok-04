@@ -47,6 +47,8 @@ MonoBehaviour:
   - RPC_PlayerReady
   - RPC_SetFirstPlayer
   - RPC_SetGameStateplay
+  - RPC_ReadyGame
+  - RPC_UpdatePlayerUI
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

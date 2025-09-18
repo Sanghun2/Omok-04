@@ -13,12 +13,12 @@ public interface INetworkController : IInitializable
     public event MatchHandler OnAllPlayerReady;
     public event MatchHandler OnGameStart;
 
-    public delegate void PlayHandler(Define.Type.Player targetPlayer);
-    public event PlayHandler OnChooseFirstPlayer; // who place stone
-    public event PlayHandler OnGameInit;
-    public event PlayHandler OnPlaceStone; // who place stone
-    public event PlayHandler OnTurnChanged; // current turn player input
-    public event PlayHandler OnGameFinish; // win player
+    public delegate void PlayerHandler(Define.Type.Player targetPlayer);
+    public event PlayerHandler OnChooseFirstPlayer; // who place stone
+    public event PlayerHandler OnPlayerInit;
+    public event PlayerHandler OnPlaceStone; // who place stone
+    public event PlayerHandler OnTurnChanged; // current turn player input
+    public event PlayerHandler OnGameFinish; // win player
 
     #region Room Set & Network Set
     void InitConnect();
@@ -41,7 +41,6 @@ public interface INetworkController : IInitializable
 
     void SetPlayerAndFirstPlayer(Define.Type.Player playerType, Define.Type.Player firstPlayer);
 
-    void StartGame();
     bool PlaceReady(Define.Type.Player turnPlayer);
     void PlaceStone(Define.Type.Player playerType, Vector2Int stonePos);
     void SetTimer(float time);
@@ -89,7 +88,7 @@ public class NetworkManager : IInitializable
 
 
     public void StartGame() {
-        networkController.StartGame();
+
     }
     public void PlaceStone(Define.Type.Player playerType, Vector2Int stonePos) {
         networkController.PlaceStone(playerType, stonePos);
