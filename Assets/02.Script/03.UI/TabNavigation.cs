@@ -6,29 +6,43 @@ using UnityEngine.EventSystems;
 
 public class TabNavigation : MonoBehaviour
 {
-    public List<TMP_InputField> inputFields;
+    [SerializeField] List<TMP_InputField> inputFields;
+    [SerializeField] Button loginButton;
 
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            GameObject current = EventSystem.current.currentSelectedGameObject;
-            Debug.Log("1번");
-            if (current == null) return;
+            HandleTabNavigation();
+        }
 
-            for (int i = 0; i < inputFields.Count; i++)
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            if (loginButton != null && loginButton.interactable)
             {
-                if (current == inputFields[i].gameObject)
-                {
-                    int nextIndex = (i + 1) % inputFields.Count;
-                    inputFields[nextIndex].Select();
-                    inputFields[nextIndex].ActivateInputField();
-                    Debug.Log("3번");
-                    break;
-                }
-                Debug.Log("2번");
+                Debug.Log("Enter key");
+                loginButton.onClick.Invoke();
             }
         }
+    }
+    
+    private void HandleTabNavigation()
+    {
+
+        GameObject current = EventSystem.current.currentSelectedGameObject;
+
+        if (current == null) return;
+
+        for (int i = 0; i < inputFields.Count; i++)
+        {
+            if (current == inputFields[i].gameObject)
+            {
+                int nextIndex = (i + 1) % inputFields.Count;
+                inputFields[nextIndex].Select();
+                inputFields[nextIndex].ActivateInputField();
+                break;
+            }
+        }
+
     }
 }

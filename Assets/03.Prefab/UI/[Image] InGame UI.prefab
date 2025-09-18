@@ -357,7 +357,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.448
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1512,8 +1512,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4e26a0fa7f8f2dd4a9bf095a9242f9d5, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 2451941570389182289, guid: d03601a6815527a489d0ba023cabf9e3, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
@@ -1759,8 +1759,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4e26a0fa7f8f2dd4a9bf095a9242f9d5, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 2451941570389182289, guid: d03601a6815527a489d0ba023cabf9e3, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2347,6 +2347,7 @@ MonoBehaviour:
   p2OKButton: {fileID: 8921065238443602695}
   GoBackButton: {fileID: 8309341889626034743}
   timeSlider: {fileID: 3992632025316237283}
+  p1Rank: {fileID: 713554972148318652}
   p2Rank: {fileID: 5186271901009303575}
   timerText: {fileID: 2417049842806786164}
   p1TurnChecks: []
@@ -2522,7 +2523,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -850, y: 450}
+  m_AnchoredPosition: {x: -890, y: 479}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &682915914168207110
@@ -2553,7 +2554,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d63cc800cba0f60419839e45fa132307, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5ae4b325bd72554b97a084758dd82f0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
