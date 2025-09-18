@@ -106,43 +106,6 @@ public class GameLogic
             return false;
     }
 
-    // Game Over 처리
-    public void EndGame(Define.State.GameResult gameResult)
-    {
-        SetState(null);
-        firstPlayerState = null;
-        secondPlayerState = null;
-
-        Define.Type.Player player;
-
-        switch (gameResult)
-        {
-            case Define.State.GameResult.BlackStoneWin:
-                player = Define.Type.Player.Player1;
-                Managers.Turn.EndGame(player);
-                break;
-            case Define.State.GameResult.WhiteStoneWin:
-                player = Define.Type.Player.Player2;
-                Managers.Turn.EndGame(player);
-                break;
-            default:
-                break;
-        }
-
-        if (gameType == Define.Type.Game.Multi)
-        {
-            if (gameResult == Define.State.GameResult.BlackStoneWin)
-                Managers.GameResult.SendGameResult(true);
-            else if (gameResult == Define.State.GameResult.WhiteStoneWin)
-                Managers.GameResult.SendGameResult(false);
-            //else // Draw일 때
-        }
-
-        Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
-        Managers.GameResult.EndGame();
-        Managers.Game.EndGame();
-    }
-
     // 게임의 결과를 확인하는 함수
     public Define.State.GameResult CheckGameResult(Define.Type.StoneColor stoneType, int row, int col)
     {

@@ -3,11 +3,6 @@ using UnityEngine;
 
 public class GameManager
 {
-    public GameManager()
-    {
-        Debug.Log("GameManager 생성");
-    }
-
     public Define.Type.Game CurrentGameType => currentGameType;
 
     private Define.State.GameState currentGameState;
@@ -99,7 +94,8 @@ public class GameManager
                 SetGameStatePlay();
                 break;
             case Define.Type.Game.Multi:
-                //gameLogic = new GameLogic(Managers.Board.Board, gameType);
+                gameLogic = new GameLogic(Managers.Board.Board, gameType);
+                SetGameStatePlay();
                 break;
             default:
                 break;
@@ -117,13 +113,42 @@ public class GameManager
         currentGameState = Define.State.GameState.InProgress;
         Managers.Time.GetTimer().StartCount();
     }
-
     #endregion
 
     #region End Game
-    public void EndGame()
+    public void EndGame(Define.State.GameResult gameResult)
     {
-        Debug.Log($"게임 종료. 모드: {currentGameType}, 난이도: {lastGameLevel}");
+        gameLogic.SetState(null);
+        gameLogic.firstPlayerState = null;
+        gameLogic.secondPlayerState = null;
+
+        Define.Type.Player player;
+
+        switch (gameResult)
+        {
+            case Define.State.GameResult.BlackStoneWin:
+                player = Define.Type.Player.Player1;
+                Managers.Turn.EndGame(player);
+                break;
+            case Define.State.GameResult.WhiteStoneWin:
+                player = Define.Type.Player.Player2;
+                Managers.Turn.EndGame(player);
+                break;
+            default:
+                break;
+        }
+
+        if (currentGameType == Define.Type.Game.Multi)
+        {
+            if (gameResult == Define.State.GameResult.BlackStoneWin)
+                Managers.GameResult.SendGameResult(true);
+            else if (gameResult == Define.State.GameResult.WhiteStoneWin)
+                Managers.GameResult.SendGameResult(false);
+            //else // Draw일 때
+        }
+
+        Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
+        Managers.GameResult.EndGame();
         gameLogic = null;
     }
     #endregion
