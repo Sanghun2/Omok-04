@@ -40,10 +40,13 @@ public class GameUIManger : UIBase
     [SerializeField] Button SfxTestButton;       // SFX 테스트 버튼 (옵션)
 
     [SerializeField] GameObject MainButton;      // 메인(인트로) 버튼 그룹(다시 보이게 할 때 사용)
+    [SerializeField] GameObject winloselog;      //승리, 패배 전적
+
 
     // 내부 상태 변수
     bool isMulti;   
     bool isTip;
+    bool iswinloselog;
 
     #region 안 쓰는 기능
     // 배경들을 미리 할당해두고 랜덤으로 하나를 켜는 용도
@@ -205,6 +208,21 @@ public class GameUIManger : UIBase
     public void OnSettingPopup()
     {
         settingPopup.SetActive(true);
+    }
+
+    public void OnLogPupup()
+    {
+        if (winloselog != null && !iswinloselog)
+        {
+            winloselog.SetActive(true);
+            iswinloselog = true;
+        }
+
+        else
+        {
+            winloselog.SetActive(false);
+            iswinloselog = false;
+        }
     }
 
     public void OnExit()

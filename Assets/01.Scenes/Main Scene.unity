@@ -930,6 +930,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1556988721}
     m_Modifications:
+    - target: {fileID: 393688503417467222, guid: 7152628008fc8ed439b9da00fc81b2c4, type: 3}
+      propertyPath: gameUImanager
+      value: 
+      objectReference: {fileID: 1923283831}
     - target: {fileID: 630372068300759589, guid: 7152628008fc8ed439b9da00fc81b2c4, type: 3}
       propertyPath: m_fontColor.b
       value: 1
@@ -1065,6 +1069,34 @@ PrefabInstance:
     - target: {fileID: 3971725704417176904, guid: 7152628008fc8ed439b9da00fc81b2c4, type: 3}
       propertyPath: m_CullTransparentMesh
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093905148038977590, guid: 7152628008fc8ed439b9da00fc81b2c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093905148038977590, guid: 7152628008fc8ed439b9da00fc81b2c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093905148038977590, guid: 7152628008fc8ed439b9da00fc81b2c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1923283831}
+    - target: {fileID: 8093905148038977590, guid: 7152628008fc8ed439b9da00fc81b2c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093905148038977590, guid: 7152628008fc8ed439b9da00fc81b2c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnExitSetting
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093905148038977590, guid: 7152628008fc8ed439b9da00fc81b2c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameUIManger, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093905148038977590, guid: 7152628008fc8ed439b9da00fc81b2c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4469,7 +4501,7 @@ GameObject:
   - component: {fileID: 1615578252}
   - component: {fileID: 1615578251}
   m_Layer: 0
-  m_Name: '[Button]WinOrLose'
+  m_Name: '[Button]WinOrLoseLog'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4492,7 +4524,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -100}
+  m_AnchoredPosition: {x: 300, y: -100}
   m_SizeDelta: {x: 300, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1615578251
@@ -4539,13 +4571,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1923283831}
+        m_TargetAssemblyTypeName: GameUIManger, Assembly-CSharp
+        m_MethodName: OnLogPupup
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5565,6 +5597,7 @@ MonoBehaviour:
   bgmTestButton: {fileID: 626718996}
   SfxTestButton: {fileID: 817359002}
   MainButton: {fileID: 1254416429}
+  winloselog: {fileID: 9081237308549235733}
 --- !u!1001 &1961725785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6158,7 +6191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1116219587945843476
@@ -6958,10 +6991,10 @@ RectTransform:
   - {fileID: 8165462720381693532}
   m_Father: {fileID: 1745490216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -645, y: 191}
-  m_SizeDelta: {x: 400, y: 400}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 300, y: -400}
+  m_SizeDelta: {x: 400, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7525157545017897759
 MonoBehaviour:
