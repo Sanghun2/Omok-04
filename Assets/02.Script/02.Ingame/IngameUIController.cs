@@ -149,7 +149,6 @@ public class IngameUIController : UIBase
         Timer timer = Managers.Time.GetTimer();
         if (timer != null)
         { BindTimer(timer);
-            Debug.Log("Timer out");
             // timer.StartCount();
         }
 
