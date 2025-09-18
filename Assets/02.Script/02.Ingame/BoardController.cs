@@ -46,6 +46,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         onStoneSettedDelegate = (stoneType) =>
         {
+            SoundManager.Instance.OnAttackSound();
             Debug.Log("### DEV_JSH MarkerEvent Start ###");
             Debug.Log($"### DEV_JSH 이번에 놓인 돌은 {stoneType.ToString()}");
             Debug.Log("### DEV_JSH MarkerEvent End ###");
