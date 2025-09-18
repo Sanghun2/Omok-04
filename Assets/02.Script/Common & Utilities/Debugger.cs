@@ -45,7 +45,8 @@ public class Debugger : MonoBehaviour
     #region Match Making
 
     public void Test_QuickMatch() {
-        Managers.Network.QuickMatch();
+        Managers.Network.FindMatch();
+        Managers.UI.OpenPopUp(PopUpInfo.FindMatchPlayer, Define.Type.PopUpParent.Front);
     }
 
     #endregion
