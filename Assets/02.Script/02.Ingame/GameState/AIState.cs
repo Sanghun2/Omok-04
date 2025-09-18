@@ -27,7 +27,7 @@ public class AIState : BasePlayerState
         var timer = Managers.Time.GetTimer();
         if (timer != null)
         {
-            timer.SetTime(25f, 25f);   // 25초 설정
+            timer.SetTimeAsDefault();   // 25초 설정
             timer.StartCount();        // 카운트 시작
         }
 
@@ -61,7 +61,7 @@ public class AIState : BasePlayerState
         var timer = Managers.Time.GetTimer();
         if (timer != null)
         {
-            timer.SetTime(25f, 25f);   // 25초 설정
+            timer.SetTimeAsDefault();   // 25초 설정
             timer.StartCount();        // 카운트 시작
         }
     }

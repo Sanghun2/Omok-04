@@ -82,7 +82,7 @@ public partial class UIManager
         var tempUIStack = new Stack<UIBase>(_openedUIStack.Count);
         while (_openedUIStack.Count > 0) {
             var ui = _openedUIStack.Pop();
-            if (typeof(T) == ui.GetType()) {
+            if (typeof(T) == ui.GetType() && ui.IsOpened) {
                 ui.CloseUI();
             }
             else {
