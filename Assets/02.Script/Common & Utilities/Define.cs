@@ -30,6 +30,12 @@ public class Define
 
     public class State
     {
+        public enum Match {
+            None,
+            MatchMaking,
+            MatchFound,
+        }
+
         public enum GameState
         {
             NotStarted,
@@ -73,8 +79,8 @@ public class Define
 
         public enum Player
         {
-            Player1,
-            Player2,
+            Player1 = 1,
+            Player2 = 2,
         }
 
         public enum GameLevel
