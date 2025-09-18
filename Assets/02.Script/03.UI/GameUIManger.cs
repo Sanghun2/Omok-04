@@ -125,7 +125,7 @@ public class GameUIManger : UIBase
     }
 
     // 게임을 실제로 시작(인트로에서 플레이로 넘어갈 때)하는 처리
-    public void OnStartSetting()
+    public void OnSelectLevelSetting()
     {
         
         introPopup.SetActive(false);
@@ -143,6 +143,18 @@ public class GameUIManger : UIBase
         // BGM 재생 시작
         if (soundManager != null)
             soundManager.SetBGMSound("Play");
+    }
+
+    public void OnStartLocalPlay()
+    {
+        Managers.Game.EnterLocalPlay();
+
+        isStart = true; // 게임이 시작되었음을 표시
+
+        // BGM 재생 시작
+        if (soundManager != null)
+            soundManager.SetBGMSound("Play");
+
     }
 
     //팝업 닫기
