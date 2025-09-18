@@ -2305,6 +2305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6209960927604852868}
   - component: {fileID: 2242362935993056444}
+  - component: {fileID: 9111428727134708010}
   m_Layer: 0
   m_Name: Ingame UI Controller
   m_TagString: Untagged
@@ -2347,10 +2348,25 @@ MonoBehaviour:
   p2OKButton: {fileID: 8921065238443602695}
   GoBackButton: {fileID: 8309341889626034743}
   timeSlider: {fileID: 3992632025316237283}
+  p1Rank: {fileID: 713554972148318652}
   p2Rank: {fileID: 5186271901009303575}
   timerText: {fileID: 2417049842806786164}
   p1TurnChecks: []
   p2TurnChecks: []
+--- !u!114 &9111428727134708010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015132240056120590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0997f10a3f161cf49b0d79ec0b60b96b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResultUI
+  p1Result: {fileID: 4560105818188246725}
+  p2Result: {fileID: 8968330880704489954}
 --- !u!1 &7176409182822036338
 GameObject:
   m_ObjectHideFlags: 0
