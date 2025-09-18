@@ -1313,7 +1313,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9051357660019340316}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4911989982506430997}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3379482782105591537
 GameObject:
   m_ObjectHideFlags: 0
@@ -3439,7 +3451,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8407582128501215734}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -3598,6 +3610,7 @@ GameObject:
   - component: {fileID: 761633033545396233}
   - component: {fileID: 413442210339546331}
   - component: {fileID: 8506446294458678373}
+  - component: {fileID: 96182872292277296}
   m_Layer: 5
   m_Name: Sign in screen
   m_TagString: Untagged
@@ -3669,6 +3682,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &96182872292277296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6081992345660670091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae7d6030de5d854eb455b810dad5077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TabNavigation
+  inputFields:
+  - {fileID: 5396222195809345364}
+  - {fileID: 9026028593494159595}
+  loginButton: {fileID: 5758346142077138672}
 --- !u!1 &6426333623532267851
 GameObject:
   m_ObjectHideFlags: 0
@@ -3805,7 +3834,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6113120045088834804
 Transform:
   m_ObjectHideFlags: 0
@@ -4863,7 +4892,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1515132121523232208}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8407582128501215734}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7780525117398296101
 GameObject:
   m_ObjectHideFlags: 0
@@ -5346,13 +5387,14 @@ GameObject:
   - component: {fileID: 7813798259320729673}
   - component: {fileID: 4308472482470942}
   - component: {fileID: 453352533188197314}
+  - component: {fileID: 8272372742173974893}
   m_Layer: 5
   m_Name: Sign up screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7813798259320729673
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5418,6 +5460,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8272372742173974893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8407582128501215734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae7d6030de5d854eb455b810dad5077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TabNavigation
+  inputFields:
+  - {fileID: 3621569285860666426}
+  - {fileID: 2292201226131043528}
+  - {fileID: 5003610489923025132}
+  loginButton: {fileID: 4075296919272347501}
 --- !u!1 &8464872825012033398
 GameObject:
   m_ObjectHideFlags: 0
