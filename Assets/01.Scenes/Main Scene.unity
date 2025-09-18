@@ -5745,22 +5745,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: omok-board_15x15_0
       objectReference: {fileID: 0}
-    - target: {fileID: 1850593699095744129, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
-      propertyPath: m_Color.b
-      value: 0.19607845
-      objectReference: {fileID: 0}
-    - target: {fileID: 1850593699095744129, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
-      propertyPath: m_Color.g
-      value: 0.36862746
-      objectReference: {fileID: 0}
-    - target: {fileID: 1850593699095744129, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
-      propertyPath: m_Color.r
-      value: 0.5529412
-      objectReference: {fileID: 0}
-    - target: {fileID: 3059836018512702626, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3577422467836143861, guid: e031644e07de04940b0f0fbee9d9f03c, type: 3}
       propertyPath: launchButton
       value: 
@@ -5797,6 +5781,7 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
