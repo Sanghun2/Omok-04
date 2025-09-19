@@ -449,6 +449,10 @@ PrefabInstance:
       propertyPath: playerType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5932309820640494907, guid: d2ace0adb6097bf4a996e137ae10d6f4, type: 3}
+      propertyPath: defaultPlayerType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6828293363150769167, guid: d2ace0adb6097bf4a996e137ae10d6f4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -564,6 +568,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5932309820640494907, guid: d2ace0adb6097bf4a996e137ae10d6f4, type: 3}
       propertyPath: playerType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932309820640494907, guid: d2ace0adb6097bf4a996e137ae10d6f4, type: 3}
+      propertyPath: defaultPlayerType
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6828293363150769167, guid: d2ace0adb6097bf4a996e137ae10d6f4, type: 3}
