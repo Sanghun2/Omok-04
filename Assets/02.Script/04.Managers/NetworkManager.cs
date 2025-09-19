@@ -39,9 +39,6 @@ public interface INetworkController : IInitializable
 
     #region InGame
 
-    void SetPlayerAndFirstPlayer(Define.Type.Player playerType, Define.Type.Player firstPlayer);
-
-    bool PlaceReady(Define.Type.Player turnPlayer);
     void SyncStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col);
     void SetTimer(float time);
 
@@ -83,9 +80,6 @@ public class NetworkManager : IInitializable
         Debug.LogAssertion($"<color=orange>대전 상대 탐색 중지</color>");
     }
 
-    public void SetPlayerAndFirstPlayer(Define.Type.Player playerType, Define.Type.Player firstPlayer) {
-        networkController.SetPlayerAndFirstPlayer(playerType, firstPlayer);
-    }
 
 
     public void StartGame() {

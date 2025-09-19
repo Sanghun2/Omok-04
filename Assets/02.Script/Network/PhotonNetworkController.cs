@@ -101,19 +101,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     #endregion
 
     #region InGame
-    public void SetPlayerAndFirstPlayer(Define.Type.Player playerType, Define.Type.Player firstPlayer) {
-        OnChooseFirstPlayer?.Invoke(firstPlayer);
-    }
 
-    /// <summary>
-    /// Place Stone을 실행할 수 있는지 판단
-    /// </summary>
-    /// <param name="turnPlayer"></param>
-    /// <returns></returns>
-    /// <exception cref="System.NotImplementedException"></exception>
-    public bool PlaceReady(Define.Type.Player turnPlayer) {
-        throw new System.NotImplementedException();
-    }
     public void SyncStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col) {
         photonView.RPC(nameof(RPC_SyncStone), RpcTarget.Others, playerType, stone, row, col);
     }
@@ -218,31 +206,37 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         var gameLogic = new GameLogic(Managers.Board.Board, Define.Type.Game.Multi);
         Managers.Game.SetCurrentLogic(gameLogic);
 
-        BasePlayerState firstPlayerState = null;
-        if (LocalPlayerType == firstPlayerType) { // 내가 선턴인 경우
-            if (LocalActorNumber == 1) {
-                gameLogic.firstPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
-                gameLogic.secondPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
-                firstPlayerState = gameLogic.firstPlayerState;
-            }
-            else {
-                gameLogic.firstPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
-                gameLogic.secondPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
-                firstPlayerState = gameLogic.secondPlayerState;
-            }
-        }
-        else { // 상대가 선턴인 경우
-            if (LocalActorNumber == 1) {
-                gameLogic.firstPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
-                gameLogic.secondPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
-                firstPlayerState = gameLogic.secondPlayerState;
-            }
-            else {
-                gameLogic.firstPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
-                gameLogic.secondPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
-                firstPlayerState = gameLogic.firstPlayerState;
-            }
-        }
+        //BasePlayerState firstPlayerState = null;
+        gameLogic.firstPlayerState = new PlayerState(true);
+        gameLogic.secondPlayerState = new PlayerState(false);
+        //if (LocalPlayerType == firstPlayerType) { // 내가 선턴인 경우
+        //    if (LocalActorNumber == 1) {
+        //        // 내가 player1인 경우
+        //        gameLogic.firstPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
+        //        gameLogic.secondPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
+        //        firstPlayerState = gameLogic.firstPlayerState;
+        //    }
+        //    else {
+        //        // 내가 player2인 경우
+        //        gameLogic.firstPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
+        //        gameLogic.secondPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
+        //        firstPlayerState = gameLogic.secondPlayerState;
+        //    }
+        //}
+        //else { // 상대가 선턴인 경우
+        //    if (LocalActorNumber == 1) {
+        //        // 내가 player1인 경우
+        //        gameLogic.firstPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
+        //        gameLogic.secondPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
+        //        firstPlayerState = gameLogic.secondPlayerState;
+        //    }
+        //    else {
+        //        // 내가 player2인 경우
+        //        gameLogic.firstPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
+        //        gameLogic.secondPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
+        //        firstPlayerState = gameLogic.firstPlayerState;
+        //    }
+        //}
 
         Managers.Board.OnStonePlaceSuccess -= SyncStone;
         Managers.Board.OnStonePlaceSuccess += SyncStone;
@@ -257,7 +251,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.Turn.OnTurnChanged.AddListener(UpdateTurnUI);
 
 
-        gameLogic.SetState(firstPlayerState);
+        gameLogic.SetState(gameLogic.firstPlayerState);
 
         // Local Player UI Init 후 rpc 동기화
         var currentUser = Managers.UserInfo.GetCurrentUser();
@@ -311,6 +305,15 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         else {
             Managers.Game.CurrentGameLogic.SetState(Managers.Game.CurrentGameLogic.firstPlayerState);
         }
+
+        if (stoneType == Define.Type.StoneColor.White) {
+            Debug.Log("### DEV_JSH 멀티에서 백색돌의 렌주 표시 호출 ###");
+            foreach (var cell in Managers.Board.Board) {
+                if (cell.Stone == Define.Type.StoneColor.None)
+                    OmokAI.CheckRenju(Define.Type.StoneColor.Black, Managers.Board.Board, cell.CellRow, cell.CellCol);
+            }
+            Managers.Board.ShowAllRenju(Managers.Board.Board);
+        }
     }
 
     [PunRPC] //
@@ -345,13 +348,15 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     private void RPC_SetGameStateplay() {
         Managers.Game.SetGameStatePlay();
         TestLog("게임 시작!", "magenta");
+
+        if (PhotonNetwork.IsMasterClient) {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            TestLog($"room close");
+        }
     }
 
     [PunRPC]
     private void RPC_FinishGame(Define.State.GameResult gameResult) {
-        //if (firstPlayerType) {
-
-        //}
         Managers.Game.EndGame(gameResult);
         TestLog($"RPC game finished");
     }
