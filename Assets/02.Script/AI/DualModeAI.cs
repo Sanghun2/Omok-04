@@ -8,25 +8,48 @@ public class DualModeAI
     {
         public int maxDepth;
         public int maxCandidates;
-        public float evalScale;
-        public bool blockThree;   // 3목 방어 여부
-        public bool sloppySort;   // 후보 정렬을 일부러 섞어서 실수 유도
-        public LevelParam(int d, int c, float e, bool block3, bool sloppy)
-        { maxDepth = d; maxCandidates = c; evalScale = e; blockThree = block3; sloppySort = sloppy; }
+        public float selfWeight;
+        public float oppWeight;
+        public bool blockThree;
+
+        // 새 가중치
+        public float winWeight;
+        public float blockWeight;
+        public float open3SelfWeight;
+        public float open3OppWeight;
+
+        public LevelParam(int d, int c, float sw, float ow, bool b3,
+                          float wW, float bW, float o3S, float o3O)
+        {
+            maxDepth = d;
+            maxCandidates = c;
+            selfWeight = sw;
+            oppWeight = ow;
+            blockThree = b3;
+            winWeight = wW;
+            blockWeight = bW;
+            open3SelfWeight = o3S;
+            open3OppWeight = o3O;
+        }
     }
 
     private static LevelParam GetLevelParam(Define.Type.GameLevel level)
     {
+        // 난이도별 가중치 예시
         switch (level)
         {
             case Define.Type.GameLevel.Easy:
-                return new LevelParam(1, 12, 0.7f, false, false);   // 얕고 실수 유도
-            case Define.Type.GameLevel.Normal:
-                return new LevelParam(2, 10, 1.0f, false, false);   // 기본형
+                return new LevelParam(1, 12, 1.0f, 1.5f, true,
+                    5000f, 4000f, 800f, 800f);
             case Define.Type.GameLevel.Hard:
-                return new LevelParam(4, 12, 1.2f, false, false);   // 깊은 대신 로딩 시간 늘어남..(3과 고민 중)
+                return new LevelParam(2, 12, 1.2f, 1.0f, true,
+                    7000f, 6000f, 1200f, 1000f);
+            case Define.Type.GameLevel.Normal:
+                return new LevelParam(3, 20, 1.4f, 1.0f, true,
+                    10000f, 8000f, 1500f, 1200f);
             default:
-                return new LevelParam(2, 10, 1.0f, false, false);
+                return new LevelParam(2, 12, 1.0f, 1.0f, true,
+                    7000f, 6000f, 1000f, 1000f);
         }
     }
 
@@ -59,39 +82,9 @@ public class DualModeAI
         if (candidates.Count == 0)
             return (board.GetLength(0) / 2, board.GetLength(1) / 2);
 
-        Define.Type.StoneColor opp = ai == Define.Type.StoneColor.Black ? Define.Type.StoneColor.White : Define.Type.StoneColor.Black;
-
-        // 1. 즉시 승리
-        foreach (var (r, c) in candidates)
-        {
-            board[r, c].SetMarker(ai);
-            if (CheckAnyWin(ai, board)) { board[r, c].SetMarker(Define.Type.StoneColor.None); return (r, c); }
-            board[r, c].SetMarker(Define.Type.StoneColor.None);
-        }
-
-        // 2. 상대 즉시 승리 차단 + 오픈포/3목 방어
-        foreach (var (r, c) in candidates)
-        {
-            board[r, c].SetMarker(opp);
-            if (CheckAnyWin(opp, board) || IsOpenFour(board, opp, r, c) ||
-               (param.blockThree && IsOpenThree(board, opp, r, c)))
-            {
-                board[r, c].SetMarker(Define.Type.StoneColor.None);
-                return (r, c);
-            }
-            board[r, c].SetMarker(Define.Type.StoneColor.None);
-        }
-
-        // 3. 후보 정렬 후 미니맥스
+        // 모든 후보를 “가중치 포함 평가” 후 정렬
         candidates.Sort((a, b) =>
-            EvaluateMove(board, b, ai).CompareTo(EvaluateMove(board, a, ai)));
-
-        if (param.sloppySort && candidates.Count > 3)
-        {
-            // Easy 모드용: 일부러 상위 3개 중 랜덤하게 선택
-            var rng = UnityEngine.Random.Range(0, 3);
-            return candidates[rng];
-        }
+            EvaluateMove(board, b, ai, param).CompareTo(EvaluateMove(board, a, ai, param)));
 
         if (candidates.Count > param.maxCandidates)
             candidates = candidates.GetRange(0, param.maxCandidates);
@@ -105,20 +98,51 @@ public class DualModeAI
                                     param.maxDepth,
                                     float.NegativeInfinity,
                                     float.PositiveInfinity,
-                                    param.evalScale);
+                                    param);
             board[r, c].SetMarker(Define.Type.StoneColor.None);
             if (score > bestScore) { bestScore = score; best = (r, c); }
         }
         return best;
     }
 
+    private static float EvaluateMove(Cell[,] board, (int r, int c) move,
+        Define.Type.StoneColor ai, LevelParam param)
+    {
+        Define.Type.StoneColor opp = ai == Define.Type.StoneColor.Black
+                                     ? Define.Type.StoneColor.White
+                                     : Define.Type.StoneColor.Black;
+
+        board[move.r, move.c].SetMarker(ai);
+
+        float s = EvaluateBoard(board, ai, param);
+
+        // === 추가된 가중치 평가 ===
+        if (CheckAnyWin(ai, board))
+            s += param.winWeight;  // AI 즉시승리 가치
+
+        // 상대가 즉시 이기는 수를 막는 가치
+        board[move.r, move.c].SetMarker(opp);
+        if (CheckAnyWin(opp, board))
+            s += param.blockWeight;
+        board[move.r, move.c].SetMarker(ai);
+
+        // 열린 3목(자신/상대) 가중치
+        if (IsOpenThree(board, ai, move.r, move.c))
+            s += param.open3SelfWeight;
+        if (param.blockThree && IsStrictOpenThree(board, opp, move.r, move.c))
+            s += param.open3OppWeight;
+
+        board[move.r, move.c].SetMarker(Define.Type.StoneColor.None);
+        return s;
+    }
+
     private static float DoMiniMax(Cell[,] board, int depth, bool isMax,
-        Define.Type.StoneColor ai, int maxDepth, float alpha, float beta, float scale)
+        Define.Type.StoneColor ai, int maxDepth, float alpha, float beta, LevelParam param)
     {
         Define.Type.StoneColor opp = ai == Define.Type.StoneColor.Black ? Define.Type.StoneColor.White : Define.Type.StoneColor.Black;
         if (CheckAnyWin(ai, board)) return 10000 - depth;
         if (CheckAnyWin(opp, board)) return -10000 + depth;
-        if (depth >= maxDepth) return EvaluateBoard(board, ai) * scale;
+        if (depth >= maxDepth) return EvaluateBoard(board, ai, param);
 
         var moves = GetCandidateMoves(board);
         if (moves.Count == 0) return 0;
@@ -127,7 +151,7 @@ public class DualModeAI
         foreach (var (r, c) in moves)
         {
             board[r, c].SetMarker(isMax ? ai : opp);
-            float sc = DoMiniMax(board, depth + 1, !isMax, ai, maxDepth, alpha, beta, scale);
+            float sc = DoMiniMax(board, depth + 1, !isMax, ai, maxDepth, alpha, beta, param);
             board[r, c].SetMarker(Define.Type.StoneColor.None);
             if (isMax)
             {
@@ -144,18 +168,11 @@ public class DualModeAI
         return best;
     }
 
-    private static float EvaluateMove(Cell[,] board, (int r, int c) move, Define.Type.StoneColor ai)
-    {
-        board[move.r, move.c].SetMarker(ai);
-        float s = EvaluateBoard(board, ai);
-        board[move.r, move.c].SetMarker(Define.Type.StoneColor.None);
-        return s;
-    }
 
-    private static float EvaluateBoard(Cell[,] board, Define.Type.StoneColor ai)
+    private static float EvaluateBoard(Cell[,] board, Define.Type.StoneColor ai, LevelParam param)
     {
         Define.Type.StoneColor opp = ai == Define.Type.StoneColor.Black ? Define.Type.StoneColor.White : Define.Type.StoneColor.Black;
-        return ScoreFor(board, ai) - ScoreFor(board, opp);
+        return ScoreFor(board, ai) * param.selfWeight - ScoreFor(board, opp) * param.oppWeight;
     }
 
     private static int ScoreFor(Cell[,] board, Define.Type.StoneColor m)
@@ -174,9 +191,9 @@ public class DualModeAI
                     while (nr >= 0 && nr < rows && nc >= 0 && nc < cols && board[nr, nc].Stone == m)
                     { cnt++; nr += d.x; nc += d.y; }
                     if (cnt >= 5) score += 100000;
-                    else if (cnt == 4) score += 20000;
-                    else if (cnt == 3) score += 3000;
-                    else if (cnt == 2) score += 200;
+                    else if (cnt == 4) score += 50000;
+                    else if (cnt == 3) score += 5000;
+                    else if (cnt == 2) score += 500;
                 }
             }
         return score;
@@ -198,27 +215,6 @@ public class DualModeAI
         return false;
     }
 
-    private static bool IsOpenFour(Cell[,] board, Define.Type.StoneColor m, int r, int c)
-    {
-        Vector2Int[] dirs = { new(1, 0), new(0, 1), new(1, 1), new(1, -1) };
-        board[r, c].SetMarker(m);
-        bool found = false;
-        foreach (var d in dirs)
-        {
-            int cnt = 1;
-            int nr = r + d.x, nc = c + d.y;
-            while (nr >= 0 && nr < board.GetLength(0) &&
-                   nc >= 0 && nc < board.GetLength(1) &&
-                   board[nr, nc].Stone == m) { cnt++; nr += d.x; nc += d.y; }
-            nr = r - d.x; nc = c - d.y;
-            while (nr >= 0 && nr < board.GetLength(0) &&
-                   nc >= 0 && nc < board.GetLength(1) &&
-                   board[nr, nc].Stone == m) { cnt++; nr -= d.x; nc -= d.y; }
-            if (cnt >= 4) { found = true; break; }
-        }
-        board[r, c].SetMarker(Define.Type.StoneColor.None);
-        return found;
-    }
 
     private static bool IsOpenThree(Cell[,] board, Define.Type.StoneColor m, int r, int c)
     {
@@ -241,4 +237,45 @@ public class DualModeAI
         board[r, c].SetMarker(Define.Type.StoneColor.None);
         return found;
     }
+
+    private static bool IsStrictOpenThree(Cell[,] board, Define.Type.StoneColor m, int r, int c)
+    {
+        Vector2Int[] dirs = { new(1, 0), new(0, 1), new(1, 1), new(1, -1) };
+        board[r, c].SetMarker(m);
+        bool found = false;
+
+        foreach (var d in dirs)
+        {
+            int cnt = 1;
+            int nr = r + d.x, nc = c + d.y;
+            while (nr >= 0 && nr < board.GetLength(0) &&
+                   nc >= 0 && nc < board.GetLength(1) &&
+                   board[nr, nc].Stone == m) { cnt++; nr += d.x; nc += d.y; }
+
+            int end1r = nr, end1c = nc;
+
+            nr = r - d.x; nc = c - d.y;
+            while (nr >= 0 && nr < board.GetLength(0) &&
+                   nc >= 0 && nc < board.GetLength(1) &&
+                   board[nr, nc].Stone == m) { cnt++; nr -= d.x; nc -= d.y; }
+
+            int end2r = nr, end2c = nc;
+
+            if (cnt == 3)
+            {
+                bool end1Open = end1r >= 0 && end1r < board.GetLength(0) &&
+                                end1c >= 0 && end1c < board.GetLength(1) &&
+                                board[end1r, end1c].Stone == Define.Type.StoneColor.None;
+
+                bool end2Open = end2r >= 0 && end2r < board.GetLength(0) &&
+                                end2c >= 0 && end2c < board.GetLength(1) &&
+                                board[end2r, end2c].Stone == Define.Type.StoneColor.None;
+
+                if (end1Open && end2Open) { found = true; break; }
+            }
+        }
+        board[r, c].SetMarker(Define.Type.StoneColor.None);
+        return found;
+    }
+
 }
