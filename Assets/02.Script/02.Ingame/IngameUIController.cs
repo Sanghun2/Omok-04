@@ -23,10 +23,14 @@ public class IngameUIController : MonoBehaviour
                 }
 
                 player2_UI.ActivePlaceButton(false);
+                player1_UI.PlaceButton.ResetPlayerType();
+                player2_UI.PlaceButton.ResetPlayerType();
                 break;
             case Define.Type.Game.Local:
                 player1_UI.InitPlayerUI(new PlayerInfo("P1", string.Empty));
                 player2_UI.InitPlayerUI(new PlayerInfo("P2", string.Empty));
+                player1_UI.PlaceButton.ResetPlayerType();
+                player2_UI.PlaceButton.ResetPlayerType();
                 break;
             case Define.Type.Game.Multi:
                 break;
