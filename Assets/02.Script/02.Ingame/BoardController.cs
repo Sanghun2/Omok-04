@@ -48,7 +48,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         board = new Cell[Define.Value.BoardRow, Define.Value.BoardCol];
 
-        onStoneSettedDelegate = (playerType, stoneType, row, col) =>
+        onStoneSettedDelegate += (playerType, stoneType, row, col) =>
         {
             SoundManager.Instance.OnAttackSound();
             Debug.Log("### DEV_JSH MarkerEvent Start ###");
