@@ -89,7 +89,7 @@ public class GameLogic
                 }
 
                 Managers.Board.ShowAllRenju(board);
-
+                Managers.Time.Timer.SetTimeAsDefault().StartCount();
                 return true;
             }
         }
@@ -102,6 +102,7 @@ public class GameLogic
             Managers.Board.PlaceMarker(stoneType, row, col);
             Managers.Board.ResetCurretCell();
             Managers.Board.OnStonePlaceSuccess?.Invoke(Managers.Turn.GetCurrentPlayer(), stoneType, row, col);
+            Managers.Time.Timer.SetTimeAsDefault().StartCount();
             return true;
         }
         else

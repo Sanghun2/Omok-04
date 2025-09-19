@@ -65,7 +65,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
                 board[i, j] = new Cell();
 
                 board[i,j].InitCell(i, j, (i,j) => {
-                    Managers.Time.Timer.SetTimeAsDefault().StartCount();
                     OnStonePlace(i, j);
                 });
             }
