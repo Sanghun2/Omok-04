@@ -125,7 +125,6 @@ public class GameManager : IInitializable
     #region End Game
 
     public void EndGame() {
-        currentGameState = Define.State.GameState.NotStarted;
         if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1)
             Managers.Game.EndGame(Define.State.GameResult.WhiteStoneWin);
         else if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player2)
@@ -134,6 +133,7 @@ public class GameManager : IInitializable
 
     public void EndGame(Define.State.GameResult gameResult)
     {
+        currentGameState = Define.State.GameState.NotStarted;
         Managers.Time.GetTimer().Pause();
 
         gameLogic.SetState(null);
