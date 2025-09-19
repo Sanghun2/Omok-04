@@ -19,7 +19,7 @@ public class PlayerUI : MonoBehaviour
 
     [SerializeField] PlaceButton placeButton;
 
-    public void InitPlayer(PlayerInfo playerInfo) {
+    public void InitPlayerUI(PlayerInfo playerInfo) {
         this.playerInfo = playerInfo;
         playerNameText.text = playerInfo.PlayerName;
         playerType = playerInfo.PlayerType;
