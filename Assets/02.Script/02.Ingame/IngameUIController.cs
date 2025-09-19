@@ -52,10 +52,8 @@ public class IngameUIController : MonoBehaviour
         Debug.LogAssertion($"init ui");
     }
 
-    public void ShowGameResult(Define.State.GameResult gameResult)
-    {
-        switch (gameResult)
-        {
+    public void ShowGameResult(Define.State.GameResult gameResult) {
+        switch (gameResult) {
             case Define.State.GameResult.DRAW:
                 player1_UI.ActiveGameResultText(true, "무");
                 player2_UI.ActiveGameResultText(true, "무");
@@ -69,6 +67,7 @@ public class IngameUIController : MonoBehaviour
                 player2_UI.ActiveGameResultText(true, "승");
                 break;
         }
+    }
     public void InitPlayerUI(Define.Type.Player targetPlayer, PlayerInfo playerInfo) {
         var targetPlayerUI = targetPlayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
         targetPlayerUI.InitPlayerUI(playerInfo);
