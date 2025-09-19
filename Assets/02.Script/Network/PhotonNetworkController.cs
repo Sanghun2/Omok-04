@@ -228,7 +228,6 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         TestLog($"{playerType}, {stoneType}, r:{row}, c:{col}");
         
         Managers.Board.OnStonePlace?.Invoke(row,col);
-        Managers.Turn.SwitchTurn();
     }
 
     [PunRPC] //
