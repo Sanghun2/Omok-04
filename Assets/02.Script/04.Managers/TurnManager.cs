@@ -7,7 +7,7 @@ public class TurnManager
     public UnityEvent<Define.Type.Player> OnTurnChanged = new UnityEvent<Define.Type.Player>();
 
     
-    public void StartGame() // GameState를 InProgress로 바꾸고 흑돌의 차례로 만드는 함수
+    public void StartGame() // 흑돌의 차례로 만드는 함수
     {
         if (Managers.Game.CurrentGameState == Define.State.GameState.NotStarted)
         {

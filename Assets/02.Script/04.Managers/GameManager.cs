@@ -134,7 +134,6 @@ public class GameManager : IInitializable
 
     public void EndGame(Define.State.GameResult gameResult)
     {
-
         Managers.Time.GetTimer().Pause();
 
         gameLogic.SetState(null);
