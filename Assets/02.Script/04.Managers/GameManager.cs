@@ -17,6 +17,8 @@ public class GameManager : IInitializable
     private Define.Type.GameLevel lastGameLevel;
     private GameLogic gameLogic;
 
+
+
     #region Flow Control
 
     public void GoToMainMenu()
@@ -175,6 +177,7 @@ public class GameManager : IInitializable
         Managers.Board.DeactiveLaunchButton();
         Managers.GameResult.EndGame();
         gameLogic = null;
+
     }
     #endregion
 

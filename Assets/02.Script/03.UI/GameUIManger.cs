@@ -41,6 +41,9 @@ public class GameUIManger : UIBase
 
     [SerializeField] GameObject MainButton;      // 메인(인트로) 버튼 그룹(다시 보이게 할 때 사용)
     [SerializeField] GameObject winloselog;      //승리, 패배 전적
+    [SerializeField] Transform content;
+    [SerializeField] GameObject logPrefab; //Text
+
 
 
     // 내부 상태 변수
@@ -69,6 +72,19 @@ public class GameUIManger : UIBase
 
         // 기본적으로 게임이 시작되지 않은 상태로 설정
         isStart = false;
+    }
+
+    public void AddResultLog(string winner, string loser)
+    {
+        if (content == null || logPrefab == null)
+        {
+            Debug.LogWarning("GameResultUI: content or logPrefab is null");
+            return;
+        }
+
+        GameObject log = Instantiate(logPrefab, content);
+        var text = log.GetComponent<TMPro.TextMeshProUGUI>();
+        text.text = $"{winner} 승리 vs {loser} 패배";
     }
 
     #region 안 쓰는 기능
