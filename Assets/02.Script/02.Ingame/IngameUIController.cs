@@ -19,14 +19,14 @@ public class IngameUIController : MonoBehaviour
         switch (gameType) {
             case Define.Type.Game.Single:
                 if (player2_UI != null) {
-                    player2_UI.InitPlayer(new PlayerInfo("AI", string.Empty));
+                    player2_UI.InitPlayerUI(new PlayerInfo("AI", string.Empty));
                 }
 
                 player2_UI.ActivePlaceButton(false);
                 break;
             case Define.Type.Game.Local:
-                player1_UI.InitPlayer(new PlayerInfo("P1", string.Empty));
-                player2_UI.InitPlayer(new PlayerInfo("P2", string.Empty));
+                player1_UI.InitPlayerUI(new PlayerInfo("P1", string.Empty));
+                player2_UI.InitPlayerUI(new PlayerInfo("P2", string.Empty));
                 break;
             case Define.Type.Game.Multi:
                 break;
@@ -57,22 +57,25 @@ public class IngameUIController : MonoBehaviour
         switch (gameResult)
         {
             case Define.State.GameResult.DRAW:
-                player1_UI.ActiveGameResultText(true, "¹«½ÂºÎ");
-                player2_UI.ActiveGameResultText(true, "¹«½ÂºÎ");
+                player1_UI.ActiveGameResultText(true, "ë¬´ìŠ¹ë¶€");
+                player2_UI.ActiveGameResultText(true, "ë¬´ìŠ¹ë¶€");
                 break;
             case Define.State.GameResult.BlackStoneWin:
-                player1_UI.ActiveGameResultText(true, "½Â");
-                player2_UI.ActiveGameResultText(true, "ÆĞ");
+                player1_UI.ActiveGameResultText(true, "ìŠ¹");
+                player2_UI.ActiveGameResultText(true, "íŒ¨");
                 break;
             case Define.State.GameResult.WhiteStoneWin:
-                player1_UI.ActiveGameResultText(true, "ÆĞ");
-                player2_UI.ActiveGameResultText(true, "½Â");
+                player1_UI.ActiveGameResultText(true, "íŒ¨");
+                player2_UI.ActiveGameResultText(true, "ìŠ¹");
                 break;
         }
+    public void InitPlayerUI(Define.Type.Player targetPlayer, PlayerInfo playerInfo) {
+        var targetPlayerUI = targetPlayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
+        targetPlayerUI.InitPlayerUI(playerInfo);
     }
 
     /// <summary>
-    /// ÇöÀç ÅÏÀÎ ÇÃ·¹ÀÌ¾î UI Ç¥½Ã
+    /// í˜„ì¬ í„´ì¸ í”Œë ˆì´ì–´ UI í‘œì‹œ
     /// </summary>
     /// <param name="aiTurn"></param>
     public void ActiveTurnMarkUI(bool aiTurn) {
@@ -89,7 +92,7 @@ public class IngameUIController : MonoBehaviour
 
     private void Start() {
         Managers.Turn.OnTurnChanged.AddListener((player) => {
-            // Local °ÔÀÓÀÏ ¶§¸¸ µ¹ »ö±ò ±âÁØ ÇöÀç ÇÃ·¹ÀÌ¾î Ç¥½Ã È°¼ºÈ­
+            // Local ê²Œì„ì¼ ë•Œë§Œ ëŒ ìƒ‰ê¹” ê¸°ì¤€ í˜„ì¬ í”Œë ˆì´ì–´ í‘œì‹œ í™œì„±í™”
             if (Managers.Game.CurrentGameType == Define.Type.Game.Local) {
                 UpdateTurnUI(player);
             }

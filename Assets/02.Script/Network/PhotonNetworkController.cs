@@ -204,8 +204,9 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         }
         ;
         var currentUser = Managers.UserInfo.GetCurrentUser();
-        // Player UI Init
-        Managers.Player.InitPlayerUI(LocalPlayerType, new PlayerInfo(currentUser.username, currentUser.rank.ToString())); // 이 부분 RPC로 동기화
+
+        // Local Player UI Init 후 rpc 동기화
+        Managers.InGameUI.InitPlayerUI(LocalPlayerType, new PlayerInfo(currentUser.username, currentUser.rank.ToString()));
         
         TestLog($"actor number: {PhotonNetwork.LocalPlayer.ActorNumber}");
         OnGameInit?.Invoke(LocalPlayerType, currentUser.username, currentUser.rank);
@@ -213,7 +214,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
     [PunRPC] //
     private void RPC_UpdatePlayerUI(Define.Type.Player targetPlayer, string playerName, int rank) {
-        Managers.Player.InitPlayerUI(targetPlayer, new PlayerInfo(playerName, rank.ToString()));
+        Managers.InGameUI.InitPlayerUI(targetPlayer, new PlayerInfo(playerName, rank.ToString()));
 
         OnPlayerInit?.Invoke(targetPlayer);
     }
@@ -242,7 +243,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
     #endregion
 
-    private void TestLog(string text, string textColor="purple") {
+    private void TestLog(string text, string textColor="aqua") {
         Debug.LogAssertion($"<color={textColor}>{text}</color>");
     }
 }
