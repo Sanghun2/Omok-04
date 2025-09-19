@@ -131,7 +131,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
             return;
 
         positionSelector.SetActive(false);
-        Debug.LogAssertion($"Black Âø¼ö");
 
         currentCell.onCellClicked?.Invoke(currentCell.CellRow,currentCell.CellCol);
         currentCell = null;
@@ -144,7 +143,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         positionSelector.SetActive(false);
 
-        Debug.LogAssertion($"White Âø¼ö");
         currentCell.onCellClicked?.Invoke(currentCell.CellRow, currentCell.CellCol);
         currentCell = null;
     }

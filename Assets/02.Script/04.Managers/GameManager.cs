@@ -82,35 +82,33 @@ public class GameManager : IInitializable
 
     private void StartGame(Define.Type.Game gameType, Define.Type.GameLevel level = Define.Type.GameLevel.Easy)
     {
+        currentGameState = Define.State.GameState.Preparing;
+
         Debug.Log($"게임 시작. 모드: {gameType}, 난이도: {level}");
         //게임 다시하기 기능때문에 추가함
         this.currentGameType = gameType;
         this.lastGameLevel = level;
-
-
-        // setting game options
-        Managers.Board.InitBoard();
-        Managers.Turn.StartGame();
 
         var timer = Managers.Time.GetTimer();
         if (timer != null) {
             timer.SetTimeAsDefault();   // 25초 설정
         }
 
-        currentGameState = Define.State.GameState.Ready;
-
         switch (gameType)
         {
             case Define.Type.Game.Single:
+                Managers.Board.InitBoard();
                 gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
+                Managers.Turn.StartGame();
                 SetGameStatePlay();
                 break;
             case Define.Type.Game.Local:
+                Managers.Board.InitBoard();
                 gameLogic = new GameLogic(Managers.Board.Board, gameType);
+                Managers.Turn.StartGame();
                 SetGameStatePlay();
                 break;
             case Define.Type.Game.Multi:
-                SetGameStatePlay();
                 break;
             default:
                 break;

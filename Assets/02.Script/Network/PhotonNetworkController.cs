@@ -12,10 +12,12 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     public Define.Type.Player LocalPlayerType => (Define.Type.Player)PhotonNetwork.LocalPlayer.ActorNumber;
     public Define.Type.Player OpponentPlayerType => (Define.Type.Player)(PhotonNetwork.LocalPlayer.ActorNumber == 1 ? 2 : 1);
     public int LocalActorNumber => PhotonNetwork.LocalPlayer.ActorNumber;
+    public Define.Type.Player FisrtPlayerType => firstPlayerType;
 
     public bool IsInit => isInit;
     private bool isInit;
     private SortedSet<int> readiedPlayers = new SortedSet<int>();
+    private Define.Type.Player firstPlayerType;
 
     public event INetworkController.MatchHandler OnMatchFound; //
     public event INetworkController.MatchHandler OnCancelMatch; //
@@ -74,7 +76,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     }
 
     public override void OnJoinedRoom() {
-        Debug.LogAssertion($"<color=cyan>room 입장. 현재 인원:{PhotonNetwork.CurrentRoom.PlayerCount}, 최대 인원: {PhotonNetwork.CurrentRoom.MaxPlayers}</color>");
+        //Debug.LogAssertion($"<color=cyan>room 입장. 현재 인원:{PhotonNetwork.CurrentRoom.PlayerCount}, 최대 인원: {PhotonNetwork.CurrentRoom.MaxPlayers}</color>");
         gameObject.AddComponent<PhotonView>();
         if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers) {
             Debug.LogAssertion($"게임 시작 시도");
@@ -200,10 +202,11 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         int firstPlayerIndex = Random.Range(1, 3);
         int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
         TestLog($"선택된 first player index: {firstPlayerIndex}, local actor: {actorNumber}");
-        Define.Type.Player firstPlayer = actorNumber == firstPlayerIndex ? Define.Type.Player.Player1 : Define.Type.Player.Player2;
+        Define.Type.Player firstPlayerType = actorNumber == firstPlayerIndex ? Define.Type.Player.Player1 : Define.Type.Player.Player2;
 
-        TestLog($"local player type: {LocalPlayerType}, first player: {firstPlayer == LocalPlayerType}");
-        OnChooseFirstPlayer?.Invoke(firstPlayer);
+        TestLog($"local player type: {LocalPlayerType}, first player: {firstPlayerType == LocalPlayerType}");
+        this.firstPlayerType = firstPlayerType;
+        OnChooseFirstPlayer?.Invoke(firstPlayerType);
     }
 
     [PunRPC] //
@@ -215,20 +218,31 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         var gameLogic = new GameLogic(Managers.Board.Board, Define.Type.Game.Multi);
         Managers.Game.SetCurrentLogic(gameLogic);
 
-        if (LocalPlayerType == firstPlayerType) {
-            gameLogic.firstPlayerState = new PlayerState(firstPlayerType == LocalPlayerType); //
-            gameLogic.secondPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
-            TestLog("first player로 set");
+        BasePlayerState firstPlayerState = null;
+        if (LocalPlayerType == firstPlayerType) { // 내가 선턴인 경우
+            if (LocalActorNumber == 1) {
+                gameLogic.firstPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
+                gameLogic.secondPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
+                firstPlayerState = gameLogic.firstPlayerState;
+            }
+            else {
+                gameLogic.firstPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
+                gameLogic.secondPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
+                firstPlayerState = gameLogic.secondPlayerState;
+            }
         }
-        else {
-            gameLogic.firstPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
-            gameLogic.secondPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
-            TestLog("second player로 set");
+        else { // 상대가 선턴인 경우
+            if (LocalActorNumber == 1) {
+                gameLogic.firstPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
+                gameLogic.secondPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
+                firstPlayerState = gameLogic.secondPlayerState;
+            }
+            else {
+                gameLogic.firstPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
+                gameLogic.secondPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
+                firstPlayerState = gameLogic.firstPlayerState;
+            }
         }
-
-        Managers.Turn.SetTurn(LocalPlayerType == firstPlayerType ? LocalPlayerType : OpponentPlayerType);
-        gameLogic.SetState(gameLogic.firstPlayerState);
-        var currentUser = Managers.UserInfo.GetCurrentUser();
 
         Managers.Board.OnStonePlaceSuccess -= SyncStone;
         Managers.Board.OnStonePlaceSuccess += SyncStone;
@@ -239,24 +253,22 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.Game.OnGameFinish -= FinishGame;
         Managers.Game.OnGameFinish += FinishGame;
 
-
-        // place stone
-            // check
-            // place
-            // sucess -> place sucess
-
-
-
         Managers.Turn.OnTurnChanged.RemoveListener(UpdateTurnUI);
         Managers.Turn.OnTurnChanged.AddListener(UpdateTurnUI);
 
+
+        gameLogic.SetState(firstPlayerState);
+
         // Local Player UI Init 후 rpc 동기화
+        var currentUser = Managers.UserInfo.GetCurrentUser();
         Managers.InGameUI.InitPlayerUI(LocalPlayerType, new PlayerInfo(currentUser.username, currentUser.rank.ToString()));
         Managers.InGameUI.ActivePlaceButton(LocalPlayerType, true);
-        Managers.InGameUI.GetPlayerUI(LocalPlayerType).PlaceButton.SetPlayerType(LocalPlayerType);
         Managers.InGameUI.ActivePlaceButton(OpponentPlayerType, false);
-        
-        TestLog($"local:{LocalPlayerType}, op:{OpponentPlayerType}");
+        Managers.InGameUI.GetPlayerUI(LocalPlayerType).PlaceButton.SetPlayerType(LocalPlayerType);
+
+        Managers.Turn.SetTurn(LocalPlayerType == firstPlayerType ? LocalPlayerType : OpponentPlayerType);
+
+        TestLog($"me:{LocalPlayerType}, op:{OpponentPlayerType}");
         OnGameInit?.Invoke(LocalPlayerType, currentUser.username, currentUser.rank);
     }
 
@@ -326,6 +338,9 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
     [PunRPC]
     private void RPC_FinishGame(Define.State.GameResult gameResult) {
+        //if (firstPlayerType) {
+
+        //}
         Managers.Game.EndGame(gameResult);
         TestLog($"RPC game finished");
     }
