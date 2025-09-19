@@ -4,15 +4,30 @@ using UnityEngine;
 public partial class Timer : MonoBehaviour
 {
     public float CurrentTime => currentTime;
+    public float TotalTime => totalTime;
+    public float CustomTimeScale
+    {
+        get
+        {
+            return customTimeScale;
+        }
+        set
+        {
+            customTimeScale = value;
+        }
+    }
 
     [SerializeField] bool _pause;
+    [SerializeField] float customTimeScale = 1;
     [SerializeField] float currentTime;
     [SerializeField] float totalTime;
     private bool isInit;
 
-    public delegate void TimeHandler(float currentTime, float totalTime);
-    public event TimeHandler OnTimeChanged;
-    public event TimeHandler OnTimeOver;
+    public delegate void TimeChangeHandler(float currentTime, float totalTime);
+    public event TimeChangeHandler OnTimeChanged;
+
+    public delegate void TimeEventHandler();
+    public event TimeEventHandler OnTimeOver;
 
     public void SetTime(float currentTime, float totalTime) {
         this.currentTime = currentTime;
@@ -34,7 +49,7 @@ public partial class Timer : MonoBehaviour
 
     private void Update() {
         if (!_pause && isInit) {
-            CountTime(Time.deltaTime);
+            CountTime(Time.unscaledDeltaTime * customTimeScale);
         }
     }
 
@@ -48,7 +63,8 @@ public partial class Timer : MonoBehaviour
 
         if (Mathf.Approximately(currentTime, 0)) {
             Pause();
-            OnTimeOver?.Invoke(0, totalTime);
+            OnTimeOver?.Invoke();
+            Debug.LogAssertion($"게임오버. 남은 시간: {currentTime}");
         }
     }
 }

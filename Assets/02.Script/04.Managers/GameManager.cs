@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager
+public class GameManager : IInitializable
 {
     public Define.Type.Game CurrentGameType => currentGameType;
+    public Define.State.GameState CurrentGameState => currentGameState;
 
+    public bool IsInit => isInit;
+
+    private bool isInit;
     private Define.State.GameState currentGameState;
     private Define.Type.Game currentGameType;
     private Define.Type.GameLevel lastGameLevel;
@@ -40,7 +45,9 @@ public class GameManager
         var prevScene = Managers.Scene.CurrentScene;
         ReleasePrevScene(prevScene);
         Managers.Scene.ShowScene(targetSceneType);
-        Managers.Coroutine.WaitFrame(1, () => InitCurrentScene(Managers.Scene.CurrentScene));
+        InitCurrentScene(Managers.Scene.CurrentScene);
+        //Managers.Coroutine.WaitFrame(1, () => {
+        //});
     }
 
     #endregion
@@ -116,8 +123,19 @@ public class GameManager
     #endregion
 
     #region End Game
+
+    public void EndGame() {
+        currentGameState = Define.State.GameState.NotStarted;
+        if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1)
+            Managers.Game.EndGame(Define.State.GameResult.WhiteStoneWin);
+        else if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player2)
+            Managers.Game.EndGame(Define.State.GameResult.BlackStoneWin);
+    }
+
     public void EndGame(Define.State.GameResult gameResult)
     {
+        Managers.Time.GetTimer().Pause();
+
         gameLogic.SetState(null);
         gameLogic.firstPlayerState = null;
         gameLogic.secondPlayerState = null;
@@ -148,6 +166,7 @@ public class GameManager
         }
 
         Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
+        Managers.InGameUI.ShowGameResult(gameResult);
         Managers.Board.DeactiveLaunchButton();
         Managers.GameResult.EndGame();
         gameLogic = null;
@@ -160,5 +179,10 @@ public class GameManager
         Debug.Log($"게임 재시작. 모드: {currentGameType}, 난이도: {lastGameLevel}");
         StartGame(currentGameType, lastGameLevel);
     }
+
+    public void Initialize() {
+        Managers.Time.Timer.OnTimeOver += EndGame;
+    }
+
     #endregion
 }

@@ -3,21 +3,14 @@ using UnityEngine.Events;
 
 public class TurnManager
 {
-        
-    private Define.State.GameState currentState = Define.State.GameState.NotStarted;
     private Define.Type.Player currentPlayer = Define.Type.Player.Player1;
     public UnityEvent<Define.Type.Player> OnTurnChanged = new UnityEvent<Define.Type.Player>();
-    public Define.State.GameState CurrentState => currentState;
-   
-
-
 
     
-    public void StartGame() // GameState를 InProgress로 바꾸고 흑돌의 차례로 만드는 함수
+    public void StartGame() // 흑돌의 차례로 만드는 함수
     {
-        if (currentState == Define.State.GameState.NotStarted)
+        if (Managers.Game.CurrentGameState == Define.State.GameState.NotStarted)
         {
-            currentState = Define.State.GameState.InProgress;
             SetTurn(Define.Type.Player.Player1);
         }
     }
@@ -25,7 +18,7 @@ public class TurnManager
     
     public void SwitchTurn() // 게임이 진행중일 때 차례를 다음 사람에게 넘기는 함수
     {
-        if (currentState != Define.State.GameState.InProgress)
+        if (Managers.Game.CurrentGameState != Define.State.GameState.InProgress)
         {
             return;
         }
@@ -35,7 +28,6 @@ public class TurnManager
         SetTurn(nextPlayer);
     }
 
-    
     private void SetTurn(Define.Type.Player player)
     {
         currentPlayer = player;
@@ -43,7 +35,7 @@ public class TurnManager
         
         OnTurnChanged?.Invoke(currentPlayer); 
 
-        Debug.Log($"현재 턴: {currentPlayer}");
+        Debug.LogAssertion($"현재 턴: {currentPlayer}");
     }
 
     
@@ -53,17 +45,10 @@ public class TurnManager
     }
 
     
-    public Define.State.GameState GetGameState()
-    {
-        return currentState;
-    }
-
-    
     public void EndGame(Define.Type.Player winner)
     {
-        if (currentState == Define.State.GameState.InProgress)
+        if (Managers.Game.CurrentGameState == Define.State.GameState.InProgress)
         {
-            currentState = Define.State.GameState.Ended;
             Debug.Log($"게임 종료! 승자: {winner}");
             // 게임 종료 UI 표시, 재경기 나가기 버튼 활성화 기능 추가 가능
             // 게임을 다시 시작하기 위해서 GameState를 NotStarted로 변경 필요

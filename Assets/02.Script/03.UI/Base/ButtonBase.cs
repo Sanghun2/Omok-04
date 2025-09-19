@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public abstract class ButtonBase : UIBase
 {
+
     [SerializeField] protected Button targetButton;
 
     #region Interface

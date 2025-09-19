@@ -1,217 +1,107 @@
+using System;
+using System.Collections;
+using System.Linq;
+using Photon.Pun.Demo.PunBasics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-using System;
-using System.Collections;
 
-public class IngameUIController : UIBase
+public class IngameUIController : MonoBehaviour
 {
-    [SerializeField] public GameObject player1;
-    [SerializeField] public GameObject player2;
-    [SerializeField] public GameObject AITurn;  // Ai ª˝∞¢ ¡ﬂ.. πÆ±∏ «•Ω√
-
-    [SerializeField] public Button pauseButton;
-    [SerializeField] public Button startButton;
-    [SerializeField] public Button p2OKButton;
-    [SerializeField] Button GoBackButton;
-
-    [SerializeField] public Slider timeSlider;
-    [SerializeField] private TextMeshProUGUI p2Rank;
-    [SerializeField] private TextMeshProUGUI timerText;
-
-    private TextMeshProUGUI p1Name;
-    private TextMeshProUGUI p1Result;
-    private TextMeshProUGUI p2Name;
-    private TextMeshProUGUI p2Result;
-    public GameObject[] p1TurnChecks;
-    public GameObject[] p2TurnChecks;
+    [SerializeField] private PlayerUI player1_UI;
+    [SerializeField] private PlayerUI player2_UI;
 
 
+    #region Public
 
-    void Awake()
-    {
-        p1Name = player1.GetComponentsInChildren<Transform>(true)
-                        .First(t => t.CompareTag("Name"))
-                        .GetComponent<TextMeshProUGUI>();
+    public void InitUIs(Define.Type.Game gameType, Define.Type.Player firstPlayer) {
+        // UI
+        switch (gameType) {
+            case Define.Type.Game.Single:
+                if (player2_UI != null) {
+                    player2_UI.InitPlayerUI(new PlayerInfo("AI", string.Empty));
+                }
 
-        p1TurnChecks = player1.GetComponentsInChildren<Transform>(true)
-                              .Where(t => t.CompareTag("TurnCheck"))
-                              .Select(t => t.gameObject)
-                              .ToArray();
-
-        p1Result = player1.GetComponentsInChildren<Transform>(true)
-                        .First(t => t.CompareTag("Result"))
-                        .GetComponent<TextMeshProUGUI>();
-
-        p2Name = player2.GetComponentsInChildren<Transform>(true)
-                        .First(t => t.CompareTag("Name"))
-                        .GetComponent<TextMeshProUGUI>();
-
-        p2TurnChecks = player2.GetComponentsInChildren<Transform>(true)
-                              .Where(t => t.CompareTag("TurnCheck"))
-                              .Select(t => t.gameObject)
-                              .ToArray();
-
-        p2Result = player2.GetComponentsInChildren<Transform>(true)
-                .First(t => t.CompareTag("Result"))
-                .GetComponent<TextMeshProUGUI>();
-    }
-
-
-    // µπ ªˆ±Ú ±‚¡ÿ¿∏∑Œ √º≈©«•Ω√
-    //public void UpdateTurnUI(Define.Type.StoneColor currentStone)
-    //{
-    //    if (currentStone == Define.Type.StoneColor.Black)
-    //    {
-    //        SetTurnChecksActive(p1TurnChecks, true);
-    //        SetTurnChecksActive(p2TurnChecks, false);
-    //    }
-    //    else if (currentStone == Define.Type.StoneColor.White)
-    //    {
-    //        SetTurnChecksActive(p1TurnChecks, false);
-    //        SetTurnChecksActive(p2TurnChecks, true);
-    //    }
-    //}
-
-    //private void SetTurnChecksActive(GameObject[] turnChecks, bool isActive)
-    //{
-    //    if (turnChecks == null) return;
-    //    foreach (var obj in turnChecks)
-    //    {
-    //        obj.SetActive(isActive);
-    //    }
-    //}
-
-
-    public void SetTurnChecks(bool aiTurn)
-    {
-        if (AITurn != null) AITurn.gameObject.SetActive(aiTurn);
-        if (p1TurnChecks != null)
-        {
-            foreach (var obj in p1TurnChecks)
-                obj.SetActive(!aiTurn);   // AI ≈œ¿Ã∏È Player1 √º≈©¥¬ ≤®¡¸
+                player2_UI.ActivePlaceButton(false);
+                break;
+            case Define.Type.Game.Local:
+                player1_UI.InitPlayerUI(new PlayerInfo("P1", string.Empty));
+                player2_UI.InitPlayerUI(new PlayerInfo("P2", string.Empty));
+                break;
+            case Define.Type.Game.Multi:
+                break;
+            default:
+                break;
         }
 
-        if (p2TurnChecks != null)
+        player1_UI.ActiveRankUI(gameType);
+        player2_UI.ActiveRankUI(gameType);
+
+        player1_UI.ShowThinkingText(false);
+        player2_UI.ShowThinkingText(false);
+
+        player1_UI.ActiveGameResultText(false);
+        player2_UI.ActiveGameResultText(false);
+
+
+        player1_UI.ActivePlaceButton(true);
+        player2_UI.ActivePlaceButton(gameType != Define.Type.Game.Single);
+
+        UpdateTurnUI(firstPlayer);
+
+        Debug.LogAssertion($"init ui");
+    }
+
+    public void ShowGameResult(Define.State.GameResult gameResult)
+    {
+        switch (gameResult)
         {
-            foreach (var obj in p2TurnChecks)
-                obj.SetActive(aiTurn);    // AI ≈œ¿Ã∏È Player2 √º≈©¥¬ ƒ—¡¸
+            case Define.State.GameResult.DRAW:
+                player1_UI.ActiveGameResultText(true, "Î¨¥ÏäπÎ∂Ä");
+                player2_UI.ActiveGameResultText(true, "Î¨¥ÏäπÎ∂Ä");
+                break;
+            case Define.State.GameResult.BlackStoneWin:
+                player1_UI.ActiveGameResultText(true, "Ïäπ");
+                player2_UI.ActiveGameResultText(true, "Ìå®");
+                break;
+            case Define.State.GameResult.WhiteStoneWin:
+                player1_UI.ActiveGameResultText(true, "Ìå®");
+                player2_UI.ActiveGameResultText(true, "Ïäπ");
+                break;
         }
+    public void InitPlayerUI(Define.Type.Player targetPlayer, PlayerInfo playerInfo) {
+        var targetPlayerUI = targetPlayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
+        targetPlayerUI.InitPlayerUI(playerInfo);
     }
 
+    /// <summary>
+    /// ÌòÑÏû¨ ÌÑ¥Ïù∏ ÌîåÎ†àÏù¥Ïñ¥ UI ÌëúÏãú
+    /// </summary>
+    /// <param name="aiTurn"></param>
+    public void ActiveTurnMarkUI(bool aiTurn) {
+        player1_UI.ActiveTurnMarkUI(!aiTurn);
+        player2_UI.ActiveTurnMarkUI(aiTurn);
 
-    /// AI ≈œ «•Ω√, Player √º≈© √ ±‚»≠
-    public void ResetTurnUI()
-    {
-        // AI ≈œ «•Ω√ ≤Ù±‚
-        if (AITurn != null)
-            AITurn.SetActive(false);
-
-        // Player1 √º≈© ≤Ù±‚
-        if (p1TurnChecks != null)
-            foreach (var obj in p1TurnChecks)
-                obj.SetActive(true);
-
-        // Player2 √º≈© ≤Ù±‚
-        if (p2TurnChecks != null)
-            foreach (var obj in p2TurnChecks)
-                obj.SetActive(false);
+        if (Managers.Game.CurrentGameType == Define.Type.Game.Single) player2_UI.ShowThinkingText(aiTurn);
     }
 
+    #endregion
 
 
+    #region Private
 
-    public override void InitUI()
-    {
-        base.InitUI();
-
-        GoBackButton.onClick.AddListener(() =>
-        {
-            ResetTurnUI();
-        });
-
-        Debug.Log($"[IngameUIController] CurrentGameType: {Managers.Game.CurrentGameType}");
-
-        // ΩÃ±€∏µÂ¿œ ∂ß player2 UI º≥¡§
-        if (Managers.Game.CurrentGameType == Define.Type.Game.Single)
-        {
-            if (p2Name != null) p2Name.text = "AI";
-            if (p2Rank != null) p2Result.text = string.Empty;
-            if (p2OKButton != null) p2OKButton.gameObject.SetActive(false);
-
-        }
-
-        // ∫∏µÂ √ ±‚»≠
-        Managers.Board.InitBoard();
-
-        // ≈∏¿Ã∏” √ ±‚»≠
-        Timer timer = Managers.Time.GetTimer();
-        if (timer != null)
-        { BindTimer(timer);
-            // timer.StartCount();
-        }
-
-        Managers.Turn.OnTurnChanged.AddListener((player) =>
-        {
-            Managers.Time.GetTimer().SetTimeAsDefault();
-        });
-
-        //Managers.Turn.OnTurnChanged.AddListener((player) =>
-        //{
-        //    var stone = player == Define.Type.Player.Player1 ?
-        //                Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
-        //    UpdateTurnUI(stone);
-        //});
-
-    }
-
-
-  
-
-
-
-    // ≈∏¿Ã∏” ¿Ã∫•∆Æ ø¨∞·
-    private void BindTimer(Timer timer)
-    {
-        timer.OnTimeChanged -= UpdateTimerUI;
-        timer.OnTimeChanged += UpdateTimerUI;
-        timer.SetTimeAsDefault();
-    }
-
-    // TextMeshPro UI ∞ªΩ≈
-    private void UpdateTimerUI(float current, float total)
-    {
-        if (timerText == null || Managers.Turn.CurrentState != Define.State.GameState.InProgress) return;
-
-        int seconds = Mathf.CeilToInt(current);
-        timerText.text = seconds.ToString();
-
-        if (timeSlider != null && total > 0)
-        {
-            timeSlider.value = current / total;
-            if (current <= 0.01f)
-            {
-                if(Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1)
-                    Managers.Game.EndGame(Define.State.GameResult.WhiteStoneWin);
-                else if(Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player2)
-                    Managers.Game.EndGame(Define.State.GameResult.BlackStoneWin);
+    private void Start() {
+        Managers.Turn.OnTurnChanged.AddListener((player) => {
+            // Local Í≤åÏûÑÏùº ÎïåÎßå Îèå ÏÉâÍπî Í∏∞Ï§Ä ÌòÑÏû¨ ÌîåÎ†àÏù¥Ïñ¥ ÌëúÏãú ÌôúÏÑ±Ìôî
+            if (Managers.Game.CurrentGameType == Define.Type.Game.Local) {
+                UpdateTurnUI(player);
             }
-                            
-        }
+        });
+    }
+    private void UpdateTurnUI(Define.Type.Player playerType) {
+        player1_UI.ActiveTurnMarkUI(playerType == Define.Type.Player.Player1);
+        player2_UI.ActiveTurnMarkUI(playerType != Define.Type.Player.Player1);
     }
 
-    protected override void Start()
-    {
-        base.Start();
-        // Debug.Log($"[TEST] Managers.Time null? : {Managers.Time == null}");
-        //var t = Managers.Time?.GetTimer();
-        //Debug.Log($"[TEST] Timer √£¿Ω? : {t != null}");
-        //if (t != null)
-        //{
-        //    t.OnTimeChanged += (c, tot) => Debug.Log($"[TEST] Timer Tick : {c}");
-        //    t.SetTime(30, 30);
-        //    t.StartCount();
-        //}
-    }
+    #endregion
 }

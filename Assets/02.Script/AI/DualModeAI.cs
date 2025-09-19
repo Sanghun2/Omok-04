@@ -20,7 +20,7 @@ public class DualModeAI
         switch (level)
         {
             case Define.Type.GameLevel.Easy:
-                return new LevelParam(1, 12, 0.7f, false, true);   // 얕고 실수 유도
+                return new LevelParam(1, 12, 0.7f, false, false);   // 얕고 실수 유도
             case Define.Type.GameLevel.Normal:
                 return new LevelParam(2, 10, 1.0f, false, false);   // 기본형
             case Define.Type.GameLevel.Hard:

@@ -1,20 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RestartButton : MonoBehaviour
+public class RestartButton : ButtonBase
 {
-    [SerializeField] private Button restartButton;
-    [SerializeField] private GameObject gameOverUI;
+    protected override void ButtonAction() {
+        Restart();
+    }
 
-    void Start()
-    {
-        if (restartButton != null)
-        {
-            restartButton.onClick.AddListener(() =>
-            {
-                Managers.Game.RestartLastGame();
-                gameOverUI.SetActive(false);
-            });
-        }
+
+    private void Restart() {
+        Managers.Game.RestartLastGame();
+        Managers.UI.GetUI<GameOverUI>().CloseUI();
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -11,9 +12,14 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI playerNameText;
     [SerializeField] TextMeshProUGUI rankText;
     [SerializeField] PlayerInfo playerInfo;
-    //[SerializeField] TimeUI timeUI;
 
-    public void InitPlayer(PlayerInfo playerInfo) {
+    [SerializeField] GameObject turnMarkObj;
+    [SerializeField] TextMeshProUGUI gameResultText;
+    [SerializeField] GameObject thinkingText;
+
+    [SerializeField] PlaceButton placeButton;
+
+    public void InitPlayerUI(PlayerInfo playerInfo) {
         this.playerInfo = playerInfo;
         playerNameText.text = playerInfo.PlayerName;
         playerType = playerInfo.PlayerType;
@@ -21,6 +27,39 @@ public class PlayerUI : MonoBehaviour
         if (rankText != null) {
             rankText.text = playerInfo.Rank;
         }
+    }
+
+    public void ActiveTurnMarkUI(bool active) {
+        turnMarkObj.SetActive(active);
+    }
+    public void ActiveRankUI(Define.Type.Game gameType) {
+        switch (gameType) {
+            case Define.Type.Game.Single:
+            case Define.Type.Game.Local:
+                rankText.gameObject.SetActive(false);
+                break;
+            case Define.Type.Game.Multi:
+                rankText.gameObject.SetActive(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void ShowGameResult(Define.State.GameResult gameResult) {
+        //gameResultText.text = gameResult == Define.State.GameResult.BlackStoneWin ? "½Â" : "ÆÐ";
+    }
+
+    public void ShowThinkingText(bool aiTurn) {
+        thinkingText.gameObject.SetActive(aiTurn);
+    }
+
+    public void ActivePlaceButton(bool active) {
+        placeButton.gameObject.SetActive(active);
+    }
+    public void ActiveGameResultText(bool active, string result = "") {
+        gameResultText.gameObject.SetActive(active);
+        gameResultText.text = result;
     }
 }
 
