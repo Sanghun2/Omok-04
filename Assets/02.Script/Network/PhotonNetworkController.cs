@@ -51,15 +51,18 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     public void OnDisconnected() {
         Debug.LogAssertion($"<color=cyan>master 연결 종료</color>");
     }
-    
+
 
     #endregion
 
     #region Match Making
 
-    public void QuickMatch(int maxPlayers) {
+    public void QuickMatch(int maxPlayers, RoomOptions roomOptions = null) {
         readiedPlayers.Clear();
-        PhotonNetwork.JoinRandomOrCreateRoom(roomOptions:new RoomOptions() { MaxPlayers= maxPlayers });
+        if (roomOptions == null) {
+            roomOptions = new RoomOptions() { MaxPlayers = maxPlayers };
+        }
+        PhotonNetwork.JoinRandomOrCreateRoom(roomOptions: roomOptions);
     }
 
     public void CancelFindMatch() {

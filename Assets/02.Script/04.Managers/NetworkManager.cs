@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public interface INetworkController : IInitializable
@@ -27,7 +28,7 @@ public interface INetworkController : IInitializable
 
     #region Match Making
 
-    void QuickMatch(int matchPlayers);
+    void QuickMatch(int matchPlayers, RoomOptions roomOptions=null);
     void CancelFindMatch();
 
     void OnConnectedToMaster();
@@ -70,9 +71,9 @@ public class NetworkManager : IInitializable
 
     private Define.State.Match currentMatchState;
 
-    public void FindMatch() {
+    public void FindMatch(RoomOptions roomOptions=null) {
         currentMatchState = Define.State.Match.MatchMaking;
-        networkController.QuickMatch(matchPlayers:2);
+        networkController.QuickMatch(matchPlayers:2, roomOptions);
     }
     public void CancelFindMatch() {
         currentMatchState = Define.State.Match.None;
