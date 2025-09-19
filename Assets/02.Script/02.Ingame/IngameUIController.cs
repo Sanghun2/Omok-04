@@ -69,6 +69,7 @@ public class IngameUIController : MonoBehaviour
                 player2_UI.ActiveGameResultText(true, "승");
                 break;
         }
+    }
     public void InitPlayerUI(Define.Type.Player targetPlayer, PlayerInfo playerInfo) {
         var targetPlayerUI = targetPlayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
         targetPlayerUI.InitPlayerUI(playerInfo);
