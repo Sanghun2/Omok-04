@@ -51,11 +51,18 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         OnStonePlaceSuccess += (playerType, stoneType, row, col) =>
         {
             SoundManager.Instance.OnAttackSound();
-            Debug.Log("### DEV_JSH MarkerEvent Start ###");
-            Debug.Log($"### DEV_JSH 방금 놓은 플레이어는 {playerType.ToString()}");
-            Debug.Log($"### DEV_JSH 방금 놓인 돌은 {stoneType.ToString()}");
-            Debug.Log($"### DEV_JSH 방금 놓인 돌의 위치는 Row : {row} / Col : {col}");
-            Debug.Log("### DEV_JSH MarkerEvent End ###");
+            board[row, col].IsRenju = false;
+            board[row, col].OnX_Marker = false;
+            board[row, col].SetMarker(stoneType);
+            Managers.Board.PlaceMarker(stoneType, row, col);
+            OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, row, col);
+            foreach (var cell in board)
+            {
+                if (cell.Stone == Define.Type.StoneColor.None)
+                    OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
+            }
+            Managers.Board.ResetCurretCell();
+            Managers.Time.Timer.SetTimeAsDefault().StartCount();
         };
 
         for (int i = 0; i < board.GetLength(0); i++)
