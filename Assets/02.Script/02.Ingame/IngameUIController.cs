@@ -11,10 +11,6 @@ public class IngameUIController : MonoBehaviour
     [SerializeField] private PlayerUI player1_UI;
     [SerializeField] private PlayerUI player2_UI;
 
-    [SerializeField] private Slider timeSlider;
-
-    //[SerializeField] private Button p2OKButton; // 재시작 시 착수 버튼 이것만 작동함
-    [SerializeField] private TextMeshProUGUI timerText;
 
     #region Public
 
@@ -73,28 +69,12 @@ public class IngameUIController : MonoBehaviour
     #region Private
 
     private void Start() {
-        Timer timer = Managers.Time.GetTimer();
-        if (timer != null)
-            BindTimeEvent(timer);
-
         Managers.Turn.OnTurnChanged.AddListener((player) => {
             // Local 게임일 때만 돌 색깔 기준 현재 플레이어 표시 활성화
             if (Managers.Game.CurrentGameType == Define.Type.Game.Local) {
                 UpdateTurnUI(player);
             }
         });
-    }
-    // 타이머 이벤트 연결
-    private void BindTimeEvent(Timer timer) {
-        timer.OnTimeChanged -= UpdateTimerUI;
-        timer.OnTimeChanged += UpdateTimerUI;
-    }
-
-    // TextMeshPro UI 갱신
-    private void UpdateTimerUI(float currentTime, float totalTime) {
-        int seconds = Mathf.RoundToInt(currentTime);
-        timerText.text = seconds.ToString();
-        timeSlider.value = currentTime / totalTime;
     }
     private void UpdateTurnUI(Define.Type.Player playerType) {
         player1_UI.ActiveTurnMarkUI(playerType == Define.Type.Player.Player1);
