@@ -143,9 +143,9 @@ public class GameUIManger : UIBase
         #endregion
         isStart = true; // 게임이 시작되었음을 표시
 
-        // BGM 재생 시작
-        if (soundManager != null)
-            soundManager.SetBGMSound("Play");
+        // // BGM 재생 시작
+        // if (soundManager != null)
+        //     soundManager.SetBGMSound("Play");
     }
 
     public void OnStartLocalPlay()

@@ -319,6 +319,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9205717687355143869, guid: f0e3e55b2b1df454f8b162c760169116, type: 3}
+      propertyPath: soundManager
+      value: 
+      objectReference: {fileID: 7525157545017897759}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2154,7 +2158,7 @@ PrefabInstance:
     - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: 'p1TurnChecks.Array.data[0]'
       value: 
-      objectReference: {fileID: 1364253691}
+      objectReference: {fileID: 0}
     - target: {fileID: 2242362935993056444, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: 'p1TurnChecks.Array.data[1]'
       value: 
@@ -6464,6 +6468,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2476392276147484558, guid: dc6a7009f277b834db265b7f3dea3ba1, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4008236324829193688, guid: dc6a7009f277b834db265b7f3dea3ba1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6507,6 +6515,10 @@ PrefabInstance:
     - target: {fileID: 4533381200631594105, guid: dc6a7009f277b834db265b7f3dea3ba1, type: 3}
       propertyPath: m_Name
       value: AudioSource
+      objectReference: {fileID: 0}
+    - target: {fileID: 7858018862210691386, guid: dc6a7009f277b834db265b7f3dea3ba1, type: 3}
+      propertyPath: m_Volume
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7030,7 +7042,7 @@ MonoBehaviour:
   attackSound: {fileID: 8300000, guid: 7a4c4b5d7ffae4646b53e27c39ffc487, type: 3}
   eventSound: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
   bgmVolume: 0.107
-  sfxVolume: 0.095
+  sfxVolume: 0.707
 --- !u!222 &8116532075583085951
 CanvasRenderer:
   m_ObjectHideFlags: 0

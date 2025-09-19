@@ -7,12 +7,16 @@ public class QuitButton : ButtonBase
         QuitGame();
     }
 
-    private void QuitGame() {
+    private void QuitGame()
+    {
         Managers.UI.GetUI<GameOverUI>().CloseUI();
         Managers.Game.GoToMainMenu();
 
-        if (Managers.Game.CurrentGameType == Define.Type.Game.Multi) {
+        if (Managers.Game.CurrentGameType == Define.Type.Game.Multi)
+        {
             PhotonNetwork.LeaveRoom();
         }
+
+        SoundManager.Instance.SetBGMSound("Intro");
     }
 }

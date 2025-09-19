@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour
     public float bgmVolume = 0.1f;
 
     [Range(0f, 1f)]
-    public float sfxVolume = 0.1f;
+    public float sfxVolume = 0.7f;
 
     void Start()
     {
