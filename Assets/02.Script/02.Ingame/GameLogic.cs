@@ -80,7 +80,7 @@ public class GameLogic
                 board[row, col].SetMarker(stoneType);
                 Managers.Board.PlaceMarker(stoneType, row, col);
                 Managers.Board.ResetCurretCell();
-                Managers.Board.onStoneSettedDelegate?.Invoke(stoneType);
+                Managers.Board.onStoneSettedDelegate?.Invoke(Managers.Turn.GetCurrentPlayer(),stoneType, row, col);
 
                 foreach (var cell in board)
                 {
@@ -101,7 +101,7 @@ public class GameLogic
             Managers.Board.DestroyX_Marker(row, col);
             Managers.Board.PlaceMarker(stoneType, row, col);
             Managers.Board.ResetCurretCell();
-            Managers.Board.onStoneSettedDelegate?.Invoke(stoneType);
+            Managers.Board.onStoneSettedDelegate?.Invoke(Managers.Turn.GetCurrentPlayer(), stoneType, row, col);
             return true;
         }
         else
