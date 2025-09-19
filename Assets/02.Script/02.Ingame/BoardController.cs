@@ -23,7 +23,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
     public delegate void OnCellClicked(int row, int col);
     public OnCellClicked onCellClickedDelegate;
-    public delegate void OnStoneSetted(Define.Type.StoneColor stoneType);
+    public delegate void OnStoneSetted(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col);
     public OnStoneSetted onStoneSettedDelegate;
     public Cell[,] Board => board;
 
@@ -48,11 +48,13 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         board = new Cell[Define.Value.BoardRow, Define.Value.BoardCol];
 
-        onStoneSettedDelegate = (stoneType) =>
+        onStoneSettedDelegate = (playerType, stoneType, row, col) =>
         {
             SoundManager.Instance.OnAttackSound();
             Debug.Log("### DEV_JSH MarkerEvent Start ###");
-            Debug.Log($"### DEV_JSH 이번에 놓인 돌은 {stoneType.ToString()}");
+            Debug.Log($"### DEV_JSH 방금 놓은 플레이어는 {playerType.ToString()}");
+            Debug.Log($"### DEV_JSH 방금 놓인 돌은 {stoneType.ToString()}");
+            Debug.Log($"### DEV_JSH 방금 놓인 돌의 위치는 Row : {row} / Col : {col}");
             Debug.Log("### DEV_JSH MarkerEvent End ###");
         };
 
