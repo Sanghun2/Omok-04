@@ -26,7 +26,7 @@ public class PlayerState : BasePlayerState
 
     public override void OnEnter(GameLogic gameLogic)
     {
-        Managers.Board.onCellClickedDelegate = (row, col) =>
+        Managers.Board.OnStonePlace = (row, col) =>
         {
             HandleMove(gameLogic, row, col);
         };
@@ -34,7 +34,7 @@ public class PlayerState : BasePlayerState
 
     public override void OnExit(GameLogic gameLogic)
     {
-        Managers.Board.onCellClickedDelegate = null;
+        Managers.Board.OnStonePlace = null;
     }
 
     protected override void HandleNextTurn(GameLogic gameLogic)
