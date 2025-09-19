@@ -291,6 +291,16 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
         // game logic sync
         Managers.Board.Board[row, col].SetMarker(stoneType);
+        if (stoneType == Define.Type.StoneColor.White)
+        {
+            Debug.Log("### DEV_JSH 멀티에서 백색돌의 렌주 표시 호출 ###");
+            foreach (var cell in Managers.Board.Board)
+            {
+                if (cell.Stone == Define.Type.StoneColor.None)
+                    OmokAI.CheckRenju(Define.Type.StoneColor.Black, Managers.Board.Board, cell.CellRow, cell.CellCol);
+            }
+            Managers.Board.ShowAllRenju(Managers.Board.Board);
+        }
 
         // turn 동기화
         BasePlayerState currentState = Managers.Game.CurrentGameLogic.CurrentState;
