@@ -22,13 +22,19 @@ public class IngameUIController : MonoBehaviour
                     player2_UI.InitPlayerUI(new PlayerInfo("AI", string.Empty));
                 }
 
+                player1_UI.ActivePlaceButton(true);
                 player2_UI.ActivePlaceButton(false);
+
                 player1_UI.PlaceButton.ResetPlayerType();
                 player2_UI.PlaceButton.ResetPlayerType();
                 break;
             case Define.Type.Game.Local:
                 player1_UI.InitPlayerUI(new PlayerInfo("P1", string.Empty));
                 player2_UI.InitPlayerUI(new PlayerInfo("P2", string.Empty));
+
+                player1_UI.ActivePlaceButton(true);
+                player2_UI.ActivePlaceButton(true);
+
                 player1_UI.PlaceButton.ResetPlayerType();
                 player2_UI.PlaceButton.ResetPlayerType();
                 break;
@@ -46,10 +52,6 @@ public class IngameUIController : MonoBehaviour
 
         player1_UI.ActiveGameResultText(false);
         player2_UI.ActiveGameResultText(false);
-
-
-        player1_UI.ActivePlaceButton(true);
-        player2_UI.ActivePlaceButton(gameType != Define.Type.Game.Single);
 
         UpdateTurnUI(firstPlayer);
 
@@ -75,6 +77,10 @@ public class IngameUIController : MonoBehaviour
     public void InitPlayerUI(Define.Type.Player targetPlayer, PlayerInfo playerInfo) {
         var targetPlayerUI = targetPlayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
         targetPlayerUI.InitPlayerUI(playerInfo);
+    }
+    public void ActivePlaceButton(Define.Type.Player targetPLayer, bool active) {
+        var targetPlayerUI = targetPLayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
+        targetPlayerUI.ActivePlaceButton(active);
     }
 
     /// <summary>
