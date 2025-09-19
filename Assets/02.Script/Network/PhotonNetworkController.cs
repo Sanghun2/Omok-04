@@ -9,6 +9,7 @@ using UnityEngine;
 public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkController, IInitializable
 {
     public Define.Type.Player LocalPlayerType => (Define.Type.Player)PhotonNetwork.LocalPlayer.ActorNumber;
+    public Define.Type.Player OpponentPlayerType => (Define.Type.Player)(PhotonNetwork.LocalPlayer.ActorNumber == 1 ? 2 : 1);
     public int LocalActorNumber => PhotonNetwork.LocalPlayer.ActorNumber;
 
     public bool IsInit => isInit;
@@ -191,6 +192,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
         // 모든 플레이어가 개별적으로 같은 값으로 board 초기화 및 플레이어 초기화
         var gameLogic = new GameLogic(Managers.Board.Board, Define.Type.Game.Multi);
+        Managers.Game.SetCurrentLogic(gameLogic);
 
         if (LocalPlayerType == Define.Type.Player.Player1) {
             gameLogic.firstPlayerState = new PlayerState(firstPlayer == LocalPlayerType);
@@ -202,13 +204,16 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
             gameLogic.secondPlayerState = new PlayerState(firstPlayer == LocalPlayerType);
             TestLog("second player로 set");
         }
-        ;
+
         var currentUser = Managers.UserInfo.GetCurrentUser();
 
         // Local Player UI Init 후 rpc 동기화
         Managers.InGameUI.InitPlayerUI(LocalPlayerType, new PlayerInfo(currentUser.username, currentUser.rank.ToString()));
+        Managers.InGameUI.ActivePlaceButton(LocalPlayerType, true);
+        Managers.InGameUI.GetPlayerUI(LocalPlayerType).PlaceButton.SetPlayerType(LocalPlayerType);
+        Managers.InGameUI.ActivePlaceButton(OpponentPlayerType, false);
         
-        TestLog($"actor number: {PhotonNetwork.LocalPlayer.ActorNumber}");
+        TestLog($"local:{LocalPlayerType}, op:{OpponentPlayerType}");
         OnGameInit?.Invoke(LocalPlayerType, currentUser.username, currentUser.rank);
     }
 

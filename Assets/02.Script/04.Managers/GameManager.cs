@@ -61,6 +61,10 @@ public class GameManager : IInitializable
 
     }
 
+    public void SetCurrentLogic(GameLogic logic) {
+        gameLogic = logic;
+    }
+
     public void EnterLocalPlay()
     {
         StartGame(Define.Type.Game.Local);
@@ -101,7 +105,6 @@ public class GameManager : IInitializable
                 SetGameStatePlay();
                 break;
             case Define.Type.Game.Multi:
-                gameLogic = new GameLogic(Managers.Board.Board, gameType);
                 SetGameStatePlay();
                 break;
             default:

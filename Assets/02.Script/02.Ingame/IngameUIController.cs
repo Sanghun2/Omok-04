@@ -57,6 +57,10 @@ public class IngameUIController : MonoBehaviour
 
         Debug.LogAssertion($"init ui");
     }
+    public void InitPlayerUI(Define.Type.Player targetPlayer, PlayerInfo playerInfo) {
+        var targetPlayerUI = targetPlayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
+        targetPlayerUI.InitPlayerUI(playerInfo);
+    }
 
     public void ShowGameResult(Define.State.GameResult gameResult) {
         switch (gameResult) {
@@ -74,10 +78,6 @@ public class IngameUIController : MonoBehaviour
                 break;
         }
     }
-    public void InitPlayerUI(Define.Type.Player targetPlayer, PlayerInfo playerInfo) {
-        var targetPlayerUI = targetPlayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
-        targetPlayerUI.InitPlayerUI(playerInfo);
-    }
     public void ActivePlaceButton(Define.Type.Player targetPLayer, bool active) {
         var targetPlayerUI = targetPLayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
         targetPlayerUI.ActivePlaceButton(active);
@@ -94,6 +94,11 @@ public class IngameUIController : MonoBehaviour
         if (Managers.Game.CurrentGameType == Define.Type.Game.Single) player2_UI.ShowThinkingText(aiTurn);
     }
 
+
+    public PlayerUI GetPlayerUI(Define.Type.Player playerType) {
+        return playerType == Define.Type.Player.Player1 ? player1_UI : player2_UI;
+    }
+
     #endregion
 
 
@@ -106,11 +111,16 @@ public class IngameUIController : MonoBehaviour
                 UpdateTurnUI(player);
             }
         });
+
+
+        player1_UI.PlaceButton.ResetPlayerType();
+        player2_UI.PlaceButton.ResetPlayerType();
     }
     private void UpdateTurnUI(Define.Type.Player playerType) {
         player1_UI.ActiveTurnMarkUI(playerType == Define.Type.Player.Player1);
         player2_UI.ActiveTurnMarkUI(playerType != Define.Type.Player.Player1);
     }
+
 
     #endregion
 }
