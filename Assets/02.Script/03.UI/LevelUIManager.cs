@@ -10,6 +10,7 @@ public class LevelUIManager : UIBase
     [SerializeField] Button NormalModeButton;
     [SerializeField] Button HardModeButton;
     [SerializeField] Button GoBackButton;
+    [SerializeField] SoundManager soundManager; //명철
 
     // [SerializeField] private UIBase inGameUI;
 
@@ -59,5 +60,9 @@ public class LevelUIManager : UIBase
         //inGameUI.OpenUI();
         gameObject.SetActive(false);
         Managers.Game.StartSinglePlay(level);
+
+        // BGM 재생 시작 명철
+        if (soundManager != null)
+            soundManager.SetBGMSound("Play");
     }
 }

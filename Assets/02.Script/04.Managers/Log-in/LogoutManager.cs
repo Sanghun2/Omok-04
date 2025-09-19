@@ -2,11 +2,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Networking;
+using Unity.VisualScripting;
 
 
 public class LogoutManager : MonoBehaviour
 {
     [SerializeField] private Button logoutButton;
+
+    //명철
+    [SerializeField] private GameUIManger gameUImanager;
 
     void Start()
     {
@@ -18,6 +22,7 @@ public class LogoutManager : MonoBehaviour
         {
             Debug.LogError("Logout Button이 연결되지 않았습니다!");
         }
+
     }
     public void LogoutAndReturnToLogin()
     {
@@ -31,7 +36,7 @@ public class LogoutManager : MonoBehaviour
         using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
             request.downloadHandler = new DownloadHandlerBuffer();
-            
+
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success)
@@ -49,5 +54,7 @@ public class LogoutManager : MonoBehaviour
             Managers.UserInfo.SetCurrentUser(null);
         }
         Managers.Scene.ShowScene(Define.Type.Scene.LogIn);
+
+        gameUImanager.OnExitSetting(); //명철
     }
 }
