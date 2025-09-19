@@ -22,9 +22,9 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField] private Button whiteStoneLaunchButton;
 
     public delegate void OnCellClicked(int row, int col);
-    public OnCellClicked onCellClickedDelegate;
+    public OnCellClicked OnStonePlace;
     public delegate void OnStoneSetted(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col);
-    public OnStoneSetted onStoneSettedDelegate;
+    public OnStoneSetted OnStonePlaceSuccess;
     public Cell[,] Board => board;
 
     private void OnDisable()
@@ -48,7 +48,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         board = new Cell[Define.Value.BoardRow, Define.Value.BoardCol];
 
-        onStoneSettedDelegate += (playerType, stoneType, row, col) =>
+        OnStonePlaceSuccess += (playerType, stoneType, row, col) =>
         {
             SoundManager.Instance.OnAttackSound();
             Debug.Log("### DEV_JSH MarkerEvent Start ###");
@@ -66,7 +66,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
                 board[i,j].InitCell(i, j, (i,j) => {
                     Managers.Time.Timer.SetTimeAsDefault().StartCount();
-                    onCellClickedDelegate(i, j);
+                    OnStonePlace(i, j);
                 });
             }
         }
