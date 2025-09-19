@@ -106,10 +106,9 @@ public class IngameUIController : MonoBehaviour
 
     private void Start() {
         Managers.Turn.OnTurnChanged.AddListener((player) => {
+            if (Managers.Game.CurrentGameType == Define.Type.Game.Single) return;
             // Local 게임일 때만 돌 색깔 기준 현재 플레이어 표시 활성화
-            if (Managers.Game.CurrentGameType == Define.Type.Game.Local) {
-                UpdateTurnUI(player);
-            }
+            UpdateTurnUI(player);
         });
 
 

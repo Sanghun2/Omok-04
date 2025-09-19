@@ -28,14 +28,14 @@ public class TurnManager
         SetTurn(nextPlayer);
     }
 
-    private void SetTurn(Define.Type.Player player)
+    public void SetTurn(Define.Type.Player player) 
     {
         currentPlayer = player;
 
         
         OnTurnChanged?.Invoke(currentPlayer); 
 
-        Debug.LogAssertion($"현재 턴: {currentPlayer}");
+        Debug.LogAssertion($"<color=orange>현재 턴: {currentPlayer}</color>"); 
     }
 
     

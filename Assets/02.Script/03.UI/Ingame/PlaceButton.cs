@@ -15,11 +15,11 @@ public class PlaceButton : ButtonBase
 
     protected override void ButtonAction() {
         if (currentPlayerType == Define.Type.Player.Player1) {
-            Debug.LogAssertion($"{currentPlayerType} 雜熱");
+            Debug.LogAssertion($"{currentPlayerType} 雜熱 衛紫");
             Managers.Board.OnClickBlackStoneLaunchButton();
         }
         else {
-            Debug.LogAssertion($"{currentPlayerType} 雜熱");
+            Debug.LogAssertion($"{currentPlayerType} 雜熱 衛紫");
             Managers.Board.OnClickWhiteStoneLaunchButton();
         }
     }

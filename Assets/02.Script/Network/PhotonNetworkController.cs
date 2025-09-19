@@ -96,8 +96,8 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     public bool PlaceReady(Define.Type.Player turnPlayer) {
         throw new System.NotImplementedException();
     }
-    public void PlaceStone(Define.Type.Player playerType, Vector2Int pos) {
-        OnPlaceStone?.Invoke(playerType);
+    public void PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col) {
+        photonView.RPC(nameof(RPC_PlaceStone), RpcTarget.Others, playerType, stone, row, col);
     }
 
     public void SetTimer(float time) {
@@ -187,7 +187,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     }
 
     [PunRPC] //
-    private void RPC_InitGame(Define.Type.Player firstPlayer) {
+    private void RPC_InitGame(Define.Type.Player firstPlayerType) {
         // 모든 플레이어 인게임 진입
 
         // 모든 플레이어가 개별적으로 같은 값으로 board 초기화 및 플레이어 초기화
@@ -195,19 +195,23 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         var gameLogic = new GameLogic(Managers.Board.Board, Define.Type.Game.Multi);
         Managers.Game.SetCurrentLogic(gameLogic);
 
-        if (LocalPlayerType == Define.Type.Player.Player1) {
-            gameLogic.firstPlayerState = new PlayerState(firstPlayer == LocalPlayerType);
-            gameLogic.secondPlayerState = new PlayerState(firstPlayer == LocalPlayerType);
+        if (LocalPlayerType == firstPlayerType) {
+            gameLogic.firstPlayerState = new PlayerState(firstPlayerType == LocalPlayerType); //
+            gameLogic.secondPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
             TestLog("first player로 set");
         }
         else {
-            gameLogic.firstPlayerState = new PlayerState(firstPlayer == LocalPlayerType);
-            gameLogic.secondPlayerState = new PlayerState(firstPlayer == LocalPlayerType);
+            gameLogic.firstPlayerState = new PlayerState(firstPlayerType == OpponentPlayerType);
+            gameLogic.secondPlayerState = new PlayerState(firstPlayerType == LocalPlayerType);
             TestLog("second player로 set");
         }
 
+        Managers.Turn.SetTurn(LocalPlayerType == firstPlayerType ? LocalPlayerType : OpponentPlayerType);
         gameLogic.SetState(gameLogic.firstPlayerState);
         var currentUser = Managers.UserInfo.GetCurrentUser();
+
+        Managers.Board.OnStonePlaceSuccess -= PlaceStone;
+        Managers.Board.OnStonePlaceSuccess += PlaceStone;
 
         // Local Player UI Init 후 rpc 동기화
         Managers.InGameUI.InitPlayerUI(LocalPlayerType, new PlayerInfo(currentUser.username, currentUser.rank.ToString()));
@@ -217,6 +221,13 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         
         TestLog($"local:{LocalPlayerType}, op:{OpponentPlayerType}");
         OnGameInit?.Invoke(LocalPlayerType, currentUser.username, currentUser.rank);
+    }
+
+    [PunRPC]
+    private void RPC_PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
+        TestLog($"{playerType}, {stoneType}, r:{row}, c:{col}");
+        Managers.Game.CurrentGameLogic.SetNewBoardValue(stoneType, row, col);
+        Managers.Turn.SwitchTurn();
     }
 
     [PunRPC] //

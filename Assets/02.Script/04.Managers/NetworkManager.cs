@@ -42,7 +42,7 @@ public interface INetworkController : IInitializable
     void SetPlayerAndFirstPlayer(Define.Type.Player playerType, Define.Type.Player firstPlayer);
 
     bool PlaceReady(Define.Type.Player turnPlayer);
-    void PlaceStone(Define.Type.Player playerType, Vector2Int stonePos);
+    void PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col);
     void SetTimer(float time);
 
     void FinishGame(Define.Type.Player winner);
@@ -90,8 +90,8 @@ public class NetworkManager : IInitializable
     public void StartGame() {
 
     }
-    public void PlaceStone(Define.Type.Player playerType, Vector2Int stonePos) {
-        networkController.PlaceStone(playerType, stonePos);
+    public void PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col) {
+        networkController.PlaceStone(playerType, stone, row, col);
     }
     public void SetTimer(float time) {
         networkController.SetTimer(time);

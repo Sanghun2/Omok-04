@@ -32,7 +32,8 @@ public partial class Timer : MonoBehaviour
     public event TimeEventHandler OnTimerInitialized; // 랜덤 때문에 추가함
 
     public void SetTimeAsDefaultAndStart() {
-
+        SetTimeAsDefault();
+        StartCount();
     }
     private void SetTimeAndStart(float currentTime, float totalTime) {
         SetTime(currentTime, totalTime);

@@ -9,6 +9,8 @@ public class GameManager : IInitializable
 
     public bool IsInit => isInit;
 
+    public GameLogic CurrentGameLogic => gameLogic;
+
     private bool isInit;
     private Define.State.GameState currentGameState;
     private Define.Type.Game currentGameType;
