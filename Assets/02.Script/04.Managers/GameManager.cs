@@ -82,6 +82,7 @@ public class GameManager : IInitializable
         // setting game options
         Managers.Board.InitBoard();
         Managers.Turn.StartGame();
+        
 
         var timer = Managers.Time.GetTimer();
         if (timer != null) {
