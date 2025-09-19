@@ -134,6 +134,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         Debug.LogAssertion($"Black 착수");
 
         currentCell.onCellClicked?.Invoke(currentCell.CellRow,currentCell.CellCol);
+        currentCell = null;
     }
 
     public void OnClickWhiteStoneLaunchButton()
@@ -145,6 +146,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         Debug.LogAssertion($"White 착수");
         currentCell.onCellClicked?.Invoke(currentCell.CellRow, currentCell.CellCol);
+        currentCell = null;
     }
     
     #region 자동 호출 메서드 / 금지 표시, 돌 생성, 셀 초기화

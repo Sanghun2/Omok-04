@@ -5,6 +5,7 @@ using Photon.Realtime;
 using Unity.VisualScripting;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkController, IInitializable
 {
@@ -50,15 +51,21 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     public void OnDisconnected() {
         Debug.LogAssertion($"<color=cyan>master 연결 종료</color>");
     }
-    
+
 
     #endregion
 
     #region Match Making
 
-    public void QuickMatch(int maxPlayers) {
+    public void QuickMatch(int maxPlayers, RoomOptions roomOptions = null) {
         readiedPlayers.Clear();
-        PhotonNetwork.JoinRandomOrCreateRoom(roomOptions:new RoomOptions() { MaxPlayers= maxPlayers });
+        if (roomOptions == null) {
+            roomOptions = new RoomOptions() { MaxPlayers = maxPlayers };
+        }
+        else {
+            roomOptions.MaxPlayers = maxPlayers;
+        }
+        PhotonNetwork.JoinRandomOrCreateRoom(roomOptions: roomOptions);
     }
 
     public void CancelFindMatch() {
@@ -78,6 +85,15 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
     public override void OnLeftRoom() {
         TestLog($"room을 나감");
+        Managers.Turn.OnTurnChanged.RemoveListener(UpdateTurnUI);
+        Managers.Board.OnStonePlaceSuccess -= SwitchTurn;
+        Managers.Board.OnStonePlaceSuccess -= SyncStone;
+        Managers.Game.OnGameFinish -= FinishGame;
+    }
+
+    public void LeaveRoom() {
+        photonView.RPC(nameof(RPC_SetPlayerUIAsLeft), RpcTarget.OthersBuffered, LocalPlayerType);
+        PhotonNetwork.LeaveRoom();
     }
 
     #endregion
@@ -96,18 +112,18 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     public bool PlaceReady(Define.Type.Player turnPlayer) {
         throw new System.NotImplementedException();
     }
-    public void PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col) {
-        photonView.RPC(nameof(RPC_PlaceStone), RpcTarget.Others, playerType, stone, row, col);
+    public void SyncStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col) {
+        photonView.RPC(nameof(RPC_SyncStone), RpcTarget.Others, playerType, stone, row, col);
     }
 
     public void SetTimer(float time) {
         throw new System.NotImplementedException();
     }
 
-    public void FinishGame(Define.Type.Player winner) {
-        if (PhotonNetwork.IsMasterClient) {
-            photonView.RPC(nameof(RPC_FinishGame), RpcTarget.AllViaServer, winner);
-        }
+
+    private void FinishGame(Define.State.GameResult gameResult) {
+        TestLog($"finish game");
+        photonView.RPC(nameof(RPC_FinishGame), RpcTarget.OthersBuffered, gameResult);
     }
 
     #endregion
@@ -172,6 +188,10 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         }
     }
 
+    private void UpdateTurnUI(Define.Type.Player currentTurnPlayerType) {
+        photonView.RPC(nameof(RPC_UpdateTurnUI), RpcTarget.Others, currentTurnPlayerType);
+    }
+
     [PunRPC] //
     private void RPC_SetFirstPlayer() {
 
@@ -210,8 +230,25 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         gameLogic.SetState(gameLogic.firstPlayerState);
         var currentUser = Managers.UserInfo.GetCurrentUser();
 
-        Managers.Board.OnStonePlaceSuccess -= PlaceStone;
-        Managers.Board.OnStonePlaceSuccess += PlaceStone;
+        Managers.Board.OnStonePlaceSuccess -= SyncStone;
+        Managers.Board.OnStonePlaceSuccess += SyncStone;
+
+        Managers.Board.OnStonePlaceSuccess -= SwitchTurn;
+        Managers.Board.OnStonePlaceSuccess += SwitchTurn;
+
+        Managers.Game.OnGameFinish -= FinishGame;
+        Managers.Game.OnGameFinish += FinishGame;
+
+
+        // place stone
+            // check
+            // place
+            // sucess -> place sucess
+
+
+
+        Managers.Turn.OnTurnChanged.RemoveListener(UpdateTurnUI);
+        Managers.Turn.OnTurnChanged.AddListener(UpdateTurnUI);
 
         // Local Player UI Init 후 rpc 동기화
         Managers.InGameUI.InitPlayerUI(LocalPlayerType, new PlayerInfo(currentUser.username, currentUser.rank.ToString()));
@@ -223,11 +260,34 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         OnGameInit?.Invoke(LocalPlayerType, currentUser.username, currentUser.rank);
     }
 
+
+    private void SwitchTurn(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
+        photonView.RPC(nameof(RPC_SwitchTurn), RpcTarget.Others);
+    }
+
     [PunRPC]
-    private void RPC_PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
-        TestLog($"{playerType}, {stoneType}, r:{row}, c:{col}");
-        Managers.Game.CurrentGameLogic.SetNewBoardValue(stoneType, row, col);
+    private void RPC_SwitchTurn() {
         Managers.Turn.SwitchTurn();
+    }
+
+    [PunRPC]
+    private void RPC_SyncStone(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
+        TestLog($"{playerType}, {stoneType}, r:{row}, c:{col}");
+
+        // stone view sync
+        Managers.Board.PlaceMarker(stoneType, row, col);
+
+        // game logic sync
+        Managers.Board.Board[row, col].SetMarker(stoneType);
+
+        // turn 동기화
+        BasePlayerState currentState = Managers.Game.CurrentGameLogic.CurrentState;
+        if (Managers.Game.CurrentGameLogic.firstPlayerState.Equals(currentState)) {
+            Managers.Game.CurrentGameLogic.SetState(Managers.Game.CurrentGameLogic.secondPlayerState);
+        }
+        else {
+            Managers.Game.CurrentGameLogic.SetState(Managers.Game.CurrentGameLogic.firstPlayerState);
+        }
     }
 
     [PunRPC] //
@@ -235,6 +295,16 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.InGameUI.InitPlayerUI(targetPlayer, new PlayerInfo(playerName, rank.ToString()));
 
         OnPlayerInit?.Invoke(targetPlayer);
+    }
+
+    [PunRPC]
+    private void RPC_SetPlayerUIAsLeft(Define.Type.Player targetPlayer) {
+        Managers.InGameUI.SetPlayerUIAsLeft(targetPlayer);
+    }
+
+    [PunRPC]
+    private void RPC_UpdateTurnUI(Define.Type.Player currentTurnPlayerType) {
+        Managers.InGameUI.UpdateTurnUI(currentTurnPlayerType);
     }
 
     [PunRPC] //
@@ -255,8 +325,9 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     }
 
     [PunRPC]
-    private void RPC_FinishGame(Define.Type.Player winner) {
-        OnGameFinish?.Invoke(winner);
+    private void RPC_FinishGame(Define.State.GameResult gameResult) {
+        Managers.Game.EndGame(gameResult);
+        TestLog($"RPC game finished");
     }
 
     #endregion
