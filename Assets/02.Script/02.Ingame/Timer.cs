@@ -29,8 +29,6 @@ public partial class Timer : MonoBehaviour
     public delegate void TimeEventHandler();
     public event TimeEventHandler OnTimeOver;
 
-    public event TimeEventHandler OnTimerInitialized; // 랜덤 때문에 추가함
-
     public void SetTimeAsDefaultAndStart() {
         SetTimeAsDefault();
         StartCount();
@@ -43,9 +41,6 @@ public partial class Timer : MonoBehaviour
         this.currentTime = currentTime;
         this.totalTime = totalTime;
         OnTimeChanged?.Invoke(this.currentTime, totalTime);
-
-        OnTimerInitialized?.Invoke(); // 타이머 초기화 시 이벤트 호출 (랜덤 떄문에 추가함)
-
         Pause();
         isInit = true;
     }
