@@ -79,6 +79,13 @@ public class GameLogic
             {
                 board[row, col].SetMarker(stoneType);
                 Managers.Board.PlaceMarker(stoneType, row, col);
+                OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, row, col);
+                foreach (var cell in board)
+                {
+                    if (cell.Stone == Define.Type.StoneColor.None)
+                        OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
+                }
+                Managers.Board.ShowAllRenju();
                 Managers.Board.ResetCurretCell();
                 Managers.Board.OnStonePlaceSuccess?.Invoke(Managers.Turn.GetCurrentPlayer(),stoneType, row, col);
                 Managers.Time.Timer.SetTimeAsDefault().StartCount();
@@ -92,6 +99,14 @@ public class GameLogic
             board[row, col].SetMarker(stoneType);
             Managers.Board.DestroyX_Marker(row, col);
             Managers.Board.PlaceMarker(stoneType, row, col);
+            OmokAI.CheckRenju(stoneType, board, row, col);
+            foreach (var cell in board)
+            {
+                if (cell.Stone == Define.Type.StoneColor.None)
+                    OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
+            }
+            if (Managers.Game.CurrentGameType != Define.Type.Game.Multi)
+                Managers.Board.ShowAllRenju();
             Managers.Board.ResetCurretCell();
             Managers.Board.OnStonePlaceSuccess?.Invoke(Managers.Turn.GetCurrentPlayer(), stoneType, row, col);
             Managers.Time.Timer.SetTimeAsDefault().StartCount();

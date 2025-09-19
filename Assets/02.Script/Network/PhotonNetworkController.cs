@@ -308,6 +308,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
         if (stoneType == Define.Type.StoneColor.White) {
             Debug.Log("### DEV_JSH 멀티에서 백색돌의 렌주 표시 호출 ###");
+            OmokAI.CheckRenju(stoneType,Managers.Board.Board, row, col);
             foreach (var cell in Managers.Board.Board) {
                 if (cell.Stone == Define.Type.StoneColor.None)
                     OmokAI.CheckRenju(Define.Type.StoneColor.Black, Managers.Board.Board, cell.CellRow, cell.CellCol);
