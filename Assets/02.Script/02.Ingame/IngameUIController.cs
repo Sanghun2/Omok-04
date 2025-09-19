@@ -52,6 +52,25 @@ public class IngameUIController : MonoBehaviour
         Debug.LogAssertion($"init ui");
     }
 
+    public void ShowGameResult(Define.State.GameResult gameResult)
+    {
+        switch (gameResult)
+        {
+            case Define.State.GameResult.DRAW:
+                player1_UI.ActiveGameResultText(true, "무승부");
+                player2_UI.ActiveGameResultText(true, "무승부");
+                break;
+            case Define.State.GameResult.BlackStoneWin:
+                player1_UI.ActiveGameResultText(true, "승");
+                player2_UI.ActiveGameResultText(true, "패");
+                break;
+            case Define.State.GameResult.WhiteStoneWin:
+                player1_UI.ActiveGameResultText(true, "패");
+                player2_UI.ActiveGameResultText(true, "승");
+                break;
+        }
+    }
+
     /// <summary>
     /// 현재 턴인 플레이어 UI 표시
     /// </summary>

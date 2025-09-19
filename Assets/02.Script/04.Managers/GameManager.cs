@@ -166,6 +166,7 @@ public class GameManager : IInitializable
         }
 
         Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
+        Managers.InGameUI.ShowGameResult(gameResult);
         Managers.Board.DeactiveLaunchButton();
         Managers.GameResult.EndGame();
         gameLogic = null;
