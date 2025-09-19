@@ -226,7 +226,8 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     [PunRPC]
     private void RPC_PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
         TestLog($"{playerType}, {stoneType}, r:{row}, c:{col}");
-        Managers.Game.CurrentGameLogic.SetNewBoardValue(stoneType, row, col);
+        
+        Managers.Board.OnStonePlace?.Invoke(row,col);
         Managers.Turn.SwitchTurn();
     }
 
