@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3404936131471297128
 RectTransform:
   m_ObjectHideFlags: 0
@@ -149,8 +149,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280329983
-  m_fontColor: {r: 1, g: 0.65036917, b: 0.1273585, a: 1}
+    rgba: 4280063206
+  m_fontColor: {r: 0.9019608, g: 0.5803922, b: 0.10980392, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -304,14 +304,10 @@ MonoBehaviour:
   playerType: 1
   playerNameText: {fileID: 2781236992461792903}
   rankText: {fileID: 8037351415854546872}
-  playerInfo:
-    playerType: 0
-    playerName: 
-    rank: 
   turnMarkObj: {fileID: 8315830431482183400}
   gameResultText: {fileID: 6423723945340309697}
-  thinkingText: {fileID: 6415458519050144969}
   placeButton: {fileID: 5932309820640494907}
+  thinkingText: {fileID: 6415458519050144969}
 --- !u!1 &4595675109206289851
 GameObject:
   m_ObjectHideFlags: 0
