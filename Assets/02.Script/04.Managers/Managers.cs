@@ -76,7 +76,19 @@ public class Managers : MonoBehaviour
         }
     }
     public static PlayerManager Player => playerManager;
+    public static IngameUIController InGameUI
+    {
+        get
+        {
+            if (inGameUIController == null) {
+                inGameUIController = GameObject.FindAnyObjectByType<IngameUIController>(FindObjectsInactive.Include);
+            }
 
+            return inGameUIController;
+        }
+    }
+
+    static IngameUIController inGameUIController;
     static PlayerManager playerManager = new PlayerManager();
     static BoardController boardController;
     static GameResultManager gameResultManager;
@@ -96,6 +108,7 @@ public class Managers : MonoBehaviour
             Time,
             Player,
             Network,
+            Game,   
         };
 
         InitializeAll(initializeList);

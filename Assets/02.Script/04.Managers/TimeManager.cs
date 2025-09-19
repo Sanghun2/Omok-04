@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class TimeManager : IInitializable
 {
+    public Timer Timer
+    {
+        get
+        {
+            if (timer == null) {
+                GetTimer();
+            }
+
+            return timer;
+        }
+    }
+
     private Timer timer;
 
     public bool IsInit => isInit;
@@ -35,15 +47,10 @@ public class TimeManager : IInitializable
 
     public void Initialize() {
         Managers.Turn.OnTurnChanged.AddListener((targetPlayer) => {
-            try {
-                GetTimer().SetTimeAsDefault();
-                Debug.LogAssertion($"<color=green>timer init complete</color>");
-                isInit = true;
-            }
-            catch {
-                Debug.LogError($"timer null");
-            }
+            GetTimer().SetTimeAsDefault().StartCount();
         });
+        isInit = true;
+        Debug.LogAssertion($"<color=green>timer init complete</color>");
     }
 
     #endregion

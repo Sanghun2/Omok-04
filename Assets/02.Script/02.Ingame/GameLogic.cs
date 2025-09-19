@@ -9,6 +9,8 @@ public class GameLogic
     public BasePlayerState secondPlayerState;           // Player B
     public Cell[,] Board => board;
 
+    public BasePlayerState CurrentState => currentPlayerState;
+
     private BasePlayerState currentPlayerState;         // 현재 턴의 Player
     private Cell[,] board;                              // 보드의 상태 정보
     private Define.Type.Game gameType;                  // 현재 게임 타입 상태
