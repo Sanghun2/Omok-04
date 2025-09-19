@@ -9,21 +9,23 @@ public class PlayerUI : MonoBehaviour
     public Define.Type.Player PlayerType => playerType;
     public PlaceButton PlaceButton => placeButton;
 
-    [SerializeField] Define.Type.Player playerType;
+
+    [Header("[  Assign  ]")]
+    [SerializeField][Tooltip("SetPlayerType으로 수동 변경 가능. 편의를 위해 기본값 할당 후 유지")] Define.Type.Player playerType;
     [SerializeField] TextMeshProUGUI playerNameText;
     [SerializeField] TextMeshProUGUI rankText;
-    [SerializeField] PlayerInfo playerInfo;
-
     [SerializeField] GameObject turnMarkObj;
     [SerializeField] TextMeshProUGUI gameResultText;
+    [SerializeField] PlaceButton placeButton;
+
+    [Space]
     [SerializeField] GameObject thinkingText;
 
-    [SerializeField] PlaceButton placeButton;
+    private PlayerInfo playerInfo;
 
     public void InitPlayerUI(PlayerInfo playerInfo) {
         this.playerInfo = playerInfo;
         playerNameText.text = playerInfo.PlayerName;
-        playerType = playerInfo.PlayerType;
 
         if (rankText != null) {
             rankText.text = playerInfo.Rank;
