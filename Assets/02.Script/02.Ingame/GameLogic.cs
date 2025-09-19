@@ -82,6 +82,7 @@ public class GameLogic
                 Managers.Board.ResetCurretCell();
                 Managers.Board.OnStonePlaceSuccess?.Invoke(Managers.Turn.GetCurrentPlayer(),stoneType, row, col);
 
+                OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, row, col);
                 foreach (var cell in board)
                 {
                     if (cell.Stone == Define.Type.StoneColor.None)
