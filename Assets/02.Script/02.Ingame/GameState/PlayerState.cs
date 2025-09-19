@@ -15,7 +15,6 @@ public class PlayerState : BasePlayerState
         stoneColor = isFirstPlayer ?
             Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
         isMultiplay = false;
-        Debug.LogAssertion($"<color=red>{stoneColor}</color>");
     }
 
     #region 필수 메서드
