@@ -81,15 +81,6 @@ public class GameLogic
                 Managers.Board.PlaceMarker(stoneType, row, col);
                 Managers.Board.ResetCurretCell();
                 Managers.Board.OnStonePlaceSuccess?.Invoke(Managers.Turn.GetCurrentPlayer(),stoneType, row, col);
-
-                OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, row, col);
-                foreach (var cell in board)
-                {
-                    if (cell.Stone == Define.Type.StoneColor.None)
-                        OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
-                }
-
-                Managers.Board.ShowAllRenju(board);
                 Managers.Time.Timer.SetTimeAsDefault().StartCount();
                 return true;
             }
@@ -103,14 +94,6 @@ public class GameLogic
             Managers.Board.PlaceMarker(stoneType, row, col);
             Managers.Board.ResetCurretCell();
             Managers.Board.OnStonePlaceSuccess?.Invoke(Managers.Turn.GetCurrentPlayer(), stoneType, row, col);
-
-            foreach (var cell in board)
-            {
-                if (cell.Stone == Define.Type.StoneColor.None)
-                    OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
-            }
-
-            Managers.Board.ShowAllRenju(board);
             Managers.Time.Timer.SetTimeAsDefault().StartCount();
             return true;
         }

@@ -56,6 +56,16 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
             Debug.Log($"### DEV_JSH 방금 놓인 돌은 {stoneType.ToString()}");
             Debug.Log($"### DEV_JSH 방금 놓인 돌의 위치는 Row : {row} / Col : {col}");
             Debug.Log("### DEV_JSH MarkerEvent End ###");
+
+            OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, row, col);
+            foreach (var cell in board)
+            {
+                if (cell.Stone == Define.Type.StoneColor.None)
+                    OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
+            }
+
+            if(Managers.Game.CurrentGameType != Define.Type.Game.Multi)
+                Managers.Board.ShowAllRenju();
         };
 
         for (int i = 0; i < board.GetLength(0); i++)
@@ -148,7 +158,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     }
     
     #region 자동 호출 메서드 / 금지 표시, 돌 생성, 셀 초기화
-    public void ShowAllRenju(Cell[,] board)
+    public void ShowAllRenju()
     {
         foreach (var cell in board)
         {

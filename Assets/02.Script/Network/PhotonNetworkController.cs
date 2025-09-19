@@ -294,7 +294,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
                 if (cell.Stone == Define.Type.StoneColor.None)
                     OmokAI.CheckRenju(Define.Type.StoneColor.Black, Managers.Board.Board, cell.CellRow, cell.CellCol);
             }
-            Managers.Board.ShowAllRenju(Managers.Board.Board);
+            Managers.Board.ShowAllRenju();
         }
 
         // turn µø±‚»≠
@@ -312,7 +312,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
                 if (cell.Stone == Define.Type.StoneColor.None)
                     OmokAI.CheckRenju(Define.Type.StoneColor.Black, Managers.Board.Board, cell.CellRow, cell.CellCol);
             }
-            Managers.Board.ShowAllRenju(Managers.Board.Board);
+            Managers.Board.ShowAllRenju();
         }
     }
 
