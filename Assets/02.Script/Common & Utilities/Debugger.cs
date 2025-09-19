@@ -56,7 +56,7 @@ public class Debugger : MonoBehaviour
 
     public void Test_InitPlayer() {
         var p = new PlayerInfo(playerName, "1");
-        Managers.Player.InitPlayerUI(targetPlayer, p);
+        Managers.InGameUI.InitPlayerUI(targetPlayer, p);
     }
 
     #endregion

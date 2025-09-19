@@ -75,7 +75,6 @@ public class Managers : MonoBehaviour
             return boardController;
         }
     }
-    public static PlayerManager Player => playerManager;
     public static IngameUIController InGameUI
     {
         get
@@ -89,7 +88,6 @@ public class Managers : MonoBehaviour
     }
 
     static IngameUIController inGameUIController;
-    static PlayerManager playerManager = new PlayerManager();
     static BoardController boardController;
     static GameResultManager gameResultManager;
     static UserInfoManager userInfoManager;
@@ -106,7 +104,6 @@ public class Managers : MonoBehaviour
         List<IInitializable> initializeList = new List<IInitializable>() {
             Scene,
             Time,
-            Player,
             Network,
             Game,   
         };

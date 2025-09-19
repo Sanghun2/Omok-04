@@ -19,14 +19,14 @@ public class IngameUIController : MonoBehaviour
         switch (gameType) {
             case Define.Type.Game.Single:
                 if (player2_UI != null) {
-                    player2_UI.InitPlayer(new PlayerInfo("AI", string.Empty));
+                    player2_UI.InitPlayerUI(new PlayerInfo("AI", string.Empty));
                 }
 
                 player2_UI.ActivePlaceButton(false);
                 break;
             case Define.Type.Game.Local:
-                player1_UI.InitPlayer(new PlayerInfo("P1", string.Empty));
-                player2_UI.InitPlayer(new PlayerInfo("P2", string.Empty));
+                player1_UI.InitPlayerUI(new PlayerInfo("P1", string.Empty));
+                player2_UI.InitPlayerUI(new PlayerInfo("P2", string.Empty));
                 break;
             case Define.Type.Game.Multi:
                 break;
@@ -50,6 +50,11 @@ public class IngameUIController : MonoBehaviour
         UpdateTurnUI(firstPlayer);
 
         Debug.LogAssertion($"init ui");
+    }
+
+    public void InitPlayerUI(Define.Type.Player targetPlayer, PlayerInfo playerInfo) {
+        var targetPlayerUI = targetPlayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
+        targetPlayerUI.InitPlayerUI(playerInfo);
     }
 
     /// <summary>
