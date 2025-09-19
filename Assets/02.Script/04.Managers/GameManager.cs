@@ -17,6 +17,9 @@ public class GameManager : IInitializable
     private Define.Type.GameLevel lastGameLevel;
     private GameLogic gameLogic;
 
+    public delegate void GameFinishHandler(Define.State.GameResult gameResult);
+    public event GameFinishHandler OnGameFinish;
+
     #region Flow Control
 
     public void GoToMainMenu()
@@ -130,14 +133,18 @@ public class GameManager : IInitializable
     #region End Game
 
     public void EndGame() {
-        if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1)
+        if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1) {
             Managers.Game.EndGame(Define.State.GameResult.WhiteStoneWin);
-        else if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player2)
+        }
+        else if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player2) {
             Managers.Game.EndGame(Define.State.GameResult.BlackStoneWin);
+        }
     }
 
     public void EndGame(Define.State.GameResult gameResult)
     {
+        if (currentGameState == Define.State.GameState.NotStarted) return;
+
         currentGameState = Define.State.GameState.NotStarted;
         Managers.Time.GetTimer().Pause();
 
@@ -163,10 +170,14 @@ public class GameManager : IInitializable
 
         if (currentGameType == Define.Type.Game.Multi)
         {
-            if (gameResult == Define.State.GameResult.BlackStoneWin)
+            if (gameResult == Define.State.GameResult.BlackStoneWin) {
                 Managers.GameResult.SendGameResult(true);
-            else if (gameResult == Define.State.GameResult.WhiteStoneWin)
+                OnGameFinish?.Invoke(Define.State.GameResult.BlackStoneWin);
+            }
+            else if (gameResult == Define.State.GameResult.WhiteStoneWin) {
                 Managers.GameResult.SendGameResult(false);
+                OnGameFinish?.Invoke(Define.State.GameResult.WhiteStoneWin);
+            }
             //else // Draw일 때
         }
 

@@ -18,7 +18,6 @@ public interface INetworkController : IInitializable
     public event PlayerHandler OnPlayerInit;
     public event PlayerHandler OnPlaceStone; // who place stone
     public event PlayerHandler OnTurnChanged; // current turn player input
-    public event PlayerHandler OnGameFinish; // win player
 
     #region Room Set & Network Set
     void InitConnect();
@@ -45,7 +44,6 @@ public interface INetworkController : IInitializable
     void SyncStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col);
     void SetTimer(float time);
 
-    void FinishGame(Define.Type.Player winner);
 
     #endregion
 }
@@ -95,11 +93,6 @@ public class NetworkManager : IInitializable
     }
     public void SetTimer(float time) {
         networkController.SetTimer(time);
-    }
-
-
-    public void FinishGame(Define.Type.Player winner) {
-        networkController.FinishGame(winner);
     }
 
     #region Capsule
