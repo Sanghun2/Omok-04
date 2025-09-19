@@ -1,6 +1,6 @@
-using System;
+using ExitGames.Client.Photon;
+using Photon.Realtime;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Debugger : MonoBehaviour
 {
@@ -22,10 +22,10 @@ public class Debugger : MonoBehaviour
 
     public void Test_OpenPopUpFront() {
         Managers.UI.OpenPopUp(new PopUpInfo(
-            "대전 상대를 찾는중..", 
+            "대전 상대를 찾는중..",
             string.Empty,
             new PopUpButtonInfo(
-                "취소", () => Managers.UI.CloseUI<PopUpUI>()                
+                "취소", () => Managers.UI.CloseUI<PopUpUI>()
             )), Define.Type.PopUpParent.Front);
 
     }
@@ -46,7 +46,14 @@ public class Debugger : MonoBehaviour
     #region Match Making
 
     public void Test_QuickMatch() {
-        Managers.Network.FindMatch();
+        string testRoomKey = "test room";
+        var expectedProps = new Hashtable() {
+            { testRoomKey , true }
+        };
+        Managers.Network.FindMatch(new RoomOptions() {
+            CustomRoomProperties = expectedProps,
+            CustomRoomPropertiesForLobby = new string[] { testRoomKey }
+        });
         Managers.UI.OpenPopUp(PopUpInfo.FindMatchPlayer, Define.Type.PopUpParent.Front);
     }
 
@@ -121,7 +128,7 @@ public class Debugger : MonoBehaviour
 
 public partial class UIManager
 {
-    public void OpenPopUp(PopUpInfo popUpInfo, Define.Type.PopUpParent popUpParent=Define.Type.PopUpParent.Main) {
+    public void OpenPopUp(PopUpInfo popUpInfo, Define.Type.PopUpParent popUpParent = Define.Type.PopUpParent.Main) {
         var ui = Managers.UI.OpenUI<PopUpUI>(Define.Path.POP_UP_UI_PATH);
         PopUpUI popUpUI = ui as PopUpUI;
         Managers.UI.FrontCanvas.ActiveTouchBlockPanel(popUpParent == Define.Type.PopUpParent.Front);

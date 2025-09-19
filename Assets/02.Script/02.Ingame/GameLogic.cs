@@ -77,31 +77,17 @@ public class GameLogic
             }
             else
             {
-                board[row, col].SetMarker(stoneType);
-                Managers.Board.PlaceMarker(stoneType, row, col);
-                Managers.Board.ResetCurretCell();
                 Managers.Board.OnStonePlaceSuccess?.Invoke(Managers.Turn.GetCurrentPlayer(),stoneType, row, col);
-
-                foreach (var cell in board)
-                {
-                    if (cell.Stone == Define.Type.StoneColor.None)
-                        OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
-                }
-
-                Managers.Board.ShowAllRenju(board);
-
+                Managers.Board.ShowAllRenju();
                 return true;
             }
         }
         else if (stoneType == Define.Type.StoneColor.White)
         {
-            board[row, col].IsRenju = false;
-            board[row, col].OnX_Marker = false;
-            board[row, col].SetMarker(stoneType);
-            Managers.Board.DestroyX_Marker(row, col);
-            Managers.Board.PlaceMarker(stoneType, row, col);
-            Managers.Board.ResetCurretCell();
             Managers.Board.OnStonePlaceSuccess?.Invoke(Managers.Turn.GetCurrentPlayer(), stoneType, row, col);
+            if(Managers.Game.CurrentGameType != Define.Type.Game.Multi)
+                Managers.Board.ShowAllRenju();
+            Managers.Board.DestroyX_Marker(row, col);
             return true;
         }
         else

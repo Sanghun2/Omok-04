@@ -17,7 +17,8 @@ public class GameManager : IInitializable
     private Define.Type.GameLevel lastGameLevel;
     private GameLogic gameLogic;
 
-
+    public delegate void GameFinishHandler(Define.State.GameResult gameResult);
+    public event GameFinishHandler OnGameFinish;
 
     #region Flow Control
 
@@ -81,35 +82,33 @@ public class GameManager : IInitializable
 
     private void StartGame(Define.Type.Game gameType, Define.Type.GameLevel level = Define.Type.GameLevel.Easy)
     {
+        currentGameState = Define.State.GameState.Preparing;
+
         Debug.Log($"게임 시작. 모드: {gameType}, 난이도: {level}");
         //게임 다시하기 기능때문에 추가함
         this.currentGameType = gameType;
         this.lastGameLevel = level;
-
-
-        // setting game options
-        Managers.Board.InitBoard();
-        Managers.Turn.StartGame();
 
         var timer = Managers.Time.GetTimer();
         if (timer != null) {
             timer.SetTimeAsDefault();   // 25초 설정
         }
 
-        currentGameState = Define.State.GameState.Ready;
-
         switch (gameType)
         {
             case Define.Type.Game.Single:
+                Managers.Board.InitBoard();
                 gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
+                Managers.Turn.StartGame();
                 SetGameStatePlay();
                 break;
             case Define.Type.Game.Local:
+                Managers.Board.InitBoard();
                 gameLogic = new GameLogic(Managers.Board.Board, gameType);
+                Managers.Turn.StartGame();
                 SetGameStatePlay();
                 break;
             case Define.Type.Game.Multi:
-                SetGameStatePlay();
                 break;
             default:
                 break;
@@ -132,14 +131,18 @@ public class GameManager : IInitializable
     #region End Game
 
     public void EndGame() {
-        if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1)
+        if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1) {
             Managers.Game.EndGame(Define.State.GameResult.WhiteStoneWin);
-        else if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player2)
+        }
+        else if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player2) {
             Managers.Game.EndGame(Define.State.GameResult.BlackStoneWin);
+        }
     }
 
     public void EndGame(Define.State.GameResult gameResult)
     {
+        if (currentGameState == Define.State.GameState.NotStarted) return;
+
         currentGameState = Define.State.GameState.NotStarted;
         Managers.Time.GetTimer().Pause();
 
@@ -165,10 +168,14 @@ public class GameManager : IInitializable
 
         if (currentGameType == Define.Type.Game.Multi)
         {
-            if (gameResult == Define.State.GameResult.BlackStoneWin)
+            if (gameResult == Define.State.GameResult.BlackStoneWin) {
                 Managers.GameResult.SendGameResult(true);
-            else if (gameResult == Define.State.GameResult.WhiteStoneWin)
+                OnGameFinish?.Invoke(Define.State.GameResult.BlackStoneWin);
+            }
+            else if (gameResult == Define.State.GameResult.WhiteStoneWin) {
                 Managers.GameResult.SendGameResult(false);
+                OnGameFinish?.Invoke(Define.State.GameResult.WhiteStoneWin);
+            }
             //else // Draw일 때
         }
 

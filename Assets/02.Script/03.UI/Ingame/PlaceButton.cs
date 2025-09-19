@@ -11,6 +11,7 @@ public class PlaceButton : ButtonBase
 
     public void SetPlayerType(Define.Type.Player playerType) {
         currentPlayerType = playerType;
+        //Debug.LogAssertion($"place button set as {playerType}");
     }
 
     protected override void ButtonAction() {

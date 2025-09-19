@@ -39,7 +39,7 @@ public class Define
         public enum GameState
         {
             NotStarted,
-            Ready,
+            Preparing,
             InProgress,
             Ended
         }

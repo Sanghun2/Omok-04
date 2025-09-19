@@ -62,6 +62,7 @@ public static class OmokAI
     {
         if (stoneColor == Define.Type.StoneColor.White)
             return false;
+        
 
 
         int openThreeDirs = 0; // »ï»ï ÆÇ´Ü¿ë

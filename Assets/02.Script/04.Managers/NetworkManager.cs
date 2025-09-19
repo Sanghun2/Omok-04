@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public interface INetworkController : IInitializable
@@ -18,7 +19,6 @@ public interface INetworkController : IInitializable
     public event PlayerHandler OnPlayerInit;
     public event PlayerHandler OnPlaceStone; // who place stone
     public event PlayerHandler OnTurnChanged; // current turn player input
-    public event PlayerHandler OnGameFinish; // win player
 
     #region Room Set & Network Set
     void InitConnect();
@@ -28,7 +28,7 @@ public interface INetworkController : IInitializable
 
     #region Match Making
 
-    void QuickMatch(int matchPlayers);
+    void QuickMatch(int matchPlayers, RoomOptions roomOptions=null);
     void CancelFindMatch();
 
     void OnConnectedToMaster();
@@ -39,13 +39,11 @@ public interface INetworkController : IInitializable
 
     #region InGame
 
-    void SetPlayerAndFirstPlayer(Define.Type.Player playerType, Define.Type.Player firstPlayer);
-
-    bool PlaceReady(Define.Type.Player turnPlayer);
-    void PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col);
+    void SyncStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col);
     void SetTimer(float time);
 
-    void FinishGame(Define.Type.Player winner);
+    void LeaveRoom();
+
 
     #endregion
 }
@@ -72,9 +70,9 @@ public class NetworkManager : IInitializable
 
     private Define.State.Match currentMatchState;
 
-    public void FindMatch() {
+    public void FindMatch(RoomOptions roomOptions=null) {
         currentMatchState = Define.State.Match.MatchMaking;
-        networkController.QuickMatch(matchPlayers:2);
+        networkController.QuickMatch(matchPlayers:2, roomOptions);
     }
     public void CancelFindMatch() {
         currentMatchState = Define.State.Match.None;
@@ -82,24 +80,20 @@ public class NetworkManager : IInitializable
         Debug.LogAssertion($"<color=orange>대전 상대 탐색 중지</color>");
     }
 
-    public void SetPlayerAndFirstPlayer(Define.Type.Player playerType, Define.Type.Player firstPlayer) {
-        networkController.SetPlayerAndFirstPlayer(playerType, firstPlayer);
-    }
 
 
     public void StartGame() {
 
     }
     public void PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col) {
-        networkController.PlaceStone(playerType, stone, row, col);
+        networkController.SyncStone(playerType, stone, row, col);
     }
     public void SetTimer(float time) {
         networkController.SetTimer(time);
     }
 
-
-    public void FinishGame(Define.Type.Player winner) {
-        networkController.FinishGame(winner);
+    public void LeaveRoom() {
+        networkController.LeaveRoom();
     }
 
     #region Capsule

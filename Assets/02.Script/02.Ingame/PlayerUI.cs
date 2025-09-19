@@ -77,6 +77,11 @@ public class PlayerInfo // userdata로 써도 괜찮은가 ai 전용 userdata 필요
     [SerializeField] string playerName;
     [SerializeField] string rank;
 
+    /// <summary>
+    /// user name, rank. rank 기본값은 string.empty
+    /// </summary>
+    /// <param name="playerName"></param>
+    /// <param name="rank"></param>
     public PlayerInfo(string playerName, string rank) {
         this.playerName = playerName;
         this.rank = rank;

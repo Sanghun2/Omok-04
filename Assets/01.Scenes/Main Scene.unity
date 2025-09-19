@@ -2265,7 +2265,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9217599280170559962, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: m_text
-      value: P2
+      value: Opponent has left..
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217599280170559962, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: m_fontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217599280170559962, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: m_pageToDisplay
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -3412,6 +3420,7 @@ GameObject:
   - component: {fileID: 1155622656}
   - component: {fileID: 1155622655}
   - component: {fileID: 1155622654}
+  - component: {fileID: 1155622658}
   m_Layer: 5
   m_Name: '[Button]StartMulti'
   m_TagString: Untagged
@@ -3482,19 +3491,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1155622656}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1155622655}
-        m_TargetAssemblyTypeName: GameButtonManager, Assembly-CSharp
-        m_MethodName: OnBtnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1155622655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3546,6 +3543,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155622652}
   m_CullTransparentMesh: 1
+--- !u!114 &1155622658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155622652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcb9c913e7c433499c77228ee3d4f2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FindMatchButton
+  targetButton: {fileID: 1155622654}
 --- !u!1001 &1180175343
 PrefabInstance:
   m_ObjectHideFlags: 0

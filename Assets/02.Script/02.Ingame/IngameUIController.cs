@@ -61,6 +61,10 @@ public class IngameUIController : MonoBehaviour
         var targetPlayerUI = targetPlayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
         targetPlayerUI.InitPlayerUI(playerInfo);
     }
+    public void SetPlayerUIAsLeft(Define.Type.Player targetPlayer) {
+        var targetPlayerUI = GetPlayerUI(targetPlayer);
+        targetPlayerUI.InitPlayerUI(new PlayerInfo("Has Left..", string.Empty));
+    }
 
     public void ShowGameResult(Define.State.GameResult gameResult) {
         switch (gameResult) {
@@ -98,6 +102,11 @@ public class IngameUIController : MonoBehaviour
     public PlayerUI GetPlayerUI(Define.Type.Player playerType) {
         return playerType == Define.Type.Player.Player1 ? player1_UI : player2_UI;
     }
+    public void UpdateTurnUI(Define.Type.Player playerType) {
+        player1_UI.ActiveTurnMarkUI(playerType == Define.Type.Player.Player1);
+        player2_UI.ActiveTurnMarkUI(playerType != Define.Type.Player.Player1);
+    }
+
 
     #endregion
 
@@ -114,10 +123,6 @@ public class IngameUIController : MonoBehaviour
 
         player1_UI.PlaceButton.ResetPlayerType();
         player2_UI.PlaceButton.ResetPlayerType();
-    }
-    private void UpdateTurnUI(Define.Type.Player playerType) {
-        player1_UI.ActiveTurnMarkUI(playerType == Define.Type.Player.Player1);
-        player2_UI.ActiveTurnMarkUI(playerType != Define.Type.Player.Player1);
     }
 
 
