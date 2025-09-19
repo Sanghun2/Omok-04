@@ -57,8 +57,9 @@ public class PlayerUI : MonoBehaviour
     public void ActivePlaceButton(bool active) {
         placeButton.gameObject.SetActive(active);
     }
-    public void ActiveGameResultText(bool active) {
+    public void ActiveGameResultText(bool active, string result = "") {
         gameResultText.gameObject.SetActive(active);
+        gameResultText.text = result;
     }
 }
 

@@ -7,6 +7,7 @@ public class QuitButton : ButtonBase
     }
 
     private void QuitGame() {
+        Managers.UI.GetUI<GameOverUI>().CloseUI();
         Managers.Game.GoToMainMenu();
     }
 }

@@ -5418,9 +5418,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2152169916812577325, guid: 7121039228ec01742ab6f40334546337, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2152169916812577325, guid: 7121039228ec01742ab6f40334546337, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2152169916812577325, guid: 7121039228ec01742ab6f40334546337, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1923283831}
+      objectReference: {fileID: 1961725787}
+    - target: {fileID: 2152169916812577325, guid: 7121039228ec01742ab6f40334546337, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 2152169916812577325, guid: 7121039228ec01742ab6f40334546337, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2414757160182648438, guid: 7121039228ec01742ab6f40334546337, type: 3}
       propertyPath: m_Name
       value: Game Over UI

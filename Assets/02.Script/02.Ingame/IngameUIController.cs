@@ -52,13 +52,30 @@ public class IngameUIController : MonoBehaviour
         Debug.LogAssertion($"init ui");
     }
 
+    public void ShowGameResult(Define.State.GameResult gameResult)
+    {
+        switch (gameResult)
+        {
+            case Define.State.GameResult.DRAW:
+                player1_UI.ActiveGameResultText(true, "ë¬´ìŠ¹ë¶€");
+                player2_UI.ActiveGameResultText(true, "ë¬´ìŠ¹ë¶€");
+                break;
+            case Define.State.GameResult.BlackStoneWin:
+                player1_UI.ActiveGameResultText(true, "ìŠ¹");
+                player2_UI.ActiveGameResultText(true, "íŒ¨");
+                break;
+            case Define.State.GameResult.WhiteStoneWin:
+                player1_UI.ActiveGameResultText(true, "íŒ¨");
+                player2_UI.ActiveGameResultText(true, "ìŠ¹");
+                break;
+        }
     public void InitPlayerUI(Define.Type.Player targetPlayer, PlayerInfo playerInfo) {
         var targetPlayerUI = targetPlayer == Define.Type.Player.Player1 ? player1_UI : player2_UI;
         targetPlayerUI.InitPlayerUI(playerInfo);
     }
 
     /// <summary>
-    /// ÇöÀç ÅÏÀÎ ÇÃ·¹ÀÌ¾î UI Ç¥½Ã
+    /// í˜„ì¬ í„´ì¸ í”Œë ˆì´ì–´ UI í‘œì‹œ
     /// </summary>
     /// <param name="aiTurn"></param>
     public void ActiveTurnMarkUI(bool aiTurn) {
@@ -75,7 +92,7 @@ public class IngameUIController : MonoBehaviour
 
     private void Start() {
         Managers.Turn.OnTurnChanged.AddListener((player) => {
-            // Local °ÔÀÓÀÏ ¶§¸¸ µ¹ »ö±ò ±âÁØ ÇöÀç ÇÃ·¹ÀÌ¾î Ç¥½Ã È°¼ºÈ­
+            // Local ê²Œì„ì¼ ë•Œë§Œ ëŒ ìƒ‰ê¹” ê¸°ì¤€ í˜„ì¬ í”Œë ˆì´ì–´ í‘œì‹œ í™œì„±í™”
             if (Managers.Game.CurrentGameType == Define.Type.Game.Local) {
                 UpdateTurnUI(player);
             }
