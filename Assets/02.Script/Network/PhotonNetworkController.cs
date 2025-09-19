@@ -191,6 +191,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         // 모든 플레이어 인게임 진입
 
         // 모든 플레이어가 개별적으로 같은 값으로 board 초기화 및 플레이어 초기화
+        Managers.Board.InitBoard();
         var gameLogic = new GameLogic(Managers.Board.Board, Define.Type.Game.Multi);
         Managers.Game.SetCurrentLogic(gameLogic);
 
@@ -205,6 +206,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
             TestLog("second player로 set");
         }
 
+        gameLogic.SetState(gameLogic.firstPlayerState);
         var currentUser = Managers.UserInfo.GetCurrentUser();
 
         // Local Player UI Init 후 rpc 동기화

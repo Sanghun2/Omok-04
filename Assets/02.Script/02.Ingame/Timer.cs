@@ -29,6 +29,13 @@ public partial class Timer : MonoBehaviour
     public delegate void TimeEventHandler();
     public event TimeEventHandler OnTimeOver;
 
+    public void SetTimeAsDefaultAndStart() {
+
+    }
+    private void SetTimeAndStart(float currentTime, float totalTime) {
+        SetTime(currentTime, totalTime);
+        StartCount();
+    }
     public void SetTime(float currentTime, float totalTime) {
         this.currentTime = currentTime;
         this.totalTime = totalTime;
