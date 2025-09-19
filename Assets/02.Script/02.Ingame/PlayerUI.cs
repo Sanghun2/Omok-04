@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
     public Define.Type.Player PlayerType => playerType;
+    public PlaceButton PlaceButton => placeButton;
 
     [SerializeField] Define.Type.Player playerType;
     [SerializeField] TextMeshProUGUI playerNameText;

@@ -75,8 +75,8 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         }
     }
 
-    public override void OnPlayerLeftRoom(Player otherPlayer) {
-        Debug.LogAssertion($"<color=cyan>left room. 현재 인원:{PhotonNetwork.CurrentRoom.PlayerCount}, 최대 인원: {PhotonNetwork.CurrentRoom.MaxPlayers}</color>");
+    public override void OnLeftRoom() {
+        TestLog($"room을 나감");
     }
 
     #endregion

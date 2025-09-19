@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class QuitButton : ButtonBase
@@ -9,5 +10,9 @@ public class QuitButton : ButtonBase
     private void QuitGame() {
         Managers.UI.GetUI<GameOverUI>().CloseUI();
         Managers.Game.GoToMainMenu();
+
+        if (Managers.Game.CurrentGameType == Define.Type.Game.Multi) {
+            PhotonNetwork.LeaveRoom();
+        }
     }
 }

@@ -2,15 +2,24 @@ using UnityEngine;
 
 public class PlaceButton : ButtonBase
 {
-    [SerializeField] Define.Type.Player playerType;
+    [SerializeField] Define.Type.Player defaultPlayerType;
+    private Define.Type.Player currentPlayerType;
+
+    public void ResetPlayerType() {
+        currentPlayerType = defaultPlayerType;
+    }
+
+    public void SetPlayerType(Define.Type.Player playerType) {
+        currentPlayerType = playerType;
+    }
 
     protected override void ButtonAction() {
-        if (playerType == Define.Type.Player.Player1) {
-            Debug.LogAssertion($"{playerType} 雜熱");
+        if (currentPlayerType == Define.Type.Player.Player1) {
+            Debug.LogAssertion($"{currentPlayerType} 雜熱");
             Managers.Board.OnClickBlackStoneLaunchButton();
         }
         else {
-            Debug.LogAssertion($"{playerType} 雜熱");
+            Debug.LogAssertion($"{currentPlayerType} 雜熱");
             Managers.Board.OnClickWhiteStoneLaunchButton();
         }
     }

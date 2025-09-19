@@ -9,5 +9,6 @@ public class InGameScene : Scene
     }
 
     public override void ReleaseScene() {
+        Managers.Time.Timer.Pause();
     }
 }
