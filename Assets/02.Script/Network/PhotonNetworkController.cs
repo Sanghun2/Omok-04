@@ -62,6 +62,9 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         if (roomOptions == null) {
             roomOptions = new RoomOptions() { MaxPlayers = maxPlayers };
         }
+        else {
+            roomOptions.MaxPlayers = maxPlayers;
+        }
         PhotonNetwork.JoinRandomOrCreateRoom(roomOptions: roomOptions);
     }
 
@@ -86,6 +89,11 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.Board.OnStonePlaceSuccess -= SwitchTurn;
         Managers.Board.OnStonePlaceSuccess -= SyncStone;
         Managers.Game.OnGameFinish -= FinishGame;
+    }
+
+    public void LeaveRoom() {
+        photonView.RPC(nameof(RPC_SetPlayerUIAsLeft), RpcTarget.OthersBuffered, LocalPlayerType);
+        PhotonNetwork.LeaveRoom();
     }
 
     #endregion
@@ -287,6 +295,11 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.InGameUI.InitPlayerUI(targetPlayer, new PlayerInfo(playerName, rank.ToString()));
 
         OnPlayerInit?.Invoke(targetPlayer);
+    }
+
+    [PunRPC]
+    private void RPC_SetPlayerUIAsLeft(Define.Type.Player targetPlayer) {
+        Managers.InGameUI.SetPlayerUIAsLeft(targetPlayer);
     }
 
     [PunRPC]

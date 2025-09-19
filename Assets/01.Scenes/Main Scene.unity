@@ -2265,7 +2265,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9217599280170559962, guid: e27876cdfd3175943aa25043d4354300, type: 3}
       propertyPath: m_text
-      value: P2
+      value: Opponent has left..
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217599280170559962, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: m_fontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 9217599280170559962, guid: e27876cdfd3175943aa25043d4354300, type: 3}
+      propertyPath: m_pageToDisplay
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

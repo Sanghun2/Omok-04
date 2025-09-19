@@ -14,7 +14,7 @@ public class QuitButton : ButtonBase
 
         if (Managers.Game.CurrentGameType == Define.Type.Game.Multi)
         {
-            PhotonNetwork.LeaveRoom();
+            Managers.Network.LeaveRoom();
         }
 
         SoundManager.Instance.SetBGMSound("Intro");

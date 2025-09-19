@@ -53,6 +53,7 @@ MonoBehaviour:
   - RPC_UpdateTurnUI
   - RPC_SyncStone
   - RPC_SwitchTurn
+  - RPC_SetPlayerUIAsLeft
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

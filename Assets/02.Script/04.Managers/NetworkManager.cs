@@ -45,6 +45,8 @@ public interface INetworkController : IInitializable
     void SyncStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col);
     void SetTimer(float time);
 
+    void LeaveRoom();
+
 
     #endregion
 }
@@ -94,6 +96,10 @@ public class NetworkManager : IInitializable
     }
     public void SetTimer(float time) {
         networkController.SetTimer(time);
+    }
+
+    public void LeaveRoom() {
+        networkController.LeaveRoom();
     }
 
     #region Capsule
