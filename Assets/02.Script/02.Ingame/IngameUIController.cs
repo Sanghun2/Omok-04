@@ -57,8 +57,8 @@ public class IngameUIController : MonoBehaviour
         switch (gameResult)
         {
             case Define.State.GameResult.DRAW:
-                player1_UI.ActiveGameResultText(true, "무승부");
-                player2_UI.ActiveGameResultText(true, "무승부");
+                player1_UI.ActiveGameResultText(true, "무");
+                player2_UI.ActiveGameResultText(true, "무");
                 break;
             case Define.State.GameResult.BlackStoneWin:
                 player1_UI.ActiveGameResultText(true, "승");
