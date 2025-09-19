@@ -115,7 +115,7 @@ public class IngameUIController : MonoBehaviour
         player1_UI.PlaceButton.ResetPlayerType();
         player2_UI.PlaceButton.ResetPlayerType();
     }
-    private void UpdateTurnUI(Define.Type.Player playerType) {
+    public void UpdateTurnUI(Define.Type.Player playerType) {
         player1_UI.ActiveTurnMarkUI(playerType == Define.Type.Player.Player1);
         player2_UI.ActiveTurnMarkUI(playerType != Define.Type.Player.Player1);
     }

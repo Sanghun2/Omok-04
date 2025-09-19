@@ -96,8 +96,8 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
     public bool PlaceReady(Define.Type.Player turnPlayer) {
         throw new System.NotImplementedException();
     }
-    public void PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col) {
-        photonView.RPC(nameof(RPC_PlaceStone), RpcTarget.Others, playerType, stone, row, col);
+    public void SyncStone(Define.Type.Player playerType, Define.Type.StoneColor stone, int row, int col) {
+        photonView.RPC(nameof(RPC_SyncStone), RpcTarget.Others, playerType, stone, row, col);
     }
 
     public void SetTimer(float time) {
@@ -172,6 +172,10 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         }
     }
 
+    private void UpdateTurnUI(Define.Type.Player currentTurnPlayerType) {
+        photonView.RPC(nameof(RPC_UpdateTurnUI), RpcTarget.Others, currentTurnPlayerType);
+    }
+
     [PunRPC] //
     private void RPC_SetFirstPlayer() {
 
@@ -210,8 +214,19 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         gameLogic.SetState(gameLogic.firstPlayerState);
         var currentUser = Managers.UserInfo.GetCurrentUser();
 
-        Managers.Board.OnStonePlaceSuccess -= PlaceStone;
-        Managers.Board.OnStonePlaceSuccess += PlaceStone;
+        Managers.Board.OnStonePlaceSuccess -= SyncStone;
+        Managers.Board.OnStonePlaceSuccess += SyncStone;
+
+
+        // place stone
+            // check
+            // place
+            // sucess -> place sucess
+
+
+
+        Managers.Turn.OnTurnChanged.RemoveListener(UpdateTurnUI);
+        Managers.Turn.OnTurnChanged.AddListener(UpdateTurnUI);
 
         // Local Player UI Init 후 rpc 동기화
         Managers.InGameUI.InitPlayerUI(LocalPlayerType, new PlayerInfo(currentUser.username, currentUser.rank.ToString()));
@@ -223,11 +238,15 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         OnGameInit?.Invoke(LocalPlayerType, currentUser.username, currentUser.rank);
     }
 
+
     [PunRPC]
-    private void RPC_PlaceStone(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
-        TestLog($"{playerType}, {stoneType}, r:{row}, c:{col}");
-        
-        Managers.Board.OnStonePlace?.Invoke(row,col);
+    private void RPC_SyncStone(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
+        TestLog($"{playerType}, {stoneType}, r:{row}, c:{col}");        
+        //Managers.Board.OnStonePlace?.Invoke(row, col);
+
+        // stone view sync
+
+        // game logic sync
     }
 
     [PunRPC] //
@@ -235,6 +254,11 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.InGameUI.InitPlayerUI(targetPlayer, new PlayerInfo(playerName, rank.ToString()));
 
         OnPlayerInit?.Invoke(targetPlayer);
+    }
+
+    [PunRPC]
+    private void RPC_UpdateTurnUI(Define.Type.Player currentTurnPlayerType) {
+        Managers.InGameUI.UpdateTurnUI(currentTurnPlayerType);
     }
 
     [PunRPC] //
