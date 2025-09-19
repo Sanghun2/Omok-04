@@ -61,10 +61,8 @@ public static class OmokAI
     public static bool CheckRenju(Define.Type.StoneColor stoneColor, Cell[,] board, int row, int col)
     {
         if (stoneColor == Define.Type.StoneColor.White)
-        {
-            board[row, col].IsRenju = false;
             return false;
-        }
+        
 
 
         int openThreeDirs = 0; // »ï»ï ÆÇ´Ü¿ë

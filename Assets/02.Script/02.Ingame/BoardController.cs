@@ -55,7 +55,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
             board[row, col].OnX_Marker = false;
             board[row, col].SetMarker(stoneType);
             Managers.Board.PlaceMarker(stoneType, row, col);
-            OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, row, col);
             foreach (var cell in board)
             {
                 if (cell.Stone == Define.Type.StoneColor.None)
