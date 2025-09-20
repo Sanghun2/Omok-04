@@ -16,6 +16,7 @@ public class Define
 
         public class Photon
         {
+            //public const string MULTIPLAYER_READY = "isReady";
             public const string PLAYER_TYPE = "playerType";
         }
     }
