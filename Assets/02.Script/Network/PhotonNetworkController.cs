@@ -1,11 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
-using Unity.VisualScripting;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkController, IInitializable
 {
@@ -150,7 +146,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         photonView.RPC(nameof(RPC_InitGame), RpcTarget.AllViaServer, firstPlayer);
     }
 
-    
+
     /// <summary>
     /// 다른 플레이어의 PlayerUI를 현재 내가 Init한 정보로 Init
     /// </summary>
@@ -285,13 +281,11 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
         // game logic sync
         Managers.Board.Board[row, col].SetMarker(stoneType);
-        if (stoneType == Define.Type.StoneColor.White)
-        {
+        if (stoneType == Define.Type.StoneColor.White) {
             Debug.Log("### DEV_JSH 멀티에서 백색돌의 렌주 표시 호출 ###");
             Managers.Board.Board[row, col].IsRenju = false;
             Managers.Board.Board[row, col].OnX_Marker = false;
-            foreach (var cell in Managers.Board.Board)
-            {
+            foreach (var cell in Managers.Board.Board) {
                 if (cell.Stone == Define.Type.StoneColor.None)
                     OmokAI.CheckRenju(Define.Type.StoneColor.Black, Managers.Board.Board, cell.CellRow, cell.CellCol);
             }
@@ -355,7 +349,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
     #endregion
 
-    private void TestLog(string text, string textColor="aqua") {
+    private void TestLog(string text, string textColor = "aqua") {
         Debug.LogAssertion($"<color={textColor}>{text}</color>");
     }
 }

@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-using Mono.Cecil.Cil;
 using UnityEngine;
 
 public class TimeManager : IInitializable

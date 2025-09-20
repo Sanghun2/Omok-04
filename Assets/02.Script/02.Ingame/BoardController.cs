@@ -1,10 +1,8 @@
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI.Table;
 
-[RequireComponent (typeof(Collider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 {
     private Cell[,] board;
@@ -27,16 +25,14 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public OnStoneSetted OnStonePlaceSuccess;
     public Cell[,] Board => board;
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         DeactiveLaunchButton();
     }
 
     /// <summary>
     /// 보드 초기화
     /// </summary>
-    public void InitBoard()
-    {
+    public void InitBoard() {
         this.gameObject.SetActive(true);
 
         //blackStoneLaunchButton.onClick.AddListener(OnClickBlackStoneLaunchButton);
@@ -51,35 +47,30 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         OnStonePlaceSuccess -= OnStonePlaced;
         OnStonePlaceSuccess += OnStonePlaced;
 
-        for (int i = 0; i < board.GetLength(0); i++)
-        {
-            for (int j = 0; j < board.GetLength(1); j++)
-            {
+        for (int i = 0; i < board.GetLength(0); i++) {
+            for (int j = 0; j < board.GetLength(1); j++) {
                 board[i, j] = new Cell();
 
-                board[i,j].InitCell(i, j, (i,j) => {
+                board[i, j].InitCell(i, j, (i, j) => {
                     OnStonePlace(i, j);
                 });
             }
         }
 
         // 돌이 있을 경우 모두 삭제
-        for (int i = stones.transform.childCount - 1; i >= 0; i--)
-        {
+        for (int i = stones.transform.childCount - 1; i >= 0; i--) {
             Transform childStone = stones.transform.GetChild(i);
             Destroy(childStone.gameObject);
         }
 
         // X 마커가 있을 경우 모두 삭제
-        for (int i = markers.transform.childCount - 1; i >= 0; i--)
-        {
+        for (int i = markers.transform.childCount - 1; i >= 0; i--) {
             Transform childMarker = markers.transform.GetChild(i);
             Destroy(childMarker.gameObject);
         }
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
+    public void OnDrag(PointerEventData eventData) {
         positionSelector.SetActive(true);
         xMarker.SetActive(false);
 
@@ -88,8 +79,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         // 보드판 범위를 벗어나면 선택 취소
         if (Mathf.Round(worldPosition.x / 0.45f) > 7 || Mathf.Round(worldPosition.x / 0.45f) < -7 ||
-            Mathf.Round(worldPosition.y / 0.45f) > 7 || Mathf.Round(worldPosition.y / 0.45f) < -7)
-        {
+            Mathf.Round(worldPosition.y / 0.45f) > 7 || Mathf.Round(worldPosition.y / 0.45f) < -7) {
             currentCell = null;
             return;
         }
@@ -99,13 +89,12 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         positionSelector.transform.position = selectorPosition;
 
         // 현재 셀렉터의 위치를 기준으로 셀 선택
-        currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
+        currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) + 7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
+    public void OnPointerDown(PointerEventData eventData) {
         positionSelector.SetActive(true);
-        xMarker.SetActive(false) ;
+        xMarker.SetActive(false);
 
         // 스크린 지점 -> 월드 지점 변환
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, Camera.main.nearClipPlane));
@@ -115,22 +104,20 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         positionSelector.transform.position = selectorPosition;
 
         // 현재 셀렉터의 위치를 기준으로 셀 선택
-        currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) +7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
+        currentCell = board[(int)Mathf.Round(worldPosition.x / 0.45f) + 7, (int)Mathf.Round(worldPosition.y / 0.45f) + 7];
     }
 
-    public void OnClickBlackStoneLaunchButton()
-    {
+    public void OnClickBlackStoneLaunchButton() {
         if (currentCell == null || Managers.Turn.GetCurrentPlayer() != Define.Type.Player.Player1)
             return;
 
         positionSelector.SetActive(false);
 
-        currentCell.onCellClicked?.Invoke(currentCell.CellRow,currentCell.CellCol);
+        currentCell.onCellClicked?.Invoke(currentCell.CellRow, currentCell.CellCol);
         currentCell = null;
     }
 
-    public void OnClickWhiteStoneLaunchButton()
-    {
+    public void OnClickWhiteStoneLaunchButton() {
         if (currentCell == null || Managers.Turn.GetCurrentPlayer() != Define.Type.Player.Player2)
             return;
 
@@ -139,55 +126,45 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         currentCell.onCellClicked?.Invoke(currentCell.CellRow, currentCell.CellCol);
         currentCell = null;
     }
-    
+
     #region 자동 호출 메서드 / 금지 표시, 돌 생성, 셀 초기화
-    public void ShowAllRenju()
-    {
-        foreach (var cell in board)
-        {
-            if (cell.IsRenju && !cell.OnX_Marker)
-            {
+    public void ShowAllRenju() {
+        foreach (var cell in board) {
+            if (cell.IsRenju && !cell.OnX_Marker) {
                 cell.OnX_Marker = true;
                 GameObject x_MarkerObj = Instantiate(x_MarkerPrefab, markers);
                 x_MarkerObj.transform.position = new Vector3((cell.CellRow - 7) * 0.45f, (cell.CellCol - 7) * 0.45f, 0);
             }
-            else if (!cell.IsRenju && cell.OnX_Marker)
-            {
+            else if (!cell.IsRenju && cell.OnX_Marker) {
                 cell.OnX_Marker = false;
                 DestroyX_Marker(cell.CellRow, cell.CellCol);
             }
         }
     }
 
-    public void DeactiveLaunchButton()
-    {
+    public void DeactiveLaunchButton() {
         blackStoneLaunchButton?.onClick.RemoveListener(OnClickBlackStoneLaunchButton);
         whiteStoneLaunchButton?.onClick.RemoveListener(OnClickWhiteStoneLaunchButton);
     }
 
-    public void DestroyX_Marker(int row, int col)
-    {
+    public void DestroyX_Marker(int row, int col) {
         Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
 
-        foreach (Transform x_marker in markers)
-        {
-            if(x_marker.position == markerPos)
-            {
+        foreach (Transform x_marker in markers) {
+            if (x_marker.position == markerPos) {
                 Destroy(x_marker.gameObject);
             }
         }
     }
 
-    public void ActiveX_Marker(int row, int col)
-    {
+    public void ActiveX_Marker(int row, int col) {
         Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
 
         xMarker.SetActive(true);
         xMarker.transform.position = markerPos;
     }
 
-    public void PlaceMarker(Define.Type.StoneColor stoneColor, int row, int col)
-    {
+    public void PlaceMarker(Define.Type.StoneColor stoneColor, int row, int col) {
         Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
 
         // 돌 생성
@@ -198,20 +175,17 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         lastPositionMarker.transform.position = markerPos;
     }
 
-    public void ResetCurretCell()
-    {
-        currentCell= null;
+    public void ResetCurretCell() {
+        currentCell = null;
     }
 
-    private void OnStonePlaced(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col)
-    {
+    private void OnStonePlaced(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
         SoundManager.Instance.OnAttackSound();
         board[row, col].IsRenju = false;
         board[row, col].OnX_Marker = false;
         board[row, col].SetMarker(stoneType);
         Managers.Board.PlaceMarker(stoneType, row, col);
-        foreach (var cell in board)
-        {
+        foreach (var cell in board) {
             if (cell.Stone == Define.Type.StoneColor.None)
                 OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
         }
