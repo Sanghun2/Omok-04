@@ -18,9 +18,9 @@ public class IngameUIController : MonoBehaviour
         // UI
         switch (gameType) {
             case Define.Type.Game.Single:
-                if (player2_UI != null) {
-                    player2_UI.InitPlayerUI(new PlayerInfo(Define.Value.DEFAULT_AI_NAME, string.Empty));
-                }
+                player1_UI.InitPlayerUI(new PlayerInfo(Define.Value.DEFAULT_PLAYER1_NAME, string.Empty));
+                player2_UI.InitPlayerUI(new PlayerInfo(Define.Value.DEFAULT_AI_NAME, string.Empty));
+
 
                 player1_UI.ActivePlaceButton(true);
                 player2_UI.ActivePlaceButton(false);
