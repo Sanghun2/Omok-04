@@ -48,21 +48,8 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         board = new Cell[Define.Value.BoardRow, Define.Value.BoardCol];
 
-        OnStonePlaceSuccess += (playerType, stoneType, row, col) =>
-        {
-            SoundManager.Instance.OnAttackSound();
-            board[row, col].IsRenju = false;
-            board[row, col].OnX_Marker = false;
-            board[row, col].SetMarker(stoneType);
-            Managers.Board.PlaceMarker(stoneType, row, col);
-            foreach (var cell in board)
-            {
-                if (cell.Stone == Define.Type.StoneColor.None)
-                    OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
-            }
-            Managers.Board.ResetCurretCell();
-            Managers.Time.Timer.SetTimeAsDefault().StartCount();
-        };
+        OnStonePlaceSuccess -= OnStonePlaced;
+        OnStonePlaceSuccess += OnStonePlaced;
 
         for (int i = 0; i < board.GetLength(0); i++)
         {
@@ -214,6 +201,22 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     public void ResetCurretCell()
     {
         currentCell= null;
+    }
+
+    private void OnStonePlaced(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col)
+    {
+        SoundManager.Instance.OnAttackSound();
+        board[row, col].IsRenju = false;
+        board[row, col].OnX_Marker = false;
+        board[row, col].SetMarker(stoneType);
+        Managers.Board.PlaceMarker(stoneType, row, col);
+        foreach (var cell in board)
+        {
+            if (cell.Stone == Define.Type.StoneColor.None)
+                OmokAI.CheckRenju(Define.Type.StoneColor.Black, board, cell.CellRow, cell.CellCol);
+        }
+        Managers.Board.ResetCurretCell();
+        Managers.Time.Timer.SetTimeAsDefault().StartCount();
     }
     #endregion
 }
