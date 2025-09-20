@@ -63,7 +63,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         else {
             roomOptions.MaxPlayers = maxPlayers;
         }
-        PhotonNetwork.JoinRandomOrCreateRoom(roomOptions: roomOptions);
+        PhotonNetwork.JoinRandomOrCreateRoom(expectedCustomRoomProperties:roomOptions.CustomRoomProperties, roomOptions: roomOptions);
     }
 
     public void CancelFindMatch() {
