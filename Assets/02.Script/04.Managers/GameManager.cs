@@ -132,11 +132,13 @@ public class GameManager : IInitializable
 
     #region End Game
 
-    public void EndGame() {
-        if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1) {
+    public void TimeOverGameEnd() {
+        var losePlayer = Managers.Turn.GetCurrentPlayer();
+        var blackStonePlayer = Managers.Turn.GetFirstPlayer();
+        if (losePlayer == blackStonePlayer) {
             Managers.Game.EndGame(Define.State.GameResult.WhiteStoneWin);
         }
-        else if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player2) {
+        else {
             Managers.Game.EndGame(Define.State.GameResult.BlackStoneWin);
         }
     }
@@ -214,7 +216,7 @@ public class GameManager : IInitializable
     }
 
     public void Initialize() {
-        Managers.Time.Timer.OnTimeOver += EndGame;
+        Managers.Time.Timer.OnTimeOver += TimeOverGameEnd;
     }
 
     #endregion

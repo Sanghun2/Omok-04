@@ -87,6 +87,10 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.Board.OnStonePlaceSuccess -= SwitchTurn;
         Managers.Board.OnStonePlaceSuccess -= SyncStone;
         Managers.Game.OnGameFinish -= FinishGame;
+        PhotonNetwork.NickName = Managers.UserInfo.GetCurrentUser().username;
+    }
+    public override void OnPlayerLeftRoom(Player otherPlayer) {
+        Debug.LogAssertion($"{otherPlayer.NickName} ³ª°¨");
     }
 
     public void LeaveRoom() {
