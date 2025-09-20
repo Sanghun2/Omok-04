@@ -5,6 +5,7 @@ public class TurnManager
 {
     private Define.Type.Player currentPlayer = Define.Type.Player.Player1;
     public UnityEvent<Define.Type.Player> OnTurnChanged = new UnityEvent<Define.Type.Player>();
+    private Define.Type.Player firstPlayer = Define.Type.Player.Player1;
 
     
     public void StartGame() // 흑돌의 차례로 만드는 함수
@@ -12,9 +13,19 @@ public class TurnManager
         if (Managers.Game.CurrentGameState == Define.State.GameState.NotStarted)
         {
             SetTurn(Define.Type.Player.Player1);
+            SetFirstPlayer(Define.Type.Player.Player1);
         }
     }
 
+    public void SetFirstPlayer(Define.Type.Player player)
+    {
+        firstPlayer = player;
+    }
+
+    public Define.Type.Player GetFirstPlayer()
+    {
+        return firstPlayer;
+    }
     
     public void SwitchTurn() // 게임이 진행중일 때 차례를 다음 사람에게 넘기는 함수
     {

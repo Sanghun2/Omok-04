@@ -261,6 +261,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.InGameUI.GetPlayerUI(LocalPlayerType).PlaceButton.SetPlayerType(LocalPlayerType);
 
         Managers.Turn.SetTurn(LocalPlayerType == firstPlayerType ? LocalPlayerType : OpponentPlayerType);
+        Managers.Turn.SetFirstPlayer(LocalPlayerType == firstPlayerType ? LocalPlayerType : OpponentPlayerType);
 
         TestLog($"me:{LocalPlayerType}, op:{OpponentPlayerType}");
         OnGameInit?.Invoke(LocalPlayerType, currentUser.username, currentUser.rank);

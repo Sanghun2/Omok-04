@@ -66,20 +66,61 @@ public class IngameUIController : MonoBehaviour
         targetPlayerUI.InitPlayerUI(new PlayerInfo(Define.Value.LEFT_PLAYER_NAME, string.Empty));
     }
 
-    public void ShowGameResult(Define.State.GameResult gameResult) {
-        switch (gameResult) {
-            case Define.State.GameResult.DRAW:
-                player1_UI.ActiveGameResultText(true, "무");
-                player2_UI.ActiveGameResultText(true, "무");
-                break;
-            case Define.State.GameResult.BlackStoneWin:
-                player1_UI.ActiveGameResultText(true, "승");
-                player2_UI.ActiveGameResultText(true, "패");
-                break;
-            case Define.State.GameResult.WhiteStoneWin:
-                player1_UI.ActiveGameResultText(true, "패");
-                player2_UI.ActiveGameResultText(true, "승");
-                break;
+    public void ShowGameResult(Define.State.GameResult gameResult)
+    {
+
+        if (Managers.Game.CurrentGameType == Define.Type.Game.Multi)
+        {
+            switch (gameResult)
+            {
+                case Define.State.GameResult.DRAW:
+                    player1_UI.ActiveGameResultText(true, "무");
+                    player2_UI.ActiveGameResultText(true, "무");
+                    break;
+                case Define.State.GameResult.BlackStoneWin:
+                    if(Managers.Turn.GetFirstPlayer() == Define.Type.Player.Player1)
+                    {
+                        player1_UI.ActiveGameResultText(true, "승");
+                        player2_UI.ActiveGameResultText(true, "패");
+                    }
+                    else
+                    {
+                        player1_UI.ActiveGameResultText(true, "패");
+                        player2_UI.ActiveGameResultText(true, "승");
+                    }
+                        break;
+                case Define.State.GameResult.WhiteStoneWin:
+
+                    if (Managers.Turn.GetFirstPlayer() == Define.Type.Player.Player1)
+                    {
+                        player1_UI.ActiveGameResultText(true, "패");
+                        player2_UI.ActiveGameResultText(true, "승");
+                    }
+                    else
+                    {
+                        player1_UI.ActiveGameResultText(true, "승");
+                        player2_UI.ActiveGameResultText(true, "패");
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            switch (gameResult)
+            {
+                case Define.State.GameResult.DRAW:
+                    player1_UI.ActiveGameResultText(true, "무");
+                    player2_UI.ActiveGameResultText(true, "무");
+                    break;
+                case Define.State.GameResult.BlackStoneWin:
+                    player1_UI.ActiveGameResultText(true, "승");
+                    player2_UI.ActiveGameResultText(true, "패");
+                    break;
+                case Define.State.GameResult.WhiteStoneWin:
+                    player1_UI.ActiveGameResultText(true, "패");
+                    player2_UI.ActiveGameResultText(true, "승");
+                    break;
+            }
         }
     }
     public void ActivePlaceButton(Define.Type.Player targetPLayer, bool active) {

@@ -82,7 +82,7 @@ public class GameManager : IInitializable
 
     private void StartGame(Define.Type.Game gameType, Define.Type.GameLevel level = Define.Type.GameLevel.Easy)
     {
-        //currentGameState = Define.State.GameState.Preparing;
+        currentGameState = Define.State.GameState.Preparing;
 
         Debug.Log($"게임 시작. 모드: {gameType}, 난이도: {level}");
         //게임 다시하기 기능때문에 추가함
@@ -99,12 +99,14 @@ public class GameManager : IInitializable
             case Define.Type.Game.Single:
                 Managers.Board.InitBoard();
                 gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
+                currentGameState = Define.State.GameState.NotStarted;
                 Managers.Turn.StartGame();
                 SetGameStatePlay();
                 break;
             case Define.Type.Game.Local:
                 Managers.Board.InitBoard();
                 gameLogic = new GameLogic(Managers.Board.Board, gameType);
+                currentGameState = Define.State.GameState.NotStarted;
                 Managers.Turn.StartGame();
                 SetGameStatePlay();
                 break;
