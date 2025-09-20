@@ -19,7 +19,7 @@ public class IngameUIController : MonoBehaviour
         switch (gameType) {
             case Define.Type.Game.Single:
                 if (player2_UI != null) {
-                    player2_UI.InitPlayerUI(new PlayerInfo("AI", string.Empty));
+                    player2_UI.InitPlayerUI(new PlayerInfo(Define.Value.DEFAULT_AI_NAME, string.Empty));
                 }
 
                 player1_UI.ActivePlaceButton(true);
@@ -29,8 +29,8 @@ public class IngameUIController : MonoBehaviour
                 player2_UI.PlaceButton.ResetPlayerType();
                 break;
             case Define.Type.Game.Local:
-                player1_UI.InitPlayerUI(new PlayerInfo("P1", string.Empty));
-                player2_UI.InitPlayerUI(new PlayerInfo("P2", string.Empty));
+                player1_UI.InitPlayerUI(new PlayerInfo(Define.Value.DEFAULT_PLAYER1_NAME, string.Empty));
+                player2_UI.InitPlayerUI(new PlayerInfo(Define.Value.DEFAULT_PLAYER2_NAME, string.Empty));
 
                 player1_UI.ActivePlaceButton(true);
                 player2_UI.ActivePlaceButton(true);
@@ -63,7 +63,7 @@ public class IngameUIController : MonoBehaviour
     }
     public void SetPlayerUIAsLeft(Define.Type.Player targetPlayer) {
         var targetPlayerUI = GetPlayerUI(targetPlayer);
-        targetPlayerUI.InitPlayerUI(new PlayerInfo("Has Left..", string.Empty));
+        targetPlayerUI.InitPlayerUI(new PlayerInfo(Define.Value.LEFT_PLAYER_NAME, string.Empty));
     }
 
     public void ShowGameResult(Define.State.GameResult gameResult) {

@@ -18,7 +18,7 @@ public class GameResultManager : MonoBehaviour
 
     public void EndGame()
     {
-        gameOverUI.SetActive(true);
+        Managers.UI.OpenUI<GameOverUI>();
     }
 
     private IEnumerator SendResultCoroutine(string userId, string result)
