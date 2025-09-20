@@ -61,6 +61,7 @@ public class NetworkManager : IInitializable
             return photonNetworkController;
         }
     }
+    public Define.Type.Player LocalPlayerType => networkController.LocalPlayerType;
 
     public bool IsInit => isInit;
 
