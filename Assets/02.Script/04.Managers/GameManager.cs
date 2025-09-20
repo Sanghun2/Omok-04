@@ -99,6 +99,7 @@ public class GameManager : IInitializable
             case Define.Type.Game.Single:
                 Managers.Board.InitBoard();
                 gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
+                Managers.Turn.SetTurn(Define.Type.Player.Player1);
                 Managers.Turn.StartGame();
                 SetGameStatePlay();
                 break;
