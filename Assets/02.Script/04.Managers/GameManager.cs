@@ -99,13 +99,14 @@ public class GameManager : IInitializable
             case Define.Type.Game.Single:
                 Managers.Board.InitBoard();
                 gameLogic = new GameLogic(Managers.Board.Board, gameType, level);
-                Managers.Turn.SetTurn(Define.Type.Player.Player1);
+                currentGameState = Define.State.GameState.NotStarted;
                 Managers.Turn.StartGame();
                 SetGameStatePlay();
                 break;
             case Define.Type.Game.Local:
                 Managers.Board.InitBoard();
                 gameLogic = new GameLogic(Managers.Board.Board, gameType);
+                currentGameState = Define.State.GameState.NotStarted;
                 Managers.Turn.StartGame();
                 SetGameStatePlay();
                 break;
@@ -185,6 +186,7 @@ public class GameManager : IInitializable
         Managers.Board.DeactiveLaunchButton();
         Managers.GameResult.EndGame();
         gameLogic = null;
+
     }
     #endregion
 

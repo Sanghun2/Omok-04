@@ -8,8 +8,15 @@ public class Define
         public const int BoardRow = 15;
         public const int BoardCol = 15;
 
+        public const string DEFAULT_AI_NAME = "AI";
+        public const string DEFAULT_PLAYER1_NAME = "P1";
+        public const string DEFAULT_PLAYER2_NAME = "P2";
+
+        public const string LEFT_PLAYER_NAME = "Opponent has left..";
+
         public class Photon
         {
+            //public const string MULTIPLAYER_READY = "isReady";
             public const string PLAYER_TYPE = "playerType";
         }
     }
@@ -79,6 +86,7 @@ public class Define
 
         public enum Player
         {
+            None,
             Player1 = 1,
             Player2 = 2,
         }

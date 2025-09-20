@@ -4,8 +4,6 @@ public class PlayerState : BasePlayerState
 {
     private bool isFirstPlayer;
     private Define.Type.StoneColor stoneColor;
-    private string roomId;
-    private bool isMultiplay;
 
     public Define.Type.StoneColor Stone => stoneColor;
 
@@ -14,8 +12,6 @@ public class PlayerState : BasePlayerState
         this.isFirstPlayer = isFirstPlayer;
         stoneColor = isFirstPlayer ?
             Define.Type.StoneColor.Black : Define.Type.StoneColor.White;
-        isMultiplay = false;
-        Debug.LogAssertion($"<color=red>{stoneColor}</color>");
     }
 
     #region 필수 메서드

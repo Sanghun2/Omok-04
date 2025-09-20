@@ -1,11 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
-using Unity.VisualScripting;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkController, IInitializable
 {
@@ -112,7 +108,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
 
     private void FinishGame(Define.State.GameResult gameResult) {
-        TestLog($"finish game");
+        TestLog($"finish game. result: {gameResult}");
         photonView.RPC(nameof(RPC_FinishGame), RpcTarget.OthersBuffered, gameResult);
     }
 
@@ -150,7 +146,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         photonView.RPC(nameof(RPC_InitGame), RpcTarget.AllViaServer, firstPlayer);
     }
 
-    
+
     /// <summary>
     /// 다른 플레이어의 PlayerUI를 현재 내가 Init한 정보로 Init
     /// </summary>
@@ -176,6 +172,10 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         if (PhotonNetwork.IsMasterClient) {
             photonView.RPC(nameof(RPC_SetGameStateplay), RpcTarget.AllViaServer);
         }
+    }
+
+    private void SwitchTurn(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
+        photonView.RPC(nameof(RPC_SwitchTurn), RpcTarget.Others);
     }
 
     private void UpdateTurnUI(Define.Type.Player currentTurnPlayerType) {
@@ -241,8 +241,8 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.Board.OnStonePlaceSuccess -= SyncStone;
         Managers.Board.OnStonePlaceSuccess += SyncStone;
 
-        Managers.Board.OnStonePlaceSuccess -= SwitchTurn;
-        Managers.Board.OnStonePlaceSuccess += SwitchTurn;
+        //Managers.Board.OnStonePlaceSuccess -= SwitchTurn;
+        //Managers.Board.OnStonePlaceSuccess += SwitchTurn;
 
         Managers.Game.OnGameFinish -= FinishGame;
         Managers.Game.OnGameFinish += FinishGame;
@@ -261,14 +261,10 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.InGameUI.GetPlayerUI(LocalPlayerType).PlaceButton.SetPlayerType(LocalPlayerType);
 
         Managers.Turn.SetTurn(LocalPlayerType == firstPlayerType ? LocalPlayerType : OpponentPlayerType);
+        Managers.Turn.SetFirstPlayer(LocalPlayerType == firstPlayerType ? LocalPlayerType : OpponentPlayerType);
 
         TestLog($"me:{LocalPlayerType}, op:{OpponentPlayerType}");
         OnGameInit?.Invoke(LocalPlayerType, currentUser.username, currentUser.rank);
-    }
-
-
-    private void SwitchTurn(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
-        photonView.RPC(nameof(RPC_SwitchTurn), RpcTarget.Others);
     }
 
     [PunRPC]
@@ -283,28 +279,30 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         // stone view sync
         Managers.Board.PlaceMarker(stoneType, row, col);
 
-        // game logic sync
+        // game logic stone sync
         Managers.Board.Board[row, col].SetMarker(stoneType);
-        if (stoneType == Define.Type.StoneColor.White)
-        {
+        if (stoneType == Define.Type.StoneColor.White) {
             Debug.Log("### DEV_JSH 멀티에서 백색돌의 렌주 표시 호출 ###");
             Managers.Board.Board[row, col].IsRenju = false;
             Managers.Board.Board[row, col].OnX_Marker = false;
-            foreach (var cell in Managers.Board.Board)
-            {
+            foreach (var cell in Managers.Board.Board) {
                 if (cell.Stone == Define.Type.StoneColor.None)
                     OmokAI.CheckRenju(Define.Type.StoneColor.Black, Managers.Board.Board, cell.CellRow, cell.CellCol);
             }
             Managers.Board.ShowAllRenju();
         }
 
-        // turn 동기화
-        BasePlayerState currentState = Managers.Game.CurrentGameLogic.CurrentState;
-        if (Managers.Game.CurrentGameLogic.firstPlayerState.Equals(currentState)) {
-            Managers.Game.CurrentGameLogic.SetState(Managers.Game.CurrentGameLogic.secondPlayerState);
-        }
-        else {
-            Managers.Game.CurrentGameLogic.SetState(Managers.Game.CurrentGameLogic.firstPlayerState);
+        if (Managers.Game.CurrentGameLogic.CheckGameResult(stoneType, row, col) == Define.State.GameResult.NONE) {
+            Managers.Turn.SwitchTurn();
+
+            // game logic 내부 turn 동기화
+            BasePlayerState currentState = Managers.Game.CurrentGameLogic.CurrentState;
+            if (Managers.Game.CurrentGameLogic.firstPlayerState.Equals(currentState)) {
+                Managers.Game.CurrentGameLogic.SetState(Managers.Game.CurrentGameLogic.secondPlayerState);
+            }
+            else {
+                Managers.Game.CurrentGameLogic.SetState(Managers.Game.CurrentGameLogic.firstPlayerState);
+            }
         }
     }
 
@@ -355,7 +353,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
 
     #endregion
 
-    private void TestLog(string text, string textColor="aqua") {
+    private void TestLog(string text, string textColor = "aqua") {
         Debug.LogAssertion($"<color={textColor}>{text}</color>");
     }
 }
