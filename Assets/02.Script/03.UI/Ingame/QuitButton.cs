@@ -9,7 +9,7 @@ public class QuitButton : ButtonBase
 
     private void QuitGame()
     {
-        Managers.UI.GetUI<GameOverUI>().CloseUI();
+        Managers.UI.CloseUI<GameOverUI>();
         Managers.Game.GoToMainMenu();
 
         if (Managers.Game.CurrentGameType == Define.Type.Game.Multi)
