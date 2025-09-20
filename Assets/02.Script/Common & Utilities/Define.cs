@@ -86,6 +86,7 @@ public class Define
 
         public enum Player
         {
+            None,
             Player1 = 1,
             Player2 = 2,
         }
