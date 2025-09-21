@@ -147,7 +147,7 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
         whiteStoneLaunchButton?.onClick.RemoveListener(OnClickWhiteStoneLaunchButton);
     }
 
-    public void DestroyX_Marker(int row, int col) {
+    private void DestroyX_Marker(int row, int col) {
         Vector3 markerPos = new Vector3((row - 7) * 0.45f, (col - 7) * 0.45f, 0);
 
         foreach (Transform x_marker in markers) {
@@ -182,7 +182,6 @@ public class BoardController : MonoBehaviour, IPointerDownHandler, IDragHandler
     private void OnStonePlaced(Define.Type.Player playerType, Define.Type.StoneColor stoneType, int row, int col) {
         SoundManager.Instance.OnAttackSound();
         board[row, col].IsRenju = false;
-        board[row, col].OnX_Marker = false;
         board[row, col].SetMarker(stoneType);
         Managers.Board.PlaceMarker(stoneType, row, col);
         foreach (var cell in board) {
