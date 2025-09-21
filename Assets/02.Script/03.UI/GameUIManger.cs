@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,6 +44,7 @@ public class GameUIManger : UIBase
     [SerializeField] GameObject winloselog;      //승리, 패배 전적
     [SerializeField] Transform content;
     [SerializeField] GameObject logPrefab; //Text
+    [SerializeField] private TextMeshProUGUI usernameText;
 
 
 
@@ -76,6 +78,8 @@ public class GameUIManger : UIBase
 
     public void AddResultLog(string winner, string loser)
     {
+        UserData currentUser = Managers.UserInfo.GetCurrentUser();
+
         if (content == null || logPrefab == null)
         {
             Debug.LogWarning("GameResultUI: content or logPrefab is null");
@@ -85,6 +89,8 @@ public class GameUIManger : UIBase
         GameObject log = Instantiate(logPrefab, content);
         var text = log.GetComponent<TMPro.TextMeshProUGUI>();
         text.text = $"{winner} 승리 vs {loser} 패배";
+        // usernameText.text = currentUser.username;
+
     }
 
     #region 안 쓰는 기능
