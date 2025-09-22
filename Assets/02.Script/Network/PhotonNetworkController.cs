@@ -63,7 +63,7 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         else {
             roomOptions.MaxPlayers = maxPlayers;
         }
-        PhotonNetwork.JoinRandomOrCreateRoom(roomOptions: roomOptions);
+        PhotonNetwork.JoinRandomOrCreateRoom(expectedCustomRoomProperties:roomOptions.CustomRoomProperties, roomOptions: roomOptions);
     }
 
     public void CancelFindMatch() {
@@ -87,6 +87,10 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         Managers.Board.OnStonePlaceSuccess -= SwitchTurn;
         Managers.Board.OnStonePlaceSuccess -= SyncStone;
         Managers.Game.OnGameFinish -= FinishGame;
+        PhotonNetwork.NickName = Managers.UserInfo.GetCurrentUser().username;
+    }
+    public override void OnPlayerLeftRoom(Player otherPlayer) {
+        Debug.LogAssertion($"{otherPlayer.NickName} 나감");
     }
 
     public void LeaveRoom() {
@@ -284,7 +288,6 @@ public class PhotonNetworkController : MonoBehaviourPunCallbacks, INetworkContro
         if (stoneType == Define.Type.StoneColor.White) {
             Debug.Log("### DEV_JSH 멀티에서 백색돌의 렌주 표시 호출 ###");
             Managers.Board.Board[row, col].IsRenju = false;
-            Managers.Board.Board[row, col].OnX_Marker = false;
             foreach (var cell in Managers.Board.Board) {
                 if (cell.Stone == Define.Type.StoneColor.None)
                     OmokAI.CheckRenju(Define.Type.StoneColor.Black, Managers.Board.Board, cell.CellRow, cell.CellCol);

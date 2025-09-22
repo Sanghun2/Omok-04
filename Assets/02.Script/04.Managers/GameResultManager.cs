@@ -58,6 +58,7 @@ public class GameResultManager : MonoBehaviour
             {
                 Debug.Log("전적 업데이트 실패: " + request.error);
             }
+            
         }
     }
 }

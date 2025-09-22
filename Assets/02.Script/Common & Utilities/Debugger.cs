@@ -47,7 +47,7 @@ public class Debugger : MonoBehaviour
 
     public void Test_QuickMatch() {
         string testRoomKey = "test room";
-        var expectedProps = new Hashtable() {
+        Hashtable expectedProps = new Hashtable() {
             { testRoomKey , true }
         };
         Managers.Network.FindMatch(new RoomOptions() {

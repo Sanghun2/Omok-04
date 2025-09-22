@@ -132,11 +132,13 @@ public class GameManager : IInitializable
 
     #region End Game
 
-    public void EndGame() {
-        if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player1) {
+    public void TimeOverGameEnd() {
+        var losePlayer = Managers.Turn.GetCurrentPlayer();
+        var blackStonePlayer = Managers.Turn.GetFirstPlayer();
+        if (losePlayer == blackStonePlayer) {
             Managers.Game.EndGame(Define.State.GameResult.WhiteStoneWin);
         }
-        else if (Managers.Turn.GetCurrentPlayer() == Define.Type.Player.Player2) {
+        else {
             Managers.Game.EndGame(Define.State.GameResult.BlackStoneWin);
         }
     }
@@ -170,15 +172,14 @@ public class GameManager : IInitializable
 
         if (currentGameType == Define.Type.Game.Multi)
         {
-            if (gameResult == Define.State.GameResult.BlackStoneWin) {
+            var winPlayerType = GetWinPlayerType(gameResult, Managers.Turn.GetFirstPlayer());
+            if (Managers.Network.LocalPlayerType == winPlayerType) {
                 Managers.GameResult.SendGameResult(true);
-                OnGameFinish?.Invoke(Define.State.GameResult.BlackStoneWin);
             }
-            else if (gameResult == Define.State.GameResult.WhiteStoneWin) {
+            else {
                 Managers.GameResult.SendGameResult(false);
-                OnGameFinish?.Invoke(Define.State.GameResult.WhiteStoneWin);
             }
-            //else // Draw일 때
+                OnGameFinish?.Invoke(gameResult);
         }
 
         Debug.Log($"### DEV_JSH Game Over Result : {gameResult.ToString()} ###");
@@ -188,6 +189,23 @@ public class GameManager : IInitializable
         gameLogic = null;
 
     }
+
+    public Define.Type.Player GetWinPlayerType(Define.State.GameResult gameResult, Define.Type.Player firstPlayerType) {
+        switch (gameResult) {                
+            case Define.State.GameResult.BlackStoneWin:
+                if (firstPlayerType == Define.Type.Player.Player1) return Define.Type.Player.Player1;
+                else return Define.Type.Player.Player2;
+            case Define.State.GameResult.WhiteStoneWin:
+                if (firstPlayerType == Define.Type.Player.Player1) return Define.Type.Player.Player2;
+                else return Define.Type.Player.Player1;
+            case Define.State.GameResult.DRAW:
+                return Define.Type.Player.None;
+            case Define.State.GameResult.NONE:
+            default:
+                return Define.Type.Player.None;
+        }
+    }
+
     #endregion
 
     #region Restart Game
@@ -198,7 +216,7 @@ public class GameManager : IInitializable
     }
 
     public void Initialize() {
-        Managers.Time.Timer.OnTimeOver += EndGame;
+        Managers.Time.Timer.OnTimeOver += TimeOverGameEnd;
     }
 
     #endregion

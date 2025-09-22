@@ -87,7 +87,6 @@ public class GameLogic
             Managers.Board.OnStonePlaceSuccess?.Invoke(Managers.Turn.GetCurrentPlayer(), stoneType, row, col);
             if(Managers.Game.CurrentGameType != Define.Type.Game.Multi)
                 Managers.Board.ShowAllRenju();
-            Managers.Board.DestroyX_Marker(row, col);
             return true;
         }
         else
